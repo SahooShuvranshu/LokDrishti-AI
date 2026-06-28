@@ -1,0 +1,348 @@
+import React, { useState, useEffect } from 'react';
+import { useApp } from '../context/AppContext';
+import { X, Calendar, User, MapPin, AlertCircle, FileText, Send, CheckCircle2, ChevronRight, Copy, Share2 } from 'lucide-react';
+
+export default function DetailPanel({ grievance, onClose }) {
+  const { updateGrievanceStatus, addProject, projects } = useApp();
+
+  const [status, setStatus] = useState(grievance.status);
+  const [streamingText, setStreamingText] = useState('');
+  const [streamingType, setStreamingType] = useState(null); // 'notice' or 'response'
+  const [isStreaming, setIsStreaming] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  // Sync state if grievance changes
+  useEffect(() => {
+    setStatus(grievance.status);
+    setStreamingText('');
+    setStreamingType(null);
+    setIsStreaming(false);
+    setCopied(false);
+  }, [grievance]);
+
+  const handleStatusChange = (newStatus) => {
+    setStatus(newStatus);
+    updateGrievanceStatus(grievance.id, newStatus);
+  };
+
+  const handleCopyToClipboard = () => {
+    navigator.clipboard.writeText(streamingText);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const streamContent = (type) => {
+    setStreamingType(type);
+    setStreamingText('');
+    setIsStreaming(true);
+
+    const nowStr = new Date().toLocaleDateString('en-IN', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+
+    let textToStream = '';
+    
+    if (type === 'notice') {
+      textToStream = `OFFICIAL MUNICIPAL DIRECTIVE
+LOKDRISHTI CONSTITUENCY COMMAND HEADQUARTERS
+Reference ID: DIR-2026-${grievance.id.split('-')[1]}
+Date: ${nowStr}
+
+TO:
+The Senior Zonal Officer / Ward Commissioner
+Municipal Grievance and Works Committee
+${grievance.ward}
+
+SUBJECT: URGENT COMPLIANCE AND FIELD INSPECTION ORDER
+
+This is a formal directive issued from the Member of Parliament Command Office regarding Ticket Reference ${grievance.id} (Category: ${grievance.sector}).
+
+INCIDENT CITATION:
+Reporter: ${grievance.reporter}
+Location Area: ${grievance.ward}
+Est. Severity: ${grievance.urgency} (Critical Priority Routing)
+Reported Detail: "${grievance.translatedDescription}"
+
+RECOMMENDED MUNICIPAL ACTION:
+1. Dispatch local engineering and inspection staff to the coordinates immediately.
+2. Formulate immediate corrective repairs.
+3. Submit a progress log and photographic proof of resolution to this Command Center.
+
+Failure to resolve or submit a justified delay brief within 72 hours will trigger escalation to the District Collector.
+
+By Order of,
+Office of the Member of Parliament
+LokDrishti Constituency Command.`;
+    } else {
+      textToStream = `OFFICIAL CONSTITUENCY UPDATE
+
+To:
+Mr./Ms. ${grievance.reporter}
+Registered Citizen
+
+Reference: Grievance Ticket ID ${grievance.id}
+
+Dear ${grievance.reporter},
+
+We are writing to update you on the status of your grievance regarding "${grievance.title}" in ${grievance.ward.split(':')[0]}, which you submitted to the LokDrishti portal.
+
+STATUS PROTOCOL UPDATE:
+Your ticket has been reviewed by the MP Command Center and is officially updated to: [ ${status.toUpperCase()} ].
+
+Action Route:
+We have drafted and dispatched an Official Directive (Reference DIR-2026-${grievance.id.split('-')[1]}) to the Ward Commissioner requesting emergency field remediation. The local supervisor has been assigned to audit the location.
+
+You can monitor the status live on the Citizen Portal using reference ID: ${grievance.id}. Thank you for helping us keep our constituency clean, safe, and progressive.
+
+Warm regards,
+Citizen Redressal Desk
+Office of the Member of Parliament`;
+    }
+
+    let charIdx = 0;
+    const interval = setInterval(() => {
+      if (charIdx < textToStream.length) {
+        setStreamingText((prev) => prev + textToStream[charIdx]);
+        charIdx++;
+      } else {
+        clearInterval(interval);
+        setIsStreaming(false);
+      }
+    }, 8);
+  };
+
+  const handleExportWorkOrder = () => {
+    // Check if project already exists
+    const projId = `PROJ-WO-${grievance.id.split('-')[1]}`;
+    if (projects.some(p => p.id === projId)) {
+      alert('A work order / project for this grievance already exists in the Optimizer queue!');
+      return;
+    }
+
+    // Estimate cost based on urgency and sector
+    let estimatedCost = 10;
+    if (grievance.urgency === 'Critical') estimatedCost = 25;
+    else if (grievance.urgency === 'Medium') estimatedCost = 15;
+
+    const materialsText = grievance.sector === 'Water Supply'
+      ? 'RO Filters: 1 Unit, Piping: 50m, Valve replacements, Labor: 40 Man-days'
+      : grievance.sector === 'Sanitation'
+      ? 'Waste containers: 4 Units, Sanitation Crew, Disinfectant sprayers, Labor: 20 Man-days'
+      : 'Structural cement: 50 Bags, Bitumen mix: 5 Tons, Excavator hire, Labor: 60 Man-days';
+
+    const newProject = {
+      id: projId,
+      name: `Grievance Repair: ${grievance.title}`,
+      sector: grievance.sector,
+      ward: grievance.ward,
+      cost: estimatedCost,
+      duration: grievance.urgency === 'Critical' ? 10 : 20,
+      materials: materialsText,
+      status: 'queued'
+    };
+
+    addProject(newProject);
+    handleStatusChange('Work Order Created');
+    alert(`Successfully generated and exported Work Order (${projId}) to the Resource Optimizer!`);
+  };
+
+  return (
+    <div className="glass-panel animate-slide-in" style={{
+      position: 'relative',
+      height: '100%',
+      backgroundColor: 'var(--bg-secondary)',
+      borderLeft: '1px solid var(--border-color)',
+      padding: '24px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '20px',
+      overflowY: 'auto'
+    }}>
+      {/* Header Row */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-color)', paddingBottom: '16px' }}>
+        <div>
+          <span className="badge badge-info" style={{ marginBottom: '4px' }}>{grievance.id}</span>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', margin: 0 }}>Grievance Inspector</h2>
+        </div>
+        <button
+          onClick={onClose}
+          className="btn btn-icon"
+          style={{ border: 'none', background: 'transparent' }}
+          title="Close Inspector"
+        >
+          <X size={18} />
+        </button>
+      </div>
+
+      {/* Ticket Metadata Grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', fontSize: '0.8rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <User size={14} style={{ color: 'var(--text-tertiary)' }} />
+          <div>
+            <div style={{ color: 'var(--text-tertiary)' }}>Reporter</div>
+            <div style={{ fontWeight: '500' }}>{grievance.reporter}</div>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Calendar size={14} style={{ color: 'var(--text-tertiary)' }} />
+          <div>
+            <div style={{ color: 'var(--text-tertiary)' }}>Date Logged</div>
+            <div style={{ fontWeight: '500' }}>
+              {new Date(grievance.timestamp).toLocaleDateString()}
+            </div>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', gridColumn: 'span 2' }}>
+          <MapPin size={14} style={{ color: 'var(--text-tertiary)' }} />
+          <div>
+            <div style={{ color: 'var(--text-tertiary)' }}>Ward Boundary</div>
+            <div style={{ fontWeight: '500' }}>{grievance.ward}</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Status Management Bar */}
+      <div className="glass-panel" style={{ padding: '12px', backgroundColor: 'var(--bg-tertiary)', border: '1px solid var(--border-color)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span style={{ fontSize: '0.8rem', fontWeight: '500' }}>Grievance Status</span>
+          <select
+            className="form-select"
+            style={{ width: 'auto', padding: '4px 8px', fontSize: '0.8rem' }}
+            value={status}
+            onChange={(e) => handleStatusChange(e.target.value)}
+          >
+            <option>Pending</option>
+            <option>Investigating</option>
+            <option>Work Order Created</option>
+            <option>Resolved</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Ticket Details Panel */}
+      <div>
+        <h3 style={{ fontSize: '0.9rem', marginBottom: '8px', color: 'var(--text-secondary)' }}>Citizen Citation</h3>
+        <div className="glass-panel" style={{ padding: '14px', backgroundColor: 'var(--bg-tertiary)', border: '1px solid var(--border-color)', fontSize: '0.85rem', lineHeight: '1.4' }}>
+          <h4 style={{ fontWeight: 'bold', fontSize: '0.9rem', marginBottom: '6px' }}>{grievance.title}</h4>
+          <p style={{ color: 'var(--text-primary)', whiteSpace: 'pre-wrap' }}>{grievance.description}</p>
+          
+          {/* Indic translation tag if necessary */}
+          {grievance.description !== grievance.translatedDescription && (
+            <div style={{ borderTop: '1px dashed var(--border-color)', marginTop: '10px', paddingTop: '8px' }}>
+              <span className="badge badge-success" style={{ fontSize: '0.6rem', marginBottom: '4px' }}>
+                AI Indic Translation (Hindi to English)
+              </span>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
+                "{grievance.translatedDescription}"
+              </p>
+            </div>
+          )}
+        </div>
+        <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '6px', textAlign: 'right' }}>
+          Est. Impact: <strong>{grievance.impact}</strong>
+        </div>
+      </div>
+
+      {/* Command Actions */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <h3 style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Command Actions</h3>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+          <button
+            onClick={() => streamContent('notice')}
+            disabled={isStreaming}
+            className="btn"
+            style={{ fontSize: '0.75rem', padding: '8px' }}
+          >
+            <FileText size={14} /> Draft Official Notice
+          </button>
+          
+          <button
+            onClick={() => streamContent('response')}
+            disabled={isStreaming}
+            className="btn"
+            style={{ fontSize: '0.75rem', padding: '8px' }}
+          >
+            <Send size={14} /> Draft Citizen Response
+          </button>
+        </div>
+
+        {status !== 'Resolved' && status !== 'Work Order Created' && (
+          <button
+            onClick={handleExportWorkOrder}
+            className="btn btn-primary"
+            style={{
+              fontSize: '0.8rem',
+              padding: '10px',
+              background: 'linear-gradient(135deg, var(--accent), #4f46e5)',
+              border: 'none',
+              width: '100%',
+              marginTop: '4px'
+            }}
+          >
+            <CheckCircle2 size={14} /> Generate & Export Work Order
+          </button>
+        )}
+      </div>
+
+      {/* Live AI Streaming output */}
+      {streamingType && (
+        <div className="glass-panel" style={{
+          display: 'flex',
+          flexDirection: 'column',
+          backgroundColor: 'var(--bg-tertiary)',
+          border: '1px solid var(--border-color)',
+          padding: '16px',
+          flexGrow: 1,
+          maxHeight: '350px'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-color)', paddingBottom: '8px', marginBottom: '10px' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 'bold', color: 'var(--accent)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              {streamingType === 'notice' ? 'OFFICIAL COMPLIANCE ORDER' : 'CITIZEN COMMUNICATION'}
+              {isStreaming && <div className="pulse-glow" style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--accent)' }}></div>}
+            </span>
+
+            {!isStreaming && (
+              <div style={{ display: 'flex', gap: '6px' }}>
+                <button
+                  onClick={handleCopyToClipboard}
+                  className="btn"
+                  style={{ padding: '2px 6px', fontSize: '0.7rem', display: 'flex', alignItems: 'center', gap: '2px' }}
+                  title="Copy to Clipboard"
+                >
+                  <Copy size={10} />
+                  {copied ? 'Copied' : 'Copy'}
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div style={{
+            flexGrow: 1,
+            overflowY: 'auto',
+            background: 'var(--bg-secondary)',
+            border: '1px solid var(--border-color)',
+            borderRadius: 'var(--radius-sm)',
+            padding: '12px'
+          }}>
+            <pre style={{
+              fontFamily: 'Consolas, monospace',
+              fontSize: '0.75rem',
+              whiteSpace: 'pre-wrap',
+              margin: 0,
+              color: 'var(--text-primary)',
+              lineHeight: '1.4'
+            }}>
+              {streamingText}
+              {isStreaming && <span className="pulse-glow" style={{ borderRight: '2px solid var(--accent)', marginLeft: '1px' }}></span>}
+            </pre>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
