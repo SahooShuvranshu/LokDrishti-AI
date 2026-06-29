@@ -20,7 +20,7 @@ export default function AboutPage() {
           About LokDrishti AI
         </h2>
         <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', margin: 0 }}>
-          Code for Communities Hackathon — Track 1: People's Priorities (AI for Constituency Development Planning)
+          Code for Communities Hackathon — People's Priorities (AI for Constituency Development Planning)
         </p>
       </section>
 
@@ -31,10 +31,10 @@ export default function AboutPage() {
         </div>
         <div>
           <h3 style={{ fontSize: '1.2rem', marginBottom: '8px', fontWeight: 'bold' }}>
-            Track 1 — People's Priorities (AI for Constituency Development Planning)
+            People's Priorities (AI for Constituency Development Planning)
           </h3>
           <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', margin: 0 }}>
-            LokDrishti AI is a custom-built solution for the <strong>Build with AI: Code for Communities</strong> Hackathon (supported by Google Cloud). Our platform directly aligns with <strong>Track 1</strong>, providing a bridge between the voice of the electorate and local governance.
+            LokDrishti AI is a custom-built solution for the <strong>Build with AI: Code for Communities</strong> Hackathon (supported by Google Cloud). Our platform directly aligns with the People's Priorities track, providing a bridge between the voice of the electorate and local governance.
           </p>
         </div>
       </section>
