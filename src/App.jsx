@@ -10,6 +10,7 @@ import Optimizer from './components/Optimizer';
 import EventSimulator from './components/EventSimulator';
 import LandingPage from './components/LandingPage';
 import AboutPage from './components/AboutPage';
+import Footer from './components/Footer';
 import { Shield, Sparkles, Sliders } from 'lucide-react';
 
 function MainAppContent() {
@@ -143,6 +144,9 @@ function MainAppContent() {
 
       {/* Floating Demo Event Simulator */}
       <EventSimulator />
+
+      {/* Website Footer */}
+      <Footer />
     </div>
   );
 }
