@@ -515,6 +515,21 @@ export const AppProvider = ({ children }) => {
     return localStorage.getItem('gemini_api_key') || '';
   });
 
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('lokdrishti_logged_in') === 'true';
+  });
+
+  const handleLogin = (username, password) => {
+    setIsLoggedIn(true);
+    localStorage.setItem('lokdrishti_logged_in', 'true');
+    return true;
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem('lokdrishti_logged_in');
+  };
+
   // Persist Data
   useEffect(() => {
     localStorage.setItem('lokdrishti_grievances', JSON.stringify(grievances));
@@ -706,6 +721,9 @@ export const AppProvider = ({ children }) => {
         setActiveTab,
         geminiApiKey,
         setGeminiApiKey,
+        isLoggedIn,
+        handleLogin,
+        handleLogout,
         budgetCap,
         currentBudgetUsed,
         addGrievance,

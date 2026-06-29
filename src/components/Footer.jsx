@@ -55,7 +55,14 @@ export default function Footer() {
                 style={{ background: 'none', border: 'none', padding: 0, textAlign: 'left', color: 'var(--text-tertiary)', cursor: 'pointer' }}
                 className="text-hover-primary"
               >
-                Home / Landing
+                Home
+              </button>
+              <button 
+                onClick={() => setActiveTab('about')} 
+                style={{ background: 'none', border: 'none', padding: 0, textAlign: 'left', color: 'var(--text-tertiary)', cursor: 'pointer' }}
+                className="text-hover-primary"
+              >
+                About
               </button>
               <button 
                 onClick={() => setActiveTab('citizen')} 
@@ -69,14 +76,7 @@ export default function Footer() {
                 style={{ background: 'none', border: 'none', padding: 0, textAlign: 'left', color: 'var(--text-tertiary)', cursor: 'pointer' }}
                 className="text-hover-primary"
               >
-                Command Dashboard
-              </button>
-              <button 
-                onClick={() => setActiveTab('about')} 
-                style={{ background: 'none', border: 'none', padding: 0, textAlign: 'left', color: 'var(--text-tertiary)', cursor: 'pointer' }}
-                className="text-hover-primary"
-              >
-                About Project
+                Command Center
               </button>
             </div>
           </div>

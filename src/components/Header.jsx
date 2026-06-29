@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Sun, Moon, Settings, Shield, User, Bell, Key, Info, Home, BookOpen, Menu } from 'lucide-react';
+import { Sun, Moon, Settings, Shield, User, Bell, Key, Info, Home, BookOpen, Menu, LogOut } from 'lucide-react';
 
 export default function Header() {
   const {
@@ -10,7 +10,9 @@ export default function Header() {
     setActiveTab,
     geminiApiKey,
     setGeminiApiKey,
-    grievances
+    grievances,
+    isLoggedIn,
+    handleLogout
   } = useApp();
 
   const [showSettings, setShowSettings] = useState(false);
@@ -98,6 +100,24 @@ export default function Header() {
           </button>
           
           <button
+            onClick={() => handleTabClick('about')}
+            className="btn"
+            style={{
+              padding: '6px 12px',
+              fontSize: '0.8rem',
+              borderRadius: 'var(--radius-sm)',
+              border: 'none',
+              boxShadow: 'none',
+              background: activeTab === 'about' ? 'var(--bg-secondary)' : 'transparent',
+              color: activeTab === 'about' ? 'var(--text-primary)' : 'var(--text-tertiary)',
+              fontWeight: activeTab === 'about' ? '600' : '400'
+            }}
+          >
+            <BookOpen size={14} style={{ marginRight: '4px', verticalAlign: 'middle', display: 'inline' }} />
+            About
+          </button>
+
+          <button
             onClick={() => handleTabClick('citizen')}
             className="btn"
             style={{
@@ -131,24 +151,6 @@ export default function Header() {
           >
             <Shield size={14} style={{ marginRight: '4px', verticalAlign: 'middle', display: 'inline' }} />
             Command Center
-          </button>
-
-          <button
-            onClick={() => handleTabClick('about')}
-            className="btn"
-            style={{
-              padding: '6px 12px',
-              fontSize: '0.8rem',
-              borderRadius: 'var(--radius-sm)',
-              border: 'none',
-              boxShadow: 'none',
-              background: activeTab === 'about' ? 'var(--bg-secondary)' : 'transparent',
-              color: activeTab === 'about' ? 'var(--text-primary)' : 'var(--text-tertiary)',
-              fontWeight: activeTab === 'about' ? '600' : '400'
-            }}
-          >
-            <BookOpen size={14} style={{ marginRight: '4px', verticalAlign: 'middle', display: 'inline' }} />
-            About Project
           </button>
         </div>
 
@@ -200,6 +202,18 @@ export default function Header() {
             <Settings size={16} />
           </button>
 
+          {/* Sign Out Button (only visible if logged in) */}
+          {isLoggedIn && (
+            <button
+              className="btn btn-icon"
+              onClick={handleLogout}
+              title="Sign Out of Command Center"
+              style={{ border: '1px solid var(--danger-border)', background: 'var(--danger-bg)', color: 'var(--danger)' }}
+            >
+              <LogOut size={16} />
+            </button>
+          )}
+
           {/* Mobile Menu Toggle Button */}
           <button
             className="btn btn-icon header-nav-mobile-btn"
@@ -228,7 +242,23 @@ export default function Header() {
             }}
           >
             <Home size={14} style={{ marginRight: '8px' }} />
-            Home (Landing Page)
+            Home
+          </button>
+
+          <button
+            onClick={() => handleTabClick('about')}
+            className="btn"
+            style={{
+              width: '100%',
+              justifyContent: 'flex-start',
+              background: activeTab === 'about' ? 'var(--bg-secondary)' : 'transparent',
+              color: activeTab === 'about' ? 'var(--text-primary)' : 'var(--text-tertiary)',
+              border: 'none',
+              boxShadow: 'none'
+            }}
+          >
+            <BookOpen size={14} style={{ marginRight: '8px' }} />
+            About
           </button>
           
           <button
@@ -260,23 +290,7 @@ export default function Header() {
             }}
           >
             <Shield size={14} style={{ marginRight: '8px' }} />
-            MP Command Center
-          </button>
-
-          <button
-            onClick={() => handleTabClick('about')}
-            className="btn"
-            style={{
-              width: '100%',
-              justifyContent: 'flex-start',
-              background: activeTab === 'about' ? 'var(--bg-secondary)' : 'transparent',
-              color: activeTab === 'about' ? 'var(--text-primary)' : 'var(--text-tertiary)',
-              border: 'none',
-              boxShadow: 'none'
-            }}
-          >
-            <BookOpen size={14} style={{ marginRight: '8px' }} />
-            About Project
+            Command Center
           </button>
         </div>
       )}
