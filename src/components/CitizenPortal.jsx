@@ -265,7 +265,7 @@ export default function CitizenPortal() {
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+          <div className="form-grid-2col">
             {/* Reporter Name */}
             <div className="form-group">
               <label className="form-label" htmlFor="reporter-name">Your Full Name</label>
@@ -299,7 +299,7 @@ export default function CitizenPortal() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+          <div className="form-grid-2col">
             {/* Sector Category */}
             <div className="form-group">
               <label className="form-label" htmlFor="sector-select">Complaint Sector</label>

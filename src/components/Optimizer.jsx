@@ -230,7 +230,7 @@ export default function Optimizer() {
   const totalGanttTimelineDays = Math.max(100, currentOffsetDays + 30);
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '20px', padding: '20px', minHeight: '600px' }}>
+    <div className="optimizer-grid">
       
       {/* LEFT PANE: Priority List & Budget Progress */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

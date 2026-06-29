@@ -87,30 +87,15 @@ function MainAppContent() {
 
           {/* Sub Workspace Routing */}
           {mpSubTab === 'grievances' ? (
-            <main style={{
-              display: 'flex',
-              gap: '20px',
-              padding: '16px 20px 20px 20px',
-              flexGrow: 1,
-              overflow: 'hidden'
-            }}>
+            <main className="dashboard-main-layout">
               {/* Map & Table Left column */}
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '16px',
-                flexGrow: 1,
-                minWidth: 0,
-                width: selectedGrievance ? 'calc(100% - 400px)' : '100%',
-                transition: 'width 0.3s ease'
-              }}>
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1.1fr 1.4fr',
-                  gap: '16px',
-                  height: '100%',
-                  alignItems: 'stretch'
-                }}>
+              <div 
+                className="dashboard-left-col"
+                style={{ 
+                  width: selectedGrievance ? 'calc(100% - 400px)' : '100%'
+                }}
+              >
+                <div className="dashboard-main-grid">
                   {/* Map Widget */}
                   <div style={{ minHeight: '450px' }}>
                     <ConstituencyMap onSelectGrievance={setSelectedGrievance} />
@@ -129,11 +114,7 @@ function MainAppContent() {
 
               {/* Inspector slide-out right side */}
               {selectedGrievance && (
-                <div className="animate-slide-in" style={{
-                  width: '380px',
-                  flexShrink: 0,
-                  height: 'auto'
-                }}>
+                <div className="detail-panel-wrapper animate-slide-in">
                   <DetailPanel
                     grievance={selectedGrievance}
                     onClose={() => setSelectedGrievance(null)}
