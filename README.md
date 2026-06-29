@@ -36,12 +36,12 @@ LokDrishti AI was specifically built for the **Build with AI: Code for Communiti
 ## 💡 How LokDrishti AI Solves This
 LokDrishti AI bridges the gap between constituency feedback and municipal resource scheduling through four key interfaces:
 
-### 1. Home / Landing Page
+### 1. Home Page
 *   Provides an immediate summary of the platform's pillars.
-*   Enables clear call-to-actions to route users to either the **Citizen Portal** or the secure **MP Command Center**.
+*   Enables clear call-to-actions to route users to either the **Citizen Portal** or the secure **Command Center**.
 
 ### 2. About Page
-*   Integrates the hackathon track details, problem statements, and technical details verbatim.
+*   Integrates the hackathon details, problem statements, and technical details verbatim.
 *   Lays out the technical architecture and tech stack choices clearly.
 
 ### 3. Citizen Portal (Inclusive Input)
@@ -51,9 +51,60 @@ LokDrishti AI bridges the gap between constituency feedback and municipal resour
 ### 4. Command Center Dashboard (Spatial & Analytic Planning)
 *   **Secure Access Gate:** Access to administrative pages is locked behind a glassmorphic simulated login window (`admin` / `password` or a single-click Demo login) to protect official constituency data.
 *   **Interactive 6-Ward SVG Map:** Displays color-coded wards indicating grievance density and satisfaction indices. Overlays interactive coordinates representing localized citizen complaints.
-*   **Visual Charts Grid (Apache ECharts):** Displays weekly incident trends, department distribution bars, and budget allocation donuts that recalculate live.
-*   **Official Directives Generator:** slide-out panel allows the MP to review translations, draft official directives (simulated streaming text), and export complaints into formal projects.
+*   **Visual Charts Grid (Apache ECharts):** Displays weekly trends, department distribution bars, and budget allocation donuts that recalculate live.
+*   **Official Directives Generator:** Slide-out panel allows the MP to review translations, draft official directives (simulated streaming text), and export complaints into formal projects.
 *   **Resource Optimizer:** Utilizes drag-and-drop sequencing (via `@dnd-kit`) to sort projects. Automatically alerts the administrator when projects exceed the ₹1.0Cr MP Local Area Development fund limit and charts active works sequentially on a Gantt timeline.
+
+---
+
+## 📂 Project Repository Structure
+
+Below is the directory and file tree of the LokDrishti AI codebase, detailing the responsibility of each file:
+
+```text
+LokDrishti-AI/
+├── index.html                   # HTML template containing Google Font preconnects and SEO Meta / OG Tags
+├── vite.config.js               # Vite configurations for React and bundler compiling
+├── package.json                 # Project dependencies, build tasks, and metadata configurations
+├── src/
+│   ├── main.jsx                 # Client entry point mounting App to the DOM
+│   ├── App.jsx                  # Main component handling state-driven page routing and viewport layouts
+│   ├── index.css                # Global CSS variables, scrollbars, glass-effects, and mobile stacking rules
+│   │
+│   ├── context/
+│   │   └── AppContext.jsx       # State Provider managing grievances, budgets, login/logout, theme, and simulator hooks
+│   │
+│   └── components/
+│       ├── Header.jsx           # Top navbar with ticker alert marquee, theme toggle, and settings modal
+│       ├── Footer.jsx           # Bottom footer containing navigation tabs, hackathon links, and copyrights
+│       ├── LandingPage.jsx      # Portal gateway hero section with descriptive pillars and CTA buttons
+│       ├── AboutPage.jsx        # Project case-study outlining the verbatim problem statement and tech details
+│       ├── LoginPortal.jsx      # Glassmorphic admin sign-in portal with prefilled demo credentials
+│       ├── CitizenPortal.jsx    # Grievance filing panel with speech recognition and AI Translation refiners
+│       ├── ConstituencyMap.jsx  # Interactive SVG representation of 6 wards with hover overlays and pinpoint coords
+│       ├── KpiGrid.jsx          # KPI analytics panel rendering ECharts sparklines and budget donuts
+│       ├── GrievanceTable.jsx   # List panel with search filters, sorting, pagination, and mobile column hiding
+│       ├── DetailPanel.jsx      # Inspector card with streaming directive generators and work order creators
+│       ├── Optimizer.jsx        # Project scheduling queue with drag-and-drop handles and Gantt charts
+│       └── EventSimulator.jsx   # Sticky trigger drawer to simulate monsoon storms or utility pipe failures
+```
+
+---
+
+## 🛠️ Detailed Technology Stack & Rationale
+
+We selected a lean, modern stack to ensure maximum performance, offline capability, and beautiful visuals:
+
+| Technology / Library | Usage in LokDrishti AI | Rationale for Choice |
+| :--- | :--- | :--- |
+| **React 19** | Virtual DOM rendering, state hooks, conditional routing. | Offers top-tier performance, declarative components, and updates DOM nodes with minimal paint cost. |
+| **Vite** | Bundler compiling, Hot Module Replacement (HMR). | Scaffolds build assets in milliseconds, providing an extremely fast developer inner loop. |
+| **Vanilla CSS3** | Custom typography, dark/light themes, HSL variables, responsive media queries, and animations. | Ensures total layout flexibility without importing bulky utility frameworks (like Tailwind). Key rules stack tables, overlay sidebars, and stack Gantt charts on mobile viewports. |
+| **Apache ECharts** | Mini KPI trend line graphs, departmental distribution charts, and budget donut charts. | Provides vector canvas-based, high-performance visualizations that automatically adjust canvas scaling on window resizing. |
+| **HTML5 Web Speech API** | Client-side speech-to-text transcription for Hindi and English voices in the Citizen Portal. | Leverages native browser engine capability, eliminating the need for expensive third-party speech API call limits. |
+| **dnd-kit** | Prioritized project ordering handles in the Resource Optimizer. | Modular pointer/touch listener sensors that render physics-based draggable elements with zero layout shift. |
+| **Lucide React** | Consistent UI icons (Shields, Keys, Maps, Dials, Alert flags). | Fully customizable SVG vectors that scale sharply across mobile and retina displays. |
+| **Render CDNs** | Live cloud static web hosting. | Automatically trigger builds on git pushes, deploying minified files on a global server network. |
 
 ---
 
@@ -65,16 +116,6 @@ LokDrishti AI bridges the gap between constituency feedback and municipal resour
     *   Secondary table columns hide automatically on mobile, keeping tables clean.
     *   Gantt project names stack vertically on top of progress bars on screens below `600px` to maximize space.
     *   Detail slideouts expand to full-screen overlays to prevent text squishing.
-
----
-
-## 🛠️ Technical Stack
-*   **Core Framework:** React 19 (JavaScript) + Vite
-*   **Sensors & Drag-and-Drop:** `@dnd-kit/core` & `@dnd-kit/sortable`
-*   **Visualization:** Apache ECharts (`echarts`, `echarts-for-react`)
-*   **Icons Suite:** Lucide React
-*   **Voice Engine:** HTML5 Web Speech API
-*   **Deployment platform:** Render (CI/CD Static Site Hosting)
 
 ---
 
