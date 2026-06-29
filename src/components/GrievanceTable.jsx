@@ -227,11 +227,11 @@ export default function GrievanceTable({ onSelectGrievance, selectedGrievanceId 
               <th onClick={() => handleSort('id')} style={{ padding: '12px 16px', cursor: 'pointer', color: 'var(--text-secondary)', fontWeight: '600' }}>
                 ID <ArrowUpDown size={12} style={{ display: 'inline', marginLeft: '4px' }} />
               </th>
-              <th onClick={() => handleSort('ward')} style={{ padding: '12px 16px', cursor: 'pointer', color: 'var(--text-secondary)', fontWeight: '600' }}>
+              <th onClick={() => handleSort('ward')} className="hide-mobile" style={{ padding: '12px 16px', cursor: 'pointer', color: 'var(--text-secondary)', fontWeight: '600' }}>
                 Ward Area <ArrowUpDown size={12} style={{ display: 'inline', marginLeft: '4px' }} />
               </th>
-              <th style={{ padding: '12px 16px', color: 'var(--text-secondary)', fontWeight: '600' }}>Reporter</th>
-              <th style={{ padding: '12px 16px', color: 'var(--text-secondary)', fontWeight: '600' }}>Sector</th>
+              <th className="hide-mobile" style={{ padding: '12px 16px', color: 'var(--text-secondary)', fontWeight: '600' }}>Reporter</th>
+              <th className="hide-mobile" style={{ padding: '12px 16px', color: 'var(--text-secondary)', fontWeight: '600' }}>Sector</th>
               <th style={{ padding: '12px 16px', color: 'var(--text-secondary)', fontWeight: '600' }}>Title</th>
               <th onClick={() => handleSort('urgency')} style={{ padding: '12px 16px', cursor: 'pointer', color: 'var(--text-secondary)', fontWeight: '600' }}>
                 Severity <ArrowUpDown size={12} style={{ display: 'inline', marginLeft: '4px' }} />
@@ -259,9 +259,9 @@ export default function GrievanceTable({ onSelectGrievance, selectedGrievanceId 
                     className="table-row-hover"
                   >
                     <td style={{ padding: '14px 16px', fontWeight: 'bold' }}>{item.id}</td>
-                    <td style={{ padding: '14px 16px', color: 'var(--text-secondary)' }}>{item.ward.split(':')[0]}</td>
-                    <td style={{ padding: '14px 16px' }}>{item.reporter}</td>
-                    <td style={{ padding: '14px 16px', color: 'var(--text-secondary)' }}>{item.sector}</td>
+                    <td className="hide-mobile" style={{ padding: '14px 16px', color: 'var(--text-secondary)' }}>{item.ward.split(':')[0]}</td>
+                    <td className="hide-mobile" style={{ padding: '14px 16px' }}>{item.reporter}</td>
+                    <td className="hide-mobile" style={{ padding: '14px 16px', color: 'var(--text-secondary)' }}>{item.sector}</td>
                     <td style={{ padding: '14px 16px', fontWeight: '500', maxWidth: '220px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {item.title}
                     </td>

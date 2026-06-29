@@ -362,16 +362,17 @@ export default function Optimizer() {
           minHeight: '400px'
         }}>
           {/* Timeline axis labels */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '150px 1fr',
-            borderBottom: '1px solid var(--border-color)',
-            paddingBottom: '8px',
-            marginBottom: '16px',
-            fontSize: '0.75rem',
-            color: 'var(--text-tertiary)',
-            fontWeight: '600'
-          }}>
+          <div 
+            className="gantt-row"
+            style={{
+              borderBottom: '1px solid var(--border-color)',
+              paddingBottom: '8px',
+              marginBottom: '16px',
+              fontSize: '0.75rem',
+              color: 'var(--text-tertiary)',
+              fontWeight: '600'
+            }}
+          >
             <span>Project Name</span>
             <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative', width: '100%' }}>
               <span>Day 0</span>
@@ -391,10 +392,8 @@ export default function Optimizer() {
               return (
                 <div
                   key={item.id}
+                  className="gantt-row"
                   style={{
-                    display: 'grid',
-                    gridTemplateColumns: '150px 1fr',
-                    alignItems: 'center',
                     fontSize: '0.8rem'
                   }}
                 >

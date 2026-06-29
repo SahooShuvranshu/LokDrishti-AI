@@ -89,12 +89,7 @@ function MainAppContent() {
           {mpSubTab === 'grievances' ? (
             <main className="dashboard-main-layout">
               {/* Map & Table Left column */}
-              <div 
-                className="dashboard-left-col"
-                style={{ 
-                  width: selectedGrievance ? 'calc(100% - 400px)' : '100%'
-                }}
-              >
+              <div className={`dashboard-left-col ${selectedGrievance ? 'shrink' : ''}`}>
                 <div className="dashboard-main-grid">
                   {/* Map Widget */}
                   <div style={{ minHeight: '450px' }}>
