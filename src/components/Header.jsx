@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Sun, Moon, Settings, Shield, User, Bell, Key, Info } from 'lucide-react';
+import { Sun, Moon, Settings, Shield, User, Bell, Key, Info, Home, BookOpen, Menu } from 'lucide-react';
 
 export default function Header() {
   const {
@@ -15,6 +15,7 @@ export default function Header() {
 
   const [showSettings, setShowSettings] = useState(false);
   const [tempKey, setTempKey] = useState(geminiApiKey);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // Filter recent critical or pending grievances for the ticker
   const recentAlerts = grievances
@@ -26,6 +27,11 @@ export default function Header() {
     setGeminiApiKey(tempKey);
     localStorage.setItem('gemini_api_key', tempKey);
     setShowSettings(false);
+  };
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+    setMenuOpen(false); // Close mobile menu on click
   };
 
   return (
@@ -42,13 +48,15 @@ export default function Header() {
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'between',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
         gap: '16px'
       }}>
         {/* Brand/Logo */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div 
+          onClick={() => handleTabClick('landing')} 
+          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
+        >
           <div className="pulse-glow" style={{
             width: '12px',
             height: '12px',
@@ -69,20 +77,32 @@ export default function Header() {
           </h1>
         </div>
 
-        {/* Tab Switcher */}
-        <div className="glass-panel" style={{
-          display: 'flex',
-          padding: '4px',
-          borderRadius: 'var(--radius-md)',
-          border: '1px solid var(--border-color)',
-          background: 'var(--bg-tertiary)'
-        }}>
+        {/* Desktop Tab Switcher */}
+        <div className="header-nav-desktop">
           <button
-            onClick={() => setActiveTab('citizen')}
+            onClick={() => handleTabClick('landing')}
             className="btn"
             style={{
-              padding: '6px 16px',
-              fontSize: '0.85rem',
+              padding: '6px 12px',
+              fontSize: '0.8rem',
+              borderRadius: 'var(--radius-sm)',
+              border: 'none',
+              boxShadow: 'none',
+              background: activeTab === 'landing' ? 'var(--bg-secondary)' : 'transparent',
+              color: activeTab === 'landing' ? 'var(--text-primary)' : 'var(--text-tertiary)',
+              fontWeight: activeTab === 'landing' ? '600' : '400'
+            }}
+          >
+            <Home size={14} style={{ marginRight: '4px', verticalAlign: 'middle', display: 'inline' }} />
+            Home
+          </button>
+          
+          <button
+            onClick={() => handleTabClick('citizen')}
+            className="btn"
+            style={{
+              padding: '6px 12px',
+              fontSize: '0.8rem',
               borderRadius: 'var(--radius-sm)',
               border: 'none',
               boxShadow: 'none',
@@ -91,15 +111,16 @@ export default function Header() {
               fontWeight: activeTab === 'citizen' ? '600' : '400'
             }}
           >
-            <User size={14} style={{ marginRight: '6px', verticalAlign: 'middle', display: 'inline' }} />
+            <User size={14} style={{ marginRight: '4px', verticalAlign: 'middle', display: 'inline' }} />
             Citizen Portal
           </button>
+          
           <button
-            onClick={() => setActiveTab('mp')}
+            onClick={() => handleTabClick('mp')}
             className="btn"
             style={{
-              padding: '6px 16px',
-              fontSize: '0.85rem',
+              padding: '6px 12px',
+              fontSize: '0.8rem',
               borderRadius: 'var(--radius-sm)',
               border: 'none',
               boxShadow: 'none',
@@ -108,8 +129,26 @@ export default function Header() {
               fontWeight: activeTab === 'mp' ? '600' : '400'
             }}
           >
-            <Shield size={14} style={{ marginRight: '6px', verticalAlign: 'middle', display: 'inline' }} />
-            MP Command Center
+            <Shield size={14} style={{ marginRight: '4px', verticalAlign: 'middle', display: 'inline' }} />
+            Command Center
+          </button>
+
+          <button
+            onClick={() => handleTabClick('about')}
+            className="btn"
+            style={{
+              padding: '6px 12px',
+              fontSize: '0.8rem',
+              borderRadius: 'var(--radius-sm)',
+              border: 'none',
+              boxShadow: 'none',
+              background: activeTab === 'about' ? 'var(--bg-secondary)' : 'transparent',
+              color: activeTab === 'about' ? 'var(--text-primary)' : 'var(--text-tertiary)',
+              fontWeight: activeTab === 'about' ? '600' : '400'
+            }}
+          >
+            <BookOpen size={14} style={{ marginRight: '4px', verticalAlign: 'middle', display: 'inline' }} />
+            About Project
           </button>
         </div>
 
@@ -160,8 +199,87 @@ export default function Header() {
           >
             <Settings size={16} />
           </button>
+
+          {/* Mobile Menu Toggle Button */}
+          <button
+            className="btn btn-icon header-nav-mobile-btn"
+            onClick={() => setMenuOpen(!menuOpen)}
+            title="Toggle Menu"
+            style={{ border: '1px solid var(--border-color)', background: 'transparent' }}
+          >
+            <Menu size={16} />
+          </button>
         </div>
       </div>
+
+      {/* Mobile Dropdown Menu (rendered below brand row on mobile) */}
+      {menuOpen && (
+        <div className="header-nav-mobile-dropdown animate-slide-in">
+          <button
+            onClick={() => handleTabClick('landing')}
+            className="btn"
+            style={{
+              width: '100%',
+              justifyContent: 'flex-start',
+              background: activeTab === 'landing' ? 'var(--bg-secondary)' : 'transparent',
+              color: activeTab === 'landing' ? 'var(--text-primary)' : 'var(--text-tertiary)',
+              border: 'none',
+              boxShadow: 'none'
+            }}
+          >
+            <Home size={14} style={{ marginRight: '8px' }} />
+            Home (Landing Page)
+          </button>
+          
+          <button
+            onClick={() => handleTabClick('citizen')}
+            className="btn"
+            style={{
+              width: '100%',
+              justifyContent: 'flex-start',
+              background: activeTab === 'citizen' ? 'var(--bg-secondary)' : 'transparent',
+              color: activeTab === 'citizen' ? 'var(--text-primary)' : 'var(--text-tertiary)',
+              border: 'none',
+              boxShadow: 'none'
+            }}
+          >
+            <User size={14} style={{ marginRight: '8px' }} />
+            Citizen Portal
+          </button>
+          
+          <button
+            onClick={() => handleTabClick('mp')}
+            className="btn"
+            style={{
+              width: '100%',
+              justifyContent: 'flex-start',
+              background: activeTab === 'mp' ? 'var(--bg-secondary)' : 'transparent',
+              color: activeTab === 'mp' ? 'var(--text-primary)' : 'var(--text-tertiary)',
+              border: 'none',
+              boxShadow: 'none'
+            }}
+          >
+            <Shield size={14} style={{ marginRight: '8px' }} />
+            MP Command Center
+          </button>
+
+          <button
+            onClick={() => handleTabClick('about')}
+            className="btn"
+            style={{
+              width: '100%',
+              justifyContent: 'flex-start',
+              background: activeTab === 'about' ? 'var(--bg-secondary)' : 'transparent',
+              color: activeTab === 'about' ? 'var(--text-primary)' : 'var(--text-tertiary)',
+              border: 'none',
+              boxShadow: 'none'
+            }}
+          >
+            <BookOpen size={14} style={{ marginRight: '8px' }} />
+            About Project
+          </button>
+        </div>
+      )}
 
       {/* Lower row: Live Incident Ticker */}
       <div style={{
@@ -191,7 +309,6 @@ export default function Header() {
         <div style={{ flexGrow: 1, overflow: 'hidden', position: 'relative' }}>
           <div className="marquee-content" style={{ display: 'flex', gap: '40px' }}>
             {recentAlerts.length > 0 ? (
-              // Double the array for seamless scrolling
               [...recentAlerts, ...recentAlerts].map((alert, idx) => (
                 <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <span className={`badge ${alert.urgency === 'Critical' ? 'badge-danger' : 'badge-warning'}`} style={{ padding: '1px 6px', fontSize: '0.65rem' }}>

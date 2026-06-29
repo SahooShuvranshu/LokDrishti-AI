@@ -8,6 +8,8 @@ import GrievanceTable from './components/GrievanceTable';
 import DetailPanel from './components/DetailPanel';
 import Optimizer from './components/Optimizer';
 import EventSimulator from './components/EventSimulator';
+import LandingPage from './components/LandingPage';
+import AboutPage from './components/AboutPage';
 import { Shield, Sparkles, Sliders } from 'lucide-react';
 
 function MainAppContent() {
@@ -19,6 +21,20 @@ function MainAppContent() {
     <div className="layout-container">
       {/* Brand Header */}
       <Header />
+
+      {/* Landing View */}
+      {activeTab === 'landing' && (
+        <main style={{ flexGrow: 1 }}>
+          <LandingPage />
+        </main>
+      )}
+
+      {/* About View */}
+      {activeTab === 'about' && (
+        <main style={{ flexGrow: 1 }}>
+          <AboutPage />
+        </main>
+      )}
 
       {/* Citizen View */}
       {activeTab === 'citizen' && (

@@ -509,7 +509,7 @@ export const AppProvider = ({ children }) => {
     return localStorage.getItem('theme') || 'dark';
   });
 
-  const [activeTab, setActiveTab] = useState('mp'); // 'mp' or 'citizen'
+  const [activeTab, setActiveTab] = useState('landing'); // 'landing', 'about', 'mp', or 'citizen'
   
   const [geminiApiKey, setGeminiApiKey] = useState(() => {
     return localStorage.getItem('gemini_api_key') || '';

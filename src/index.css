@@ -431,3 +431,38 @@ h2 {
   }
 }
 
+/* Header Nav Responsiveness */
+.header-nav-desktop {
+  display: flex;
+  padding: 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+}
+
+.header-nav-mobile-btn {
+  display: none;
+}
+
+.header-nav-mobile-dropdown {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .header-nav-desktop {
+    display: none !important;
+  }
+  
+  .header-nav-mobile-btn {
+    display: inline-flex !important;
+  }
+}
+
