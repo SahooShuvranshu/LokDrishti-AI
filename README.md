@@ -8,6 +8,7 @@
 [![Apache ECharts](https://img.shields.io/badge/ECharts-Apache_Visuals-AA0000?style=for-the-badge&logo=apache&logoColor=white)](https://echarts.apache.org/)
 [![Web Speech API](https://img.shields.io/badge/Web_Speech_API-HTML5_Speech-EFD81D?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
 [![dnd-kit](https://img.shields.io/badge/%40dnd--kit-Drag_--_Drop-FF5722?style=for-the-badge)](https://dndkit.com/)
+[![Gemini AI Integration](https://img.shields.io/badge/Gemini_AI-Google_DeepMind-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
 [![Render Deploy](https://img.shields.io/badge/Render-Live_Static_Site-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://lokdrishti-ai.onrender.com)
 [![License MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
