@@ -45,6 +45,12 @@ export default function ConstituencyMap({ onSelectGrievance }) {
 
   // Geocode location center of Bhubaneswar, Odisha
   const getGrievanceLatLng = (item) => {
+    if (item.coordinates && typeof item.coordinates.lat === 'number') {
+      return {
+        lat: item.coordinates.lat,
+        lng: item.coordinates.lng
+      };
+    }
     if (item.coordinates && typeof item.coordinates.x === 'number') {
       const centerLat = 20.2961;
       const centerLng = 85.8245;

@@ -3,7 +3,7 @@ import { useApp } from '../context/AppContext';
 import { Mic, MicOff, Sparkles, Send, CheckCircle2, RotateCcw, AlertTriangle, Languages } from 'lucide-react';
 
 export default function CitizenPortal() {
-  const { addGrievance, geminiApiKey } = useApp();
+  const { addGrievance, geminiApiKey, googleMapsApiKey } = useApp();
 
   // Form states
   const [reporterName, setReporterName] = useState('');
@@ -28,6 +28,13 @@ export default function CitizenPortal() {
   const [imageBase64, setImageBase64] = useState('');
   const [imageMimeType, setImageMimeType] = useState('');
   const [imagePreview, setImagePreview] = useState(null);
+
+  // Map location selector states
+  const [pinLocation, setPinLocation] = useState({ lat: 20.2961, lng: 85.8245 });
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const mapRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+  const markerRef = useRef(null);
 
   // Submission success state
   const [submittedTicket, setSubmittedTicket] = useState(null);
@@ -91,6 +98,80 @@ export default function CitizenPortal() {
       }
     }
   };
+
+  // Inject Google Maps script for location selection
+  useEffect(() => {
+    if (window.google && window.google.maps) {
+      setScriptLoaded(true);
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey || ''}`;
+    script.async = true;
+    script.defer = true;
+
+    const handleScriptLoad = () => setScriptLoaded(true);
+    script.addEventListener('load', handleScriptLoad);
+    document.head.appendChild(script);
+
+    return () => {
+      script.removeEventListener('load', handleScriptLoad);
+    };
+  }, [googleMapsApiKey]);
+
+  // Initialize Map inside Citizen Form
+  useEffect(() => {
+    if (!scriptLoaded || !mapRef.current) return;
+
+    const defaultLoc = { lat: 20.2961, lng: 85.8245 };
+
+    const map = new window.google.maps.Map(mapRef.current, {
+      center: defaultLoc,
+      zoom: 13,
+      disableDefaultUI: true,
+      zoomControl: true,
+      styles: [
+        { elementType: 'geometry', stylers: [{ color: '#18181b' }] },
+        { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#27272a' }] },
+        { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#09090b' }] }
+      ]
+    });
+
+    const marker = new window.google.maps.Marker({
+      position: defaultLoc,
+      map: map,
+      draggable: true,
+      title: "Problem Location"
+    });
+
+    mapInstanceRef.current = map;
+    markerRef.current = marker;
+
+    // Listen to click events on map
+    map.addListener('click', (e) => {
+      const clickedLoc = {
+        lat: e.latLng.lat(),
+        lng: e.latLng.lng()
+      };
+      setPinLocation(clickedLoc);
+      marker.setPosition(clickedLoc);
+    });
+
+    // Listen to marker drag events
+    marker.addListener('dragend', () => {
+      const pos = marker.getPosition();
+      setPinLocation({
+        lat: pos.lat(),
+        lng: pos.lng()
+      });
+    });
+
+    return () => {
+      if (markerRef.current) markerRef.current.setMap(null);
+      mapInstanceRef.current = null;
+    };
+  }, [scriptLoaded]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -277,7 +358,7 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
       sector: sector,
       urgency: urgency,
       status: 'Pending',
-      coordinates: { x: 30 + Math.random() * 40, y: 30 + Math.random() * 40 },
+      coordinates: { lat: pinLocation.lat, lng: pinLocation.lng },
       timestamp: new Date().toISOString(),
       impact: 'Est. 50 households',
       photo: imageBase64 ? `data:${imageMimeType};base64,${imageBase64}` : null
@@ -300,6 +381,7 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
     setImageBase64('');
     setImageMimeType('');
     setImagePreview(null);
+    setPinLocation({ lat: 20.2961, lng: 85.8245 });
   };
 
   if (submittedTicket) {
@@ -320,6 +402,10 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
               <span style={{ color: 'var(--text-secondary)' }}>Sector:</span>
               <span>{submittedTicket.sector}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+              <span style={{ color: 'var(--text-secondary)' }}>Coordinates:</span>
+              <span>{submittedTicket.coordinates.lat.toFixed(4)}, {submittedTicket.coordinates.lng.toFixed(4)}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
               <span style={{ color: 'var(--text-secondary)' }}>Urgency:</span>
@@ -541,6 +627,26 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
                 </button>
               </div>
             )}
+          </div>
+
+          {/* Map Location Selector */}
+          <div className="form-group" style={{ marginTop: '16px', marginBottom: '16px' }}>
+            <label className="form-label">Pin Problem Location on Map</label>
+            <p className="text-xs text-zinc-400 mb-2">Click or tap on the map to place a pin where the issue is occurring.</p>
+            <div
+              ref={mapRef}
+              style={{
+                width: '100%',
+                height: '260px',
+                borderRadius: '8px',
+                border: '1px solid var(--border-color)',
+                backgroundColor: 'var(--bg-tertiary)'
+              }}
+            />
+            <div className="text-xs text-zinc-500 mt-2" style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>Latitude: {pinLocation.lat.toFixed(6)}</span>
+              <span>Longitude: {pinLocation.lng.toFixed(6)}</span>
+            </div>
           </div>
 
           {/* AI Assist Refinement Panel */}
