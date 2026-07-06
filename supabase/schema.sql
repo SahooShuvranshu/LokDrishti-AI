@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS grievances (
 -- 2. Create Projects Table
 CREATE TABLE IF NOT EXISTS projects (
   id TEXT PRIMARY KEY,
-  title TEXT NOT NULL,
+  name TEXT NOT NULL,
   description TEXT,
   ward TEXT NOT NULL,
   sector TEXT NOT NULL,
