@@ -7,7 +7,7 @@ LokDrishti AI is a fully responsive, state-of-the-art Web GIS and Live AI platfo
 ## 📌 Project Overview
 * **Live Site URL:** [https://lokdrishti-ai.onrender.com](https://lokdrishti-ai.onrender.com)
 * **GitHub Repository:** [SahooShuvranshu/LokDrishti-AI](https://github.com/SahooShuvranshu/LokDrishti-AI)
-* **Target Focus:** Multimodal Citizen Input (Text/Voice/Photo), Demographic & Infrastructure Gap Analysis, Trade-Off Analytics (School Upgrades vs. Vocational Centers), Live AI Copilot, and Dynamic Project Scheduling.
+* **Target Focus:** Geocoded Citizen Input (Text/Voice with Live Map Selection), Demographic & Infrastructure Gap Analysis, Trade-Off Analytics (School Upgrades vs. Vocational Centers), Live AI Copilot, and Dynamic Project Scheduling.
 
 ---
 
@@ -17,10 +17,10 @@ LokDrishti AI is a fully responsive, state-of-the-art Web GIS and Live AI platfo
 | :--- | :--- | :--- |
 | **Frontend Framework** | React (Vite) | Fast-loading, component-driven client interface. |
 | **Styling & Theme** | Modern Glassmorphism CSS | Slick, premium dark-mode dashboard with hover micro-animations. |
-| **AI Model Engine** | Google Gemini 1.5 Flash API | Performs live dialect translation, multimodal image analysis (Vertex AI Vision), directive letter generation, and strategic demographic trade-off roadmaps. |
-| **Database** | Supabase PostgreSQL | Live database hosting grievances (including base64 photo binaries), project queues, and priority indices. |
+| **AI Model Engine** | Google Gemini 1.5 Flash API | Performs live dialect translation, directive letter generation, and strategic demographic trade-off roadmaps. |
+| **Database** | Supabase PostgreSQL | Live database hosting grievances (including geocoded coordinate pairs), project queues, and priority indices. |
 | **Authentication** | Supabase Auth (Google OAuth) | Secure login for Members of Parliament and constituency administration staff. |
-| **GIS Mapping** | Google Maps JavaScript API | Interactive map centered on Bhubaneswar, Odisha showing geocoded wards, custom markers, and active problem overlays. |
+| **GIS Mapping** | Google Maps JavaScript API | Interactive map centered on Bhubaneswar, Odisha showing geocoded custom markers and active problem overlays. |
 | **Interactive Icons** | Lucide React | Clean, scalable vector interface icons. |
 | **State Management** | React Context API | Unified global application context (`AppContext.jsx`) to handle auth status, loading states, and live API configurations. |
 
@@ -30,13 +30,13 @@ LokDrishti AI is a fully responsive, state-of-the-art Web GIS and Live AI platfo
 
 ```mermaid
 graph TD
-    Citizen[Citizen Voice / Text / Photo Input] -->|1. Submit Complaint| Portal[Citizen Portal]
-    Portal -->|2. Request Multimodal Refinement| Gemini[Google Gemini 1.5 Flash]
+    Citizen[Citizen Voice / Text Input] -->|1. Pin Location on Map & Submit| Portal[Citizen Portal]
+    Portal -->|2. Request Transcript Refinement| Gemini[Google Gemini 1.5 Flash]
     Gemini -->|3. Return Refined Report & Category| Portal
-    Portal -->|4. Save Row & Photo Binary| DB[(Supabase PostgreSQL)]
+    Portal -->|4. Save Row & GPS Coordinates| DB[(Supabase PostgreSQL)]
     
-    DB -->|5. Sync Data & Photo| Admin[MP Command Center]
-    Admin -->|6. Render Ward Polygons, Pins & Photo Evidence| Maps[Google Maps API]
+    DB -->|5. Sync Data & geocodes| Admin[MP Command Center]
+    Admin -->|6. Render geocoded Pins on Map| Maps[Google Maps API]
     Admin -->|7. Generate Directive Letter| Gemini
     Admin -->|8. Reorder Gantt Timeline| Optimizer[Resource Optimizer]
     Optimizer -->|9. Update Priority Index| DB
@@ -55,20 +55,17 @@ Stores citizen-submitted issues.
 * `reporter` (TEXT): Name of the citizen.
 * `description` (TEXT): Raw complaint text (or speech transcription).
 * `translated_description` (TEXT): Refined, professional English translation.
-* `ward` (TEXT): Assigned geographical ward boundaries.
 * `sector` (TEXT): Category (e.g., `Water Supply`, `Sanitation`, `Public Health`, `Infrastructure`).
 * `urgency` (TEXT): Severity level (`Low`, `Medium`, `High`, `Critical`).
 * `status` (TEXT): Redressal state (`Pending`, `Investigating`, `Resolved`).
-* `coordinates` (JSONB): `{x, y}` coordinates mapping to geolocated wards in Bhubaneswar.
+* `coordinates` (JSONB): `{lat, lng}` coordinate pair representing the geocoded position pinned on the map.
 * `timestamp` (TIMESTAMPTZ): Submission time.
-* `photo` (TEXT): Citizen-uploaded image evidence stored as a base64 Data URL.
 
 ### 2. Projects Table (`projects`)
 Tracks proposed constituency projects funded under the MP Local Area Development (MPLAD) budget.
 * `id` (TEXT, Primary Key): Unique project ID (e.g., `PROJ-WO-1234`).
 * `name` (TEXT): Name of the development project.
 * `sector` (TEXT): Work sector classification.
-* `ward` (TEXT): Location target.
 * `cost` (NUMERIC): Estimated budget cost in Lakhs.
 * `duration` (INTEGER): Completion timeline in days.
 * `status` (TEXT): Queue status (`Queued`, `Active`, `Completed`).
@@ -79,15 +76,14 @@ Tracks proposed constituency projects funded under the MP Local Area Development
 
 ## 💎 How LokDrishti Answers the Track 1 Challenge (What to tell the Judges)
 
-### 1. Multimodal Intake (Vertex Vision/Gemini Multimodal)
-* **The Flow:** Citizens can select/upload photos (e.g., a photo of potholes, polluted lakes, garbage heaps) in the Citizen Portal.
-* **The AI analysis:** The image file is encoded to base64 and sent directly to Gemini 1.5 Flash. Gemini performs image analysis to detect the problem, categorizes the sector, determines the urgency level, and drafts a complete English report summary, even if the citizen wrote no text!
-* **Visual Evidence:** The photo is saved in Supabase and displayed directly in the MP's dashboard inspector panel when auditing the ticket.
+### 1. Interactive Geolocation Map Pinning
+* **The Flow:** Citizens can type an address or landmark in Bhubaneswar using the geocoding search bar, or click "Share Live Location" to share their current GPS location. They can then fine-tune the pin placement directly on an interactive Google Map.
+* **Precise Coordinates:** Eliminates abstract ward groupings. Complaints are logged with high-resolution coordinates for exact spatial lookup.
 
 ### 2. Demographic & Infrastructure Gap Integration
 * **Data Context:** Incorporated public demographic profiles for Bhubaneswar wards (Population size, Literacy rate, Ward school enrollment, average travel-distance to school, and youth unemployment rates).
-* **The AI Advisor Analysis:** Gathers all active grievances and scheduled projects from Supabase and passes them to Gemini alongside the ward demographics.
-* **Comparative Trade-offs:** Gemini performs objective trade-off analyses, calculating priorities based on data (e.g. comparing Ward B's average 4.5km travel-distance and 94% school enrollment against Ward C's 18% unemployment rate and 1,200 unemployed graduates) to recommend whether to fund a school upgrade vs. a vocational training center.
+* **The AI Advisor Analysis:** Gathers all active grievances and scheduled projects from Supabase and passes them to Gemini alongside the sector demographics.
+* **Comparative Trade-offs:** Gemini performs objective trade-off analyses, calculating priorities based on data (e.g. comparing average school travel-distances against youth unemployment rates) to recommend whether to fund a school upgrade vs. a vocational training center.
 
 ### 3. MP LAD Fund Resource Optimizer
 * **Interactive Gantt Timeline:** Organizes project schedules in a drag-and-drop hierarchy.
