@@ -361,125 +361,127 @@ export default function Optimizer() {
           padding: '16px',
           minHeight: '400px'
         }}>
-          {/* Timeline axis labels */}
-          <div 
-            className="gantt-row"
-            style={{
-              borderBottom: '1px solid var(--border-color)',
-              paddingBottom: '8px',
-              marginBottom: '16px',
-              fontSize: '0.75rem',
-              color: 'var(--text-tertiary)',
-              fontWeight: '600'
-            }}
-          >
-            <span>Project Name</span>
-            <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative', width: '100%' }}>
-              <span>Day 0</span>
-              <span>Day {Math.round(totalGanttTimelineDays / 3)}</span>
-              <span>Day {Math.round(totalGanttTimelineDays * 2 / 3)}</span>
-              <span>Day {Math.round(totalGanttTimelineDays)}</span>
+          <div style={{ minWidth: '500px', display: 'flex', flexDirection: 'column', gap: '16px', flexGrow: 1 }}>
+            {/* Timeline axis labels */}
+            <div 
+              className="gantt-row"
+              style={{
+                borderBottom: '1px solid var(--border-color)',
+                paddingBottom: '8px',
+                marginBottom: '16px',
+                fontSize: '0.75rem',
+                color: 'var(--text-tertiary)',
+                fontWeight: '600'
+              }}
+            >
+              <span>Project Name</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative', width: '100%' }}>
+                <span>Day 0</span>
+                <span>Day {Math.round(totalGanttTimelineDays / 3)}</span>
+                <span>Day {Math.round(totalGanttTimelineDays * 2 / 3)}</span>
+                <span>Day {Math.round(totalGanttTimelineDays)}</span>
+              </div>
             </div>
-          </div>
 
-          {/* Gantt Bars List */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '18px', flexGrow: 1 }}>
-            {ganttItems.map((item, idx) => {
-              // Calculate percent positions
-              const startPercent = (item.startDay / totalGanttTimelineDays) * 100;
-              const widthPercent = (item.duration / totalGanttTimelineDays) * 100;
+            {/* Gantt Bars List */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '18px', flexGrow: 1 }}>
+              {ganttItems.map((item, idx) => {
+                // Calculate percent positions
+                const startPercent = (item.startDay / totalGanttTimelineDays) * 100;
+                const widthPercent = (item.duration / totalGanttTimelineDays) * 100;
 
-              return (
-                <div
-                  key={item.id}
-                  className="gantt-row"
-                  style={{
-                    fontSize: '0.8rem'
-                  }}
-                >
-                  {/* Truncated Name */}
-                  <span
+                return (
+                  <div
+                    key={item.id}
+                    className="gantt-row"
                     style={{
-                      fontWeight: '500',
-                      textOverflow: 'ellipsis',
-                      overflow: 'hidden',
-                      whiteSpace: 'nowrap',
-                      paddingRight: '12px',
-                      color: item.fits ? 'var(--text-primary)' : 'var(--text-tertiary)'
+                      fontSize: '0.8rem'
                     }}
-                    title={item.name}
                   >
-                    {item.name}
-                  </span>
+                    {/* Truncated Name */}
+                    <span
+                      style={{
+                        fontWeight: '500',
+                        textOverflow: 'ellipsis',
+                        overflow: 'hidden',
+                        whiteSpace: 'nowrap',
+                        paddingRight: '12px',
+                        color: item.fits ? 'var(--text-primary)' : 'var(--text-tertiary)'
+                      }}
+                      title={item.name}
+                    >
+                      {item.name}
+                    </span>
 
-                  {/* Gantt Bar Row */}
-                  <div style={{ position: 'relative', width: '100%', height: '24px', backgroundColor: 'rgba(0,0,0,0.02)', borderRadius: '4px' }}>
-                    {/* Render Bar if project fits and is not completed */}
-                    {item.fits && item.status !== 'completed' ? (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          left: `${startPercent}%`,
-                          width: `${widthPercent}%`,
-                          height: '100%',
-                          backgroundColor: item.status === 'active' ? 'var(--accent)' : 'var(--warning)',
-                          borderRadius: '4px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          paddingLeft: '6px',
-                          fontSize: '0.65rem',
-                          color: '#ffffff',
-                          fontWeight: 'bold',
-                          boxShadow: 'var(--shadow-sm)',
-                          transition: 'all 0.3s ease'
-                        }}
-                      >
-                        {item.duration}d
-                      </div>
-                    ) : item.status === 'completed' ? (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          left: '0%',
-                          width: '100%',
-                          height: '100%',
-                          backgroundColor: 'var(--success-bg)',
-                          border: '1px solid var(--success-border)',
-                          borderRadius: '4px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          fontSize: '0.7rem',
-                          color: 'var(--success)',
-                          fontWeight: 'bold'
-                        }}
-                      >
-                        Completed (0d Remaining)
-                      </div>
-                    ) : (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          left: '0%',
-                          width: '100%',
-                          height: '100%',
-                          border: '1px dashed var(--danger-border)',
-                          borderRadius: '4px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          fontSize: '0.7rem',
-                          color: 'var(--text-tertiary)',
-                          background: 'rgba(239, 68, 68, 0.02)'
-                        }}
-                      >
-                        Suspended (No Budget)
-                      </div>
-                    )}
+                    {/* Gantt Bar Row */}
+                    <div style={{ position: 'relative', width: '100%', height: '24px', backgroundColor: 'rgba(0,0,0,0.02)', borderRadius: '4px' }}>
+                      {/* Render Bar if project fits and is not completed */}
+                      {item.fits && item.status !== 'completed' ? (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            left: `${startPercent}%`,
+                            width: `${widthPercent}%`,
+                            height: '100%',
+                            backgroundColor: item.status === 'active' ? 'var(--accent)' : 'var(--warning)',
+                            borderRadius: '4px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            paddingLeft: '6px',
+                            fontSize: '0.65rem',
+                            color: '#ffffff',
+                            fontWeight: 'bold',
+                            boxShadow: 'var(--shadow-sm)',
+                            transition: 'all 0.3s ease'
+                          }}
+                        >
+                          {item.duration}d
+                        </div>
+                      ) : item.status === 'completed' ? (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            left: '0%',
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'var(--success-bg)',
+                            border: '1px solid var(--success-border)',
+                            borderRadius: '4px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '0.7rem',
+                            color: 'var(--success)',
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          Completed (0d Remaining)
+                        </div>
+                      ) : (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            left: '0%',
+                            width: '100%',
+                            height: '100%',
+                            border: '1px dashed var(--danger-border)',
+                            borderRadius: '4px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '0.7rem',
+                            color: 'var(--text-tertiary)',
+                            background: 'rgba(239, 68, 68, 0.02)'
+                          }}
+                        >
+                          Suspended (No Budget)
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

@@ -137,13 +137,13 @@ export default function GrievanceTable({ onSelectGrievance, selectedGrievanceId 
         </div>
 
         {/* Filter selectors */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center', flexGrow: 1, width: '100%' }}>
           {/* Ward filter */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: '1 1 140px' }}>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>Ward:</span>
             <select
               className="form-select"
-              style={{ padding: '6px 10px', fontSize: '0.75rem', width: 'auto' }}
+              style={{ padding: '6px 10px', fontSize: '0.75rem', width: '100%' }}
               value={selectedWard}
               onChange={(e) => { setSelectedWard(e.target.value); setCurrentPage(1); }}
             >
@@ -158,11 +158,11 @@ export default function GrievanceTable({ onSelectGrievance, selectedGrievanceId 
           </div>
 
           {/* Sector filter */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: '1 1 140px' }}>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>Sector:</span>
             <select
               className="form-select"
-              style={{ padding: '6px 10px', fontSize: '0.75rem', width: 'auto' }}
+              style={{ padding: '6px 10px', fontSize: '0.75rem', width: '100%' }}
               value={selectedSector}
               onChange={(e) => { setSelectedSector(e.target.value); setCurrentPage(1); }}
             >
@@ -177,11 +177,11 @@ export default function GrievanceTable({ onSelectGrievance, selectedGrievanceId 
           </div>
 
           {/* Severity filter */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: '1 1 140px' }}>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>Severity:</span>
             <select
               className="form-select"
-              style={{ padding: '6px 10px', fontSize: '0.75rem', width: 'auto' }}
+              style={{ padding: '6px 10px', fontSize: '0.75rem', width: '100%' }}
               value={selectedUrgency}
               onChange={(e) => { setSelectedUrgency(e.target.value); setCurrentPage(1); }}
             >
@@ -204,7 +204,8 @@ export default function GrievanceTable({ onSelectGrievance, selectedGrievanceId 
                 color: 'var(--text-secondary)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px'
+                gap: '4px',
+                flex: '0 0 auto'
               }}
             >
               <X size={12} />
