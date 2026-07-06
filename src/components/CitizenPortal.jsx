@@ -7,7 +7,7 @@ export default function CitizenPortal() {
 
   // Form states
   const [reporterName, setReporterName] = useState('');
-  const [ward, setWard] = useState('Ward B: Urban Center');
+  
   const [sector, setSector] = useState('Infrastructure');
   const [urgency, setUrgency] = useState('Medium');
   const [description, setDescription] = useState('');
@@ -273,7 +273,7 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
       description: description,
       translatedDescription: description,
       reporter: reporterName,
-      ward: ward,
+      
       sector: sector,
       urgency: urgency,
       status: 'Pending',
@@ -289,8 +289,7 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
 
   const handleResetForm = () => {
     setReporterName('');
-    setWard('Ward B: Urban Center');
-    setSector('Infrastructure');
+        setSector('Infrastructure');
     setUrgency('Medium');
     setDescription('');
     setSubmittedTicket(null);
@@ -328,10 +327,7 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
                 {submittedTicket.urgency}
               </span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <span style={{ color: 'var(--text-secondary)' }}>Ward Area:</span>
-              <span>{submittedTicket.ward}</span>
-            </div>
+
             <div style={{ marginTop: '12px', borderTop: '1px solid var(--border-color)', paddingTop: '10px' }}>
               <span style={{ fontWeight: '500', display: 'block', marginBottom: '4px' }}>Ticket Description:</span>
               <p style={{ fontSize: '0.9rem', color: 'var(--text-primary)', whiteSpace: 'pre-wrap' }}>{submittedTicket.description}</p>
@@ -362,38 +358,17 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
-          <div className="form-grid-2col">
-            {/* Reporter Name */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="reporter-name">Your Full Name</label>
-              <input
-                id="reporter-name"
-                className="form-input"
-                type="text"
-                placeholder="Enter your name"
-                value={reporterName}
-                onChange={(e) => setReporterName(e.target.value)}
-                required
-              />
-            </div>
-
-            {/* Ward Selector */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="ward-select">Ward Area</label>
-              <select
-                id="ward-select"
-                className="form-select"
-                value={ward}
-                onChange={(e) => setWard(e.target.value)}
-              >
-                <option>Ward A: Industrial Core</option>
-                <option>Ward B: Urban Center</option>
-                <option>Ward C: Rural Green</option>
-                <option>Ward D: Heritage Quarter</option>
-                <option>Ward E: Coastal/Lake District</option>
-                <option>Ward F: Suburbia East</option>
-              </select>
-            </div>
+          <div className="form-group">
+            <label className="form-label" htmlFor="reporter-name">Your Full Name</label>
+            <input
+              id="reporter-name"
+              className="form-input"
+              type="text"
+              placeholder="Enter your name"
+              value={reporterName}
+              onChange={(e) => setReporterName(e.target.value)}
+              required
+            />
           </div>
 
           <div className="form-grid-2col">

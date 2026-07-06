@@ -42,7 +42,7 @@ export const AppProvider = ({ children }) => {
     fetchProjects();
   }, []);
 
-  const [selectedWard, setSelectedWard] = useState('All');
+  
   const [selectedUrgency, setSelectedUrgency] = useState('All');
   const [selectedSector, setSelectedSector] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -236,7 +236,6 @@ export const AppProvider = ({ children }) => {
           description: 'Rainwater has fully flooded the subway bypass. Vehicles stalled, causing 3km long traffic gridlock.',
           translatedDescription: 'Severe Street Flooding at Subway',
           reporter: 'Simulated Citizen (Monsoon)',
-          ward: 'Ward B: Urban Center',
           sector: 'Infrastructure',
           urgency: 'Critical',
           status: 'Pending',
@@ -250,7 +249,6 @@ export const AppProvider = ({ children }) => {
           description: 'Heavy rains have damaged the support beams of the community center roof. Water leaking from electrical boxes.',
           translatedDescription: 'Roof Collapse Risk in Old Slum Area',
           reporter: 'Simulated Citizen (Monsoon)',
-          ward: 'Ward E: Coastal/Lake District',
           sector: 'Sanitation',
           urgency: 'Critical',
           status: 'Pending',
@@ -264,7 +262,6 @@ export const AppProvider = ({ children }) => {
           description: 'Main drainage pipe near markets overflowing. Raw sewage flooding shop entrances.',
           translatedDescription: 'Sewer Line Backed Up & Gushing Water',
           reporter: 'Simulated Citizen (Monsoon)',
-          ward: 'Ward B: Urban Center',
           sector: 'Sanitation',
           urgency: 'Critical',
           status: 'Pending',
@@ -281,7 +278,6 @@ export const AppProvider = ({ children }) => {
           description: 'No supply in municipal lines since morning. Local vendors selling water tanks at double prices.',
           translatedDescription: 'Water Treatment Plant Valve Malfunction',
           reporter: 'Simulated Citizen (Water Crisis)',
-          ward: 'Ward A: Industrial Core',
           sector: 'Water Supply',
           urgency: 'Critical',
           status: 'Pending',
@@ -295,7 +291,6 @@ export const AppProvider = ({ children }) => {
           description: 'Water has black particles and high chlorine smell. Unusable for drinking or cooking.',
           translatedDescription: 'Turbid Water Coming Out of Taps',
           reporter: 'Simulated Citizen (Water Crisis)',
-          ward: 'Ward F: Suburbia East',
           sector: 'Water Supply',
           urgency: 'Medium',
           status: 'Pending',
@@ -312,7 +307,6 @@ export const AppProvider = ({ children }) => {
           description: 'Elections are near and we need a local skill center for unemployed graduates in Ward C.',
           translatedDescription: 'Demand for Youth Skills Center',
           reporter: 'Community Representative',
-          ward: 'Ward C: Rural Green',
           sector: 'Infrastructure',
           urgency: 'Medium',
           status: 'Pending',
@@ -326,7 +320,6 @@ export const AppProvider = ({ children }) => {
           description: 'Request for expanding hospital hours to 24/7 due to rising constituency population.',
           translatedDescription: 'Request for expanding hospital hours to 24/7 due to rising constituency population.',
           reporter: 'Panchayat Chief',
-          ward: 'Ward C: Rural Green',
           sector: 'Public Health',
           urgency: 'Medium',
           status: 'Pending',
@@ -353,8 +346,7 @@ export const AppProvider = ({ children }) => {
         setGrievances,
         projects,
         setProjects,
-        selectedWard,
-        setSelectedWard,
+
         selectedUrgency,
         setSelectedUrgency,
         selectedSector,

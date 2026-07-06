@@ -5,8 +5,7 @@ import { Search, Filter, ArrowUpDown, ChevronLeft, ChevronRight, X } from 'lucid
 export default function GrievanceTable({ onSelectGrievance, selectedGrievanceId }) {
   const {
     grievances,
-    selectedWard,
-    setSelectedWard,
+    
     selectedSector,
     setSelectedSector,
     selectedUrgency,
@@ -23,15 +22,14 @@ export default function GrievanceTable({ onSelectGrievance, selectedGrievanceId 
 
   // Clear all filters
   const handleClearFilters = () => {
-    setSelectedWard('All');
-    setSelectedSector('All');
+        setSelectedSector('All');
     setSelectedUrgency('All');
     setSearchQuery('');
     setCurrentPage(1);
   };
 
   // Check if any filter is active
-  const isFilterActive = selectedWard !== 'All' || selectedSector !== 'All' || selectedUrgency !== 'All' || searchQuery !== '';
+  const isFilterActive =  selectedSector !== 'All' || selectedUrgency !== 'All' || searchQuery !== '';
 
   // Sort handler
   const handleSort = (field) => {
@@ -46,8 +44,7 @@ export default function GrievanceTable({ onSelectGrievance, selectedGrievanceId 
 
   // Filter Grievances
   const filteredGrievances = grievances.filter((g) => {
-    if (selectedWard !== 'All' && g.ward !== selectedWard) return false;
-    if (selectedSector !== 'All' && g.sector !== selectedSector) return false;
+        if (selectedSector !== 'All' && g.sector !== selectedSector) return false;
     if (selectedUrgency !== 'All' && g.urgency !== selectedUrgency) return false;
     if (searchQuery.trim() !== '') {
       const query = searchQuery.toLowerCase();
@@ -138,24 +135,7 @@ export default function GrievanceTable({ onSelectGrievance, selectedGrievanceId 
 
         {/* Filter selectors */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center', flexGrow: 1, width: '100%' }}>
-          {/* Ward filter */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: '1 1 140px' }}>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>Ward:</span>
-            <select
-              className="form-select"
-              style={{ padding: '6px 10px', fontSize: '0.75rem', width: '100%' }}
-              value={selectedWard}
-              onChange={(e) => { setSelectedWard(e.target.value); setCurrentPage(1); }}
-            >
-              <option value="All">All Wards</option>
-              <option>Ward A: Industrial Core</option>
-              <option>Ward B: Urban Center</option>
-              <option>Ward C: Rural Green</option>
-              <option>Ward D: Heritage Quarter</option>
-              <option>Ward E: Coastal/Lake District</option>
-              <option>Ward F: Suburbia East</option>
-            </select>
-          </div>
+
 
           {/* Sector filter */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: '1 1 140px' }}>
@@ -228,9 +208,7 @@ export default function GrievanceTable({ onSelectGrievance, selectedGrievanceId 
               <th onClick={() => handleSort('id')} style={{ padding: '12px 16px', cursor: 'pointer', color: 'var(--text-secondary)', fontWeight: '600' }}>
                 ID <ArrowUpDown size={12} style={{ display: 'inline', marginLeft: '4px' }} />
               </th>
-              <th onClick={() => handleSort('ward')} className="hide-mobile" style={{ padding: '12px 16px', cursor: 'pointer', color: 'var(--text-secondary)', fontWeight: '600' }}>
-                Ward Area <ArrowUpDown size={12} style={{ display: 'inline', marginLeft: '4px' }} />
-              </th>
+
               <th className="hide-mobile" style={{ padding: '12px 16px', color: 'var(--text-secondary)', fontWeight: '600' }}>Reporter</th>
               <th className="hide-mobile" style={{ padding: '12px 16px', color: 'var(--text-secondary)', fontWeight: '600' }}>Sector</th>
               <th style={{ padding: '12px 16px', color: 'var(--text-secondary)', fontWeight: '600' }}>Title</th>
@@ -260,7 +238,7 @@ export default function GrievanceTable({ onSelectGrievance, selectedGrievanceId 
                     className="table-row-hover"
                   >
                     <td style={{ padding: '14px 16px', fontWeight: 'bold' }}>{item.id}</td>
-                    <td className="hide-mobile" style={{ padding: '14px 16px', color: 'var(--text-secondary)' }}>{item.ward.split(':')[0]}</td>
+                    
                     <td className="hide-mobile" style={{ padding: '14px 16px' }}>{item.reporter}</td>
                     <td className="hide-mobile" style={{ padding: '14px 16px', color: 'var(--text-secondary)' }}>{item.sector}</td>
                     <td style={{ padding: '14px 16px', fontWeight: '500', maxWidth: '220px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -281,7 +259,7 @@ export default function GrievanceTable({ onSelectGrievance, selectedGrievanceId 
               })
             ) : (
               <tr>
-                <td colSpan="7" style={{ padding: '32px 16px', textAlign: 'center', color: 'var(--text-tertiary)' }}>
+                <td colSpan="6" style={{ padding: '32px 16px', textAlign: 'center', color: 'var(--text-tertiary)' }}>
                   No grievances found matching the current search filters.
                 </td>
               </tr>

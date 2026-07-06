@@ -56,7 +56,6 @@ Grievance Details:
 - ID: ${grievance.id}
 - Category/Sector: ${grievance.sector}
 - Urgency: ${grievance.urgency}
-- Location: ${grievance.ward}
 - Complaint: "${grievance.description}"
 - Reported by: ${grievance.reporter}
 - Date: ${nowStr}
@@ -68,7 +67,6 @@ Structure it like an official government notice. Include Reference ID: DIR-2026-
 Grievance Details:
 - ID: ${grievance.id}
 - Title: ${grievance.title}
-- Location: ${grievance.ward}
 - Sector: ${grievance.sector}
 - Updated Status: ${status.toUpperCase()}
 - Date: ${nowStr}
@@ -205,13 +203,7 @@ Write in a professional, polite, and reassuring tone. Tell them that their ticke
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', gridColumn: 'span 2' }}>
-          <MapPin size={14} style={{ color: 'var(--text-tertiary)' }} />
-          <div>
-            <div style={{ color: 'var(--text-tertiary)' }}>Ward Boundary</div>
-            <div style={{ fontWeight: '500' }}>{grievance.ward}</div>
-          </div>
-        </div>
+
       </div>
 
       {/* Status Management Bar */}

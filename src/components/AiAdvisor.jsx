@@ -3,43 +3,31 @@ import { useApp } from '../context/AppContext';
 import { Sparkles, Brain, Award, AlertOctagon, TrendingUp, CheckCircle, FileText, Copy, Printer, RefreshCw } from 'lucide-react';
 
 const constituencyDemographics = {
-  "Ward A: Industrial Core": {
-    population: 45000,
-    unemploymentRate: "8%",
-    primarySchools: 3,
-    literacyRate: "82%",
-    infrastructureGap: "High heavy-vehicle road wear, lack of worker healthcare centers"
-  },
-  "Ward B: Urban Center": {
-    population: 62000,
+  "Education Sector": {
     unemploymentRate: "5%",
     primarySchools: 12,
     schoolEnrollmentRate: "94%",
-    averageTravelToSchoolKm: 4.5,
-    infrastructureGap: "Overburdened primary schools, heavy school traffic congestion"
+    averageTravelToSchoolKm: "4.5 km",
+    infrastructureGap: "Overburdened primary schools in urban center, lack of high-school upgrading funds."
   },
-  "Ward C: Rural Green": {
-    population: 28000,
-    unemploymentRate: "18%",
-    primarySchools: 2,
-    unemployedYouthGraduates: 1200,
-    infrastructureGap: "No local vocational training or skill development centers, low agricultural water access"
+  "Vocational Training & Employment Sector": {
+    youthUnemploymentRate: "18%",
+    unemployedGraduatesCount: 1200,
+    infrastructureGap: "No local skill development or vocational training centers in rural green belt."
   },
-  "Ward D: Heritage Quarter": {
-    population: 35000,
-    unemploymentRate: "6%",
-    touristAnnualFootfall: "1.2 Lakhs",
-    infrastructureGap: "Poor heritage site restoration, lack of public toilets and sanitation bins"
+  "Water Supply Sector": {
+    contaminationsCount: 8,
+    populationWithoutFiltration: "42%",
+    infrastructureGap: "Lack of central filtration plants and pipe flushes."
   },
-  "Ward E: Coastal/Lake District": {
-    population: 22000,
-    unemploymentRate: "11%",
-    infrastructureGap: "Lack of clean drinking water filtration, open garbage dumping near water bodies"
+  "Sanitation Sector": {
+    dailyWasteAccumulationTons: 15,
+    infrastructureGap: "Lack of systematic garbage containers and local segregation hubs."
   },
-  "Ward F: Suburbia East": {
-    population: 50000,
-    unemploymentRate: "4%",
-    infrastructureGap: "Power grid instability, transformer overloads in summer"
+  "Infrastructure & Roads Sector": {
+    heavyTrafficRoadWearIndex: "8.5 / 10",
+    potholeIncidentsCount: 34,
+    infrastructureGap: "Water logging at main junctions, asphalt cracking in industrial expressway."
   }
 };
 
@@ -122,7 +110,7 @@ Your output must include:
 2. ### PRIMARY BOTTLENECKS
    Identify the top 2 sectors and wards with the highest congestion of grievances.
 3. ### STRATEGIC BUDGET RECOMMENDATIONS & TRADE-OFFS
-   Recommend where the remaining budget of ${budgetCap - currentBudgetUsed} Lakhs should be allocated, referencing specific wards. Provide an objective trade-off analysis comparing school upgrades vs. vocational centers or infrastructure vs. sanitation based on the demographic gaps.
+   Recommend where the remaining budget of ${budgetCap - currentBudgetUsed} Lakhs should be allocated. Provide an objective trade-off analysis comparing school upgrades vs. vocational centers or infrastructure vs. sanitation based on the demographic and sector gaps.
 4. ### ADMINISTRATIVE DIRECTIVES
    Recommend exactly 3 official directives the MP should issue to local departments (e.g. Water Board, Sanitation Dept) based on this data.`;
 
