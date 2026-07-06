@@ -357,11 +357,11 @@ h2 {
 }
 
 .optimizer-grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
   gap: 20px;
   padding: 20px;
-  min-height: auto;
+  min-height: 600px;
 }
 
 .form-grid-2col {
@@ -388,6 +388,8 @@ h2 {
     grid-template-columns: 1fr;
   }
   .optimizer-grid {
+    grid-template-columns: 1fr;
+    min-height: auto;
     padding: 12px;
   }
 }
