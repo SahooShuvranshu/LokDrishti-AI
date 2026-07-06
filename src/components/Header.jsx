@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Sun, Moon, Settings, Shield, User, Bell, Key, Info, Home, BookOpen, Menu, LogOut } from 'lucide-react';
+import { Sun, Moon, Shield, User, Bell, Info, Home, BookOpen, Menu, LogOut } from 'lucide-react';
 
 export default function Header() {
   const {
@@ -9,33 +9,17 @@ export default function Header() {
     activeTab,
     setActiveTab,
     geminiApiKey,
-    setGeminiApiKey,
-    googleMapsApiKey,
-    setGoogleMapsApiKey,
     grievances,
     isLoggedIn,
     handleLogout
   } = useApp();
 
-  const [showSettings, setShowSettings] = useState(false);
-  const [tempKey, setTempKey] = useState(geminiApiKey);
-  const [tempMapsKey, setTempMapsKey] = useState(googleMapsApiKey);
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Filter recent critical or pending grievances for the ticker
   const recentAlerts = grievances
     .filter(g => g.urgency === 'Critical' || g.status === 'Pending')
     .slice(0, 5);
-
-  const handleSaveSettings = (e) => {
-    e.preventDefault();
-    setGeminiApiKey(tempKey);
-    localStorage.setItem('gemini_api_key', tempKey);
-    setGoogleMapsApiKey(tempMapsKey);
-    localStorage.setItem('google_maps_api_key', tempMapsKey);
-    setShowSettings(false);
-    window.location.reload();
-  };
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -198,16 +182,6 @@ export default function Header() {
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
 
-          {/* Settings button */}
-          <button
-            className="btn btn-icon"
-            onClick={() => setShowSettings(true)}
-            title="API Settings"
-            style={{ border: '1px solid var(--border-color)', background: 'transparent' }}
-          >
-            <Settings size={16} />
-          </button>
-
           {/* Sign Out Button (only visible if logged in) */}
           {isLoggedIn && (
             <button
@@ -345,102 +319,6 @@ export default function Header() {
           </div>
         </div>
       </div>
-
-      {/* Settings Modal Overlay */}
-      {showSettings && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          backgroundColor: 'rgba(0, 0, 0, 0.6)',
-          backdropFilter: 'blur(4px)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 9999
-        }}>
-          <div className="glass-panel-glow" style={{
-            width: '90%',
-            maxWidth: '500px',
-            padding: '24px',
-            backgroundColor: 'var(--bg-secondary)',
-            border: '1px solid var(--border-color)'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h2 style={{ fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Key size={18} style={{ color: 'var(--accent)' }} />
-                Gemini AI Configuration
-              </h2>
-              <button
-                className="btn btn-icon"
-                onClick={() => setShowSettings(false)}
-                style={{ border: 'none', background: 'transparent', fontSize: '1.2rem' }}
-              >
-                &times;
-              </button>
-            </div>
-
-            <form onSubmit={handleSaveSettings} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div className="form-group">
-                <label className="form-label" htmlFor="api-key-input">Gemini API Key</label>
-                <input
-                  id="api-key-input"
-                  className="form-input"
-                  type="password"
-                  placeholder="Enter your Gemini API key (AIzaSy...)"
-                  value={tempKey}
-                  onChange={(e) => setTempKey(e.target.value)}
-                />
-              </div>
-
-              <div className="form-group">
-                <label className="form-label" htmlFor="maps-key-input">Google Maps API Key</label>
-                <input
-                  id="maps-key-input"
-                  className="form-input"
-                  type="password"
-                  placeholder="Enter your Google Maps API key"
-                  value={tempMapsKey}
-                  onChange={(e) => setTempMapsKey(e.target.value)}
-                />
-              </div>
-
-              <div className="glass-panel" style={{
-                padding: '12px',
-                fontSize: '0.8rem',
-                color: 'var(--text-secondary)',
-                backgroundColor: 'var(--bg-tertiary)',
-                borderRadius: 'var(--radius-sm)',
-                display: 'flex',
-                gap: '10px'
-              }}>
-                <Info size={28} style={{ color: 'var(--accent)', flexShrink: 0 }} />
-                <div>
-                  <strong>Simulation Mode:</strong> If no API key is provided, the application runs a local Mock AI stream that simulates realistic responses, letters, and timelines. Ideal for demonstrations!
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '10px' }}>
-                <button
-                  type="button"
-                  className="btn"
-                  onClick={() => setShowSettings(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                >
-                  Save Settings
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </header>
   );
 }

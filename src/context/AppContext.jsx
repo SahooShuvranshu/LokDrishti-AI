@@ -512,11 +512,11 @@ export const AppProvider = ({ children }) => {
   const [activeTab, setActiveTab] = useState('landing'); // 'landing', 'about', 'mp', or 'citizen'
   
   const [geminiApiKey, setGeminiApiKey] = useState(() => {
-    return localStorage.getItem('gemini_api_key') || '';
+    return import.meta.env.VITE_GEMINI_API_KEY || localStorage.getItem('gemini_api_key') || '';
   });
 
   const [googleMapsApiKey, setGoogleMapsApiKey] = useState(() => {
-    return localStorage.getItem('google_maps_api_key') || '';
+    return import.meta.env.VITE_GOOGLE_MAPS_API_KEY || localStorage.getItem('google_maps_api_key') || '';
   });
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
