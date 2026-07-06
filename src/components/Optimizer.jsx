@@ -134,7 +134,8 @@ export default function Optimizer() {
     budgetCap,
     currentBudgetUsed,
     addProject,
-    deleteProject
+    deleteProject,
+    reorderProjects
   } = useApp();
 
   const [optimizerLogs, setOptimizerLogs] = useState([]);
@@ -152,11 +153,10 @@ export default function Optimizer() {
   const handleDragEnd = (event) => {
     const { active, over } = event;
     if (active && over && active.id !== over.id) {
-      setProjects((items) => {
-        const oldIndex = items.findIndex((i) => i.id === active.id);
-        const newIndex = items.findIndex((i) => i.id === over.id);
-        return arrayMove(items, oldIndex, newIndex);
-      });
+      const oldIndex = projects.findIndex((i) => i.id === active.id);
+      const newIndex = projects.findIndex((i) => i.id === over.id);
+      const newProjects = arrayMove(projects, oldIndex, newIndex);
+      reorderProjects(newProjects);
     }
   };
 
