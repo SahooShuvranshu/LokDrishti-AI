@@ -1,6 +1,124 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { MapPin, Info, Layers, Sliders } from 'lucide-react';
+import { Info, MapPin } from 'lucide-react';
+
+// Bounding box for wards partition in New Delhi
+const wards = [
+  {
+    id: 'Ward A: Industrial Core',
+    name: 'Ward A',
+    label: 'Industrial Core',
+    latRange: [28.60, 28.70],
+    lngRange: [77.10, 77.20],
+    path: [
+      { lat: 28.60, lng: 77.10 },
+      { lat: 28.70, lng: 77.10 },
+      { lat: 28.70, lng: 77.20 },
+      { lat: 28.60, lng: 77.20 }
+    ],
+    baseSatisfaction: 64,
+    population: '1.2L'
+  },
+  {
+    id: 'Ward B: Urban Center',
+    name: 'Ward B',
+    label: 'Urban Center',
+    latRange: [28.60, 28.70],
+    lngRange: [77.20, 77.25],
+    path: [
+      { lat: 28.60, lng: 77.20 },
+      { lat: 28.70, lng: 77.20 },
+      { lat: 28.70, lng: 77.25 },
+      { lat: 28.60, lng: 77.25 }
+    ],
+    baseSatisfaction: 79,
+    population: '2.5L'
+  },
+  {
+    id: 'Ward C: Rural Green',
+    name: 'Ward C',
+    label: 'Rural Green',
+    latRange: [28.50, 28.60],
+    lngRange: [77.10, 77.20],
+    path: [
+      { lat: 28.50, lng: 77.10 },
+      { lat: 28.60, lng: 77.10 },
+      { lat: 28.60, lng: 77.20 },
+      { lat: 28.50, lng: 77.20 }
+    ],
+    baseSatisfaction: 52,
+    population: '0.8L'
+  },
+  {
+    id: 'Ward D: Heritage Quarter',
+    name: 'Ward D',
+    label: 'Heritage Quarter',
+    latRange: [28.60, 28.70],
+    lngRange: [77.25, 77.30],
+    path: [
+      { lat: 28.60, lng: 77.25 },
+      { lat: 28.70, lng: 77.25 },
+      { lat: 28.70, lng: 77.30 },
+      { lat: 28.60, lng: 77.30 }
+    ],
+    baseSatisfaction: 71,
+    population: '1.1L'
+  },
+  {
+    id: 'Ward E: Coastal/Lake District',
+    name: 'Ward E',
+    label: 'Coastal/Lake',
+    latRange: [28.50, 28.60],
+    lngRange: [77.25, 77.30],
+    path: [
+      { lat: 28.50, lng: 77.25 },
+      { lat: 28.60, lng: 77.25 },
+      { lat: 28.60, lng: 77.30 },
+      { lat: 28.50, lng: 77.30 }
+    ],
+    baseSatisfaction: 68,
+    population: '0.9L'
+  },
+  {
+    id: 'Ward F: Suburbia East',
+    name: 'Ward F',
+    label: 'Suburbia East',
+    latRange: [28.50, 28.60],
+    lngRange: [77.20, 77.25],
+    path: [
+      { lat: 28.50, lng: 77.20 },
+      { lat: 28.60, lng: 77.20 },
+      { lat: 28.60, lng: 77.25 },
+      { lat: 28.50, lng: 77.25 }
+    ],
+    baseSatisfaction: 85,
+    population: '1.8L'
+  }
+];
+
+// Dark Google Maps theme styling
+const darkMapStyle = [
+  { elementType: 'geometry', stylers: [{ color: '#18181b' }] },
+  { elementType: 'labels.text.stroke', stylers: [{ color: '#18181b' }] },
+  { elementType: 'labels.text.fill', stylers: [{ color: '#71717a' }] },
+  { featureType: 'administrative', elementType: 'geometry', stylers: [{ color: '#27272a' }] },
+  { featureType: 'poi', elementType: 'labels.text.fill', stylers: [{ color: '#a1a1aa' }] },
+  { featureType: 'poi.park', elementType: 'geometry', stylers: [{ color: '#09090b' }] },
+  { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#27272a' }] },
+  { featureType: 'road', elementType: 'geometry.stroke', stylers: [{ color: '#09090b' }] },
+  { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#3f3f46' }] },
+  { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#09090b' }] }
+];
+
+// Light Google Maps theme styling
+const lightMapStyle = [
+  { elementType: 'geometry', stylers: [{ color: '#f4f4f5' }] },
+  { elementType: 'labels.text.stroke', stylers: [{ color: '#ffffff' }] },
+  { elementType: 'labels.text.fill', stylers: [{ color: '#71717a' }] },
+  { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#ffffff' }] },
+  { featureType: 'road', elementType: 'geometry.stroke', stylers: [{ color: '#e4e4e7' }] },
+  { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#e0f2fe' }] }
+];
 
 export default function ConstituencyMap({ onSelectGrievance }) {
   const {
@@ -8,68 +126,20 @@ export default function ConstituencyMap({ onSelectGrievance }) {
     selectedWard,
     setSelectedWard,
     selectedSector,
-    selectedUrgency
+    selectedUrgency,
+    googleMapsApiKey,
+    theme
   } = useApp();
 
   const [mapView, setMapView] = useState('density'); // 'density' or 'satisfaction'
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [loadError, setLoadError] = useState(false);
 
-  // Ward data definition
-  const wards = [
-    {
-      id: 'Ward A: Industrial Core',
-      name: 'Ward A',
-      label: 'Industrial Core',
-      points: '50,120 260,80 290,220 180,340 50,280',
-      center: { x: 150, y: 190 },
-      baseSatisfaction: 64,
-      population: '1.2L'
-    },
-    {
-      id: 'Ward B: Urban Center',
-      name: 'Ward B',
-      label: 'Urban Center',
-      points: '290,220 480,170 520,310 320,360',
-      center: { x: 400, y: 260 },
-      baseSatisfaction: 79,
-      population: '2.5L'
-    },
-    {
-      id: 'Ward C: Rural Green',
-      name: 'Ward C',
-      label: 'Rural Green',
-      points: '480,170 750,110 700,340 520,310',
-      center: { x: 610, y: 220 },
-      baseSatisfaction: 52,
-      population: '0.8L'
-    },
-    {
-      id: 'Ward D: Heritage Quarter',
-      name: 'Ward D',
-      label: 'Heritage Quarter',
-      points: '260,80 480,60 480,170 290,220',
-      center: { x: 370, y: 130 },
-      baseSatisfaction: 71,
-      population: '1.1L'
-    },
-    {
-      id: 'Ward E: Coastal/Lake District',
-      name: 'Ward E',
-      label: 'Coastal/Lake',
-      points: '180,340 320,360 520,310 450,440 120,410',
-      center: { x: 300, y: 390 },
-      baseSatisfaction: 68,
-      population: '0.9L'
-    },
-    {
-      id: 'Ward F: Suburbia East',
-      name: 'Ward F',
-      label: 'Suburbia East',
-      points: '750,110 700,340 520,310 580,440 780,380',
-      center: { x: 680, y: 360 },
-      baseSatisfaction: 85,
-      population: '1.8L'
-    }
-  ];
+  const mapContainerRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+  const polygonsRef = useRef({});
+  const markersRef = useRef([]);
+  const infoWindowRef = useRef(null);
 
   // Helper: Count grievances in a ward matching current sector/urgency filters
   const getWardGrievanceCount = (wardId) => {
@@ -82,7 +152,6 @@ export default function ConstituencyMap({ onSelectGrievance }) {
   };
 
   // Helper: Calculate Dynamic Satisfaction per ward
-  // More pending/critical grievances reduces the satisfaction rate
   const getWardSatisfaction = (ward) => {
     const criticalCount = grievances.filter((g) => g.ward === ward.id && g.urgency === 'Critical' && g.status !== 'Resolved').length;
     const pendingCount = grievances.filter((g) => g.ward === ward.id && g.status === 'Pending').length;
@@ -97,195 +166,297 @@ export default function ConstituencyMap({ onSelectGrievance }) {
   const getWardColor = (ward) => {
     const isSelected = selectedWard === 'All' || selectedWard === ward.id;
     if (!isSelected) {
-      return 'var(--bg-tertiary)';
+      return '#3f3f46'; // dim grey for unselected
     }
 
     if (mapView === 'density') {
       const count = getWardGrievanceCount(ward.id);
-      if (count > 6) return 'rgba(239, 68, 68, 0.4)'; // Heavy Red
-      if (count > 3) return 'rgba(245, 158, 11, 0.35)'; // Amber
-      if (count > 0) return 'rgba(99, 102, 241, 0.25)'; // Indigo
-      return 'rgba(16, 185, 129, 0.15)'; // Green
+      if (count === 0) return '#10b981'; // green / quiet
+      if (count <= 2) return '#f59e0b';  // yellow / warning
+      return '#ef4444';                  // red / dense
     } else {
       const sat = getWardSatisfaction(ward);
-      if (sat < 60) return 'rgba(239, 68, 68, 0.3)'; // Red
-      if (sat < 75) return 'rgba(245, 158, 11, 0.3)'; // Amber
-      return 'rgba(16, 185, 129, 0.3)'; // Green
+      if (sat >= 75) return '#10b981';    // green / high satisfaction
+      if (sat >= 60) return '#f59e0b';    // yellow / moderate
+      return '#ef4444';                  // red / poor satisfaction
     }
   };
 
-  const getWardBorderColor = (ward) => {
-    if (selectedWard === ward.id) {
-      return 'var(--accent)';
+  // Translate grid percentage coordinates {x, y} to geographical Lat/Lng inside the ward bounds
+  const getGrievanceLatLng = (grievance) => {
+    const wardDef = wards.find((w) => w.id === grievance.ward);
+    if (!wardDef) {
+      return { lat: 28.6139, lng: 77.2090 }; // Center New Delhi
     }
-    return 'var(--border-color)';
+    const latMin = wardDef.latRange[0];
+    const latMax = wardDef.latRange[1];
+    const lngMin = wardDef.lngRange[0];
+    const lngMax = wardDef.lngRange[1];
+
+    const x = grievance.coordinates?.x ?? 50;
+    const y = grievance.coordinates?.y ?? 50;
+
+    // Linearly interpolate inside the bounding box
+    const lng = lngMin + (x / 100) * (lngMax - lngMin);
+    const lat = latMin + ((100 - y) / 100) * (latMax - latMin);
+    return { lat, lng };
   };
+
+  // 1. Dynamic Script Loader
+  useEffect(() => {
+    if (window.google && window.google.maps) {
+      setScriptLoaded(true);
+      return;
+    }
+
+    const scriptId = 'google-maps-script';
+    let script = document.getElementById(scriptId);
+
+    if (!script) {
+      script = document.createElement('script');
+      script.id = scriptId;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey || ''}`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+
+    const handleScriptLoad = () => setScriptLoaded(true);
+    const handleScriptError = () => setLoadError(true);
+
+    script.addEventListener('load', handleScriptLoad);
+    script.addEventListener('error', handleScriptError);
+
+    return () => {
+      script.removeEventListener('load', handleScriptLoad);
+      script.removeEventListener('error', handleScriptError);
+    };
+  }, [googleMapsApiKey]);
+
+  // 2. Initialize Google Maps
+  useEffect(() => {
+    if (!scriptLoaded || !mapContainerRef.current) return;
+
+    // Setup map instance
+    const map = new window.google.maps.Map(mapContainerRef.current, {
+      center: { lat: 28.60, lng: 77.20 },
+      zoom: 12,
+      styles: theme === 'dark' ? darkMapStyle : lightMapStyle,
+      disableDefaultUI: false,
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: true
+    });
+
+    mapInstanceRef.current = map;
+    infoWindowRef.current = new window.google.maps.InfoWindow();
+
+    // Render Ward Polygons
+    const polygons = {};
+    wards.forEach((ward) => {
+      const polygon = new window.google.maps.Polygon({
+        paths: ward.path,
+        strokeColor: '#71717a',
+        strokeOpacity: 0.8,
+        strokeWeight: 1.5,
+        fillColor: getWardColor(ward),
+        fillOpacity: 0.35,
+        map: map
+      });
+
+      // Click: set active ward filter
+      polygon.addListener('click', () => {
+        if (selectedWard === ward.id) {
+          setSelectedWard('All');
+        } else {
+          setSelectedWard(ward.id);
+        }
+      });
+
+      // Hover: opacity feedback
+      polygon.addListener('mouseover', () => {
+        polygon.setOptions({ fillOpacity: 0.55 });
+      });
+      polygon.addListener('mouseout', () => {
+        const isCurrentSelected = selectedWard === 'All' || selectedWard === ward.id;
+        polygon.setOptions({ fillOpacity: isCurrentSelected ? 0.35 : 0.1 });
+      });
+
+      polygons[ward.id] = polygon;
+    });
+
+    polygonsRef.current = polygons;
+
+    return () => {
+      // Clear polygons
+      Object.values(polygonsRef.current).forEach((p) => p.setMap(null));
+      polygonsRef.current = {};
+    };
+  }, [scriptLoaded]);
+
+  // 3. Update Polygons Fill Color on state change
+  useEffect(() => {
+    if (!mapInstanceRef.current) return;
+    wards.forEach((ward) => {
+      const polygon = polygonsRef.current[ward.id];
+      if (polygon) {
+        polygon.setOptions({
+          fillColor: getWardColor(ward),
+          fillOpacity: selectedWard === 'All' || selectedWard === ward.id ? 0.35 : 0.1
+        });
+      }
+    });
+  }, [grievances, mapView, selectedWard, selectedSector, selectedUrgency]);
+
+  // 4. Update Map Theme Styling
+  useEffect(() => {
+    if (!mapInstanceRef.current) return;
+    mapInstanceRef.current.setOptions({
+      styles: theme === 'dark' ? darkMapStyle : lightMapStyle
+    });
+  }, [theme]);
+
+  // 5. Render Grievance Markers
+  useEffect(() => {
+    if (!mapInstanceRef.current) return;
+
+    // Clear existing markers
+    markersRef.current.forEach((m) => m.setMap(null));
+    markersRef.current = [];
+
+    // Filter grievances based on dashboard selections
+    const filteredGrievances = grievances.filter((g) => {
+      if (selectedWard !== 'All' && g.ward !== selectedWard) return false;
+      if (selectedSector !== 'All' && g.sector !== selectedSector) return false;
+      if (selectedUrgency !== 'All' && g.urgency !== selectedUrgency) return false;
+      return g.status !== 'Resolved';
+    });
+
+    // Plot markers
+    filteredGrievances.forEach((item) => {
+      const latLng = getGrievanceLatLng(item);
+      const color = item.urgency === 'Critical' ? '#ef4444' : item.urgency === 'Medium' ? '#f59e0b' : '#10b981';
+
+      // SVG path representation for a clean custom MapPin marker icon
+      const pinIcon = {
+        path: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
+        fillColor: color,
+        fillOpacity: 1,
+        strokeColor: '#ffffff',
+        strokeWeight: 1.5,
+        scale: 1.2,
+        anchor: new window.google.maps.Point(12, 22)
+      };
+
+      const marker = new window.google.maps.Marker({
+        position: latLng,
+        map: mapInstanceRef.current,
+        icon: pinIcon,
+        title: item.title
+      });
+
+      marker.addListener('click', () => {
+        const contentString = `
+          <div style="padding: 10px; color: #18181b; font-family: sans-serif; max-width: 250px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span style="font-weight: bold; font-size: 0.75rem; color: #71717a;">${item.id}</span>
+              <span style="padding: 2px 6px; font-size: 0.65rem; border-radius: 4px; font-weight: bold; background: ${color}20; color: ${color};">${item.urgency}</span>
+            </div>
+            <h4 style="margin: 0 0 6px 0; font-size: 0.85rem; font-weight: 600; color: #18181b;">${item.title}</h4>
+            <p style="margin: 0 0 10px 0; font-size: 0.75rem; color: #52525b; line-height: 1.3;">${item.description.substring(0, 80)}...</p>
+            <button 
+              id="inspect-btn-${item.id}"
+              style="width: 100%; border: none; padding: 6px; font-size: 0.75rem; background: #2563eb; color: white; border-radius: 4px; cursor: pointer; font-weight: bold;"
+            >
+              Inspect Details
+            </button>
+          </div>
+        `;
+
+        infoWindowRef.current.setContent(contentString);
+        infoWindowRef.current.open(mapInstanceRef.current, marker);
+
+        // Add listener to inspect details button in InfoWindow
+        window.google.maps.event.addListenerOnce(infoWindowRef.current, 'domready', () => {
+          const btn = document.getElementById(`inspect-btn-${item.id}`);
+          if (btn) {
+            btn.onclick = () => {
+              onSelectGrievance(item);
+              infoWindowRef.current.close();
+            };
+          }
+        });
+      });
+
+      markersRef.current.push(marker);
+    });
+  }, [grievances, selectedWard, selectedSector, selectedUrgency, scriptLoaded]);
 
   const handleWardClick = (wardId) => {
     if (selectedWard === wardId) {
-      setSelectedWard('All'); // Deselect
+      setSelectedWard('All');
     } else {
       setSelectedWard(wardId);
     }
   };
 
-  // Grievance Pins to overlay on the map
-  // Filter pins based on selected Ward/Sector/Urgency, and status must not be Resolved
-  const mapPins = grievances.filter((g) => {
-    if (g.status === 'Resolved') return false;
-    if (selectedWard !== 'All' && g.ward !== selectedWard) return false;
-    if (selectedSector !== 'All' && g.sector !== selectedSector) return false;
-    if (selectedUrgency !== 'All' && g.urgency !== selectedUrgency) return false;
-    return true;
-  });
-
   return (
-    <div className="glass-panel" style={{
-      padding: '20px',
-      backgroundColor: 'var(--bg-secondary)',
-      border: '1px solid var(--border-color)',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '16px',
-      height: '100%'
-    }}>
-      {/* Map Settings controls */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h3 style={{ fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Layers size={18} style={{ color: 'var(--accent)' }} />
-          Constituency Heatmap
-        </h3>
+    <div className="glass-panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '14px', flexGrow: 1 }}>
+      
+      {/* Header & View Switcher */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-primary)' }}>Constituency Map Diagnostics</span>
+          <span style={{ fontSize: '0.7rem', color: 'var(--text-tertiary)' }}>Live Google Maps spatial overlay of New Delhi district</span>
+        </div>
 
-        {/* View toggles */}
-        <div style={{ display: 'flex', gap: '4px', background: 'var(--bg-tertiary)', padding: '2px', borderRadius: 'var(--radius-sm)' }}>
+        <div className="glass-panel" style={{ display: 'flex', padding: '3px', background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)' }}>
           <button
             onClick={() => setMapView('density')}
+            className="btn"
             style={{
               padding: '4px 10px',
-              fontSize: '0.75rem',
-              border: 'none',
-              borderRadius: 'var(--radius-sm)',
-              cursor: 'pointer',
+              fontSize: '0.7rem',
+              borderRadius: 'var(--radius-xs)',
               background: mapView === 'density' ? 'var(--bg-secondary)' : 'transparent',
               color: mapView === 'density' ? 'var(--text-primary)' : 'var(--text-tertiary)',
-              fontWeight: '500'
+              border: 'none',
+              boxShadow: 'none'
             }}
           >
-            Grievances
+            Grievance Density
           </button>
           <button
             onClick={() => setMapView('satisfaction')}
+            className="btn"
             style={{
               padding: '4px 10px',
-              fontSize: '0.75rem',
-              border: 'none',
-              borderRadius: 'var(--radius-sm)',
-              cursor: 'pointer',
+              fontSize: '0.7rem',
+              borderRadius: 'var(--radius-xs)',
               background: mapView === 'satisfaction' ? 'var(--bg-secondary)' : 'transparent',
               color: mapView === 'satisfaction' ? 'var(--text-primary)' : 'var(--text-tertiary)',
-              fontWeight: '500'
+              border: 'none',
+              boxShadow: 'none'
             }}
           >
-            Satisfaction
+            Satisfaction Rate
           </button>
         </div>
       </div>
 
-      {/* SVG Map Container */}
-      <div style={{
-        position: 'relative',
-        width: '100%',
-        backgroundColor: 'var(--bg-tertiary)',
-        borderRadius: 'var(--radius-md)',
-        border: '1px solid var(--border-color)',
-        overflow: 'hidden',
-        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)'
-      }}>
-        {/* SVG paths representing wards */}
-        <svg
-          viewBox="0 0 800 480"
-          style={{
-            width: '100%',
-            height: 'auto',
-            display: 'block'
-          }}
-        >
-          {wards.map((ward) => (
-            <g key={ward.id} style={{ cursor: 'pointer' }} onClick={() => handleWardClick(ward.id)}>
-              <polygon
-                points={ward.points}
-                fill={getWardColor(ward)}
-                stroke={getWardBorderColor(ward)}
-                strokeWidth={selectedWard === ward.id ? '3' : '1.5'}
-                style={{
-                  transition: 'all 0.3s ease',
-                  filter: selectedWard === ward.id ? 'drop-shadow(0 0 8px var(--accent-glow))' : 'none'
-                }}
-              />
-              {/* Ward Labels overlay in SVG */}
-              <text
-                x={ward.center.x}
-                y={ward.center.y}
-                textAnchor="middle"
-                style={{
-                  fill: 'var(--text-primary)',
-                  fontSize: '0.8rem',
-                  fontWeight: '600',
-                  pointerEvents: 'none',
-                  letterSpacing: '0.05em'
-                }}
-              >
-                {ward.name}
-              </text>
-              <text
-                x={ward.center.x}
-                y={ward.center.y + 16}
-                textAnchor="middle"
-                style={{
-                  fill: 'var(--text-secondary)',
-                  fontSize: '0.65rem',
-                  pointerEvents: 'none'
-                }}
-              >
-                {mapView === 'density' ? `${getWardGrievanceCount(ward.id)} Tickets` : `${getWardSatisfaction(ward)}% Sat`}
-              </text>
-            </g>
-          ))}
-        </svg>
-
-        {/* Absolute Overlay Pins */}
-        {mapPins.map((pin) => {
-          const pinColor = pin.urgency === 'Critical' ? 'var(--danger)' : pin.urgency === 'Medium' ? 'var(--warning)' : 'var(--success)';
-          return (
-            <div
-              key={pin.id}
-              onClick={() => onSelectGrievance(pin)}
-              className={pin.urgency === 'Critical' ? 'pulse-glow' : ''}
-              style={{
-                position: 'absolute',
-                left: `${pin.coordinates.x}%`,
-                top: `${pin.coordinates.y}%`,
-                transform: 'translate(-50%, -100%)',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                zIndex: 5,
-                transition: 'all 0.2s ease'
-              }}
-              title={`${pin.id}: ${pin.title} (${pin.urgency})`}
-            >
-              <MapPin
-                size={22}
-                fill={pinColor}
-                color="var(--bg-secondary)"
-                style={{
-                  filter: `drop-shadow(0 2px 4px rgba(0,0,0,0.3))`
-                }}
-              />
-            </div>
-          );
-        })}
+      {/* Map Container */}
+      <div style={{ position: 'relative', width: '100%', height: '420px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', overflow: 'hidden', backgroundColor: 'var(--bg-tertiary)' }}>
+        {loadError ? (
+          <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px', color: 'var(--danger)', fontSize: '0.85rem' }}>
+            <p>Failed to load Google Maps script. Check your internet connection or API Key configuration.</p>
+          </div>
+        ) : !scriptLoaded ? (
+          <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+            <span className="pulse-glow" style={{ padding: '8px 16px', borderRadius: 'var(--radius-full)', backgroundColor: 'var(--bg-secondary)' }}>Loading Google Maps...</span>
+          </div>
+        ) : (
+          <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />
+        )}
       </div>
 
       {/* Ward Status Cards Info */}
@@ -326,7 +497,7 @@ export default function ConstituencyMap({ onSelectGrievance }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.7rem', color: 'var(--text-tertiary)', borderTop: '1px solid var(--border-color)', paddingTop: '10px' }}>
         <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
           <Info size={12} />
-          Click Wards to Filter Dashboard
+          Click Wards on Map to Filter Workspace
         </span>
         <div style={{ display: 'flex', gap: '10px' }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--danger)' }}></div> Critical</span>

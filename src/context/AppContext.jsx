@@ -515,6 +515,10 @@ export const AppProvider = ({ children }) => {
     return localStorage.getItem('gemini_api_key') || '';
   });
 
+  const [googleMapsApiKey, setGoogleMapsApiKey] = useState(() => {
+    return localStorage.getItem('google_maps_api_key') || '';
+  });
+
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem('lokdrishti_logged_in') === 'true';
   });
@@ -721,6 +725,8 @@ export const AppProvider = ({ children }) => {
         setActiveTab,
         geminiApiKey,
         setGeminiApiKey,
+        googleMapsApiKey,
+        setGoogleMapsApiKey,
         isLoggedIn,
         handleLogin,
         handleLogout,

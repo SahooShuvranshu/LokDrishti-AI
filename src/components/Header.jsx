@@ -10,6 +10,8 @@ export default function Header() {
     setActiveTab,
     geminiApiKey,
     setGeminiApiKey,
+    googleMapsApiKey,
+    setGoogleMapsApiKey,
     grievances,
     isLoggedIn,
     handleLogout
@@ -17,6 +19,7 @@ export default function Header() {
 
   const [showSettings, setShowSettings] = useState(false);
   const [tempKey, setTempKey] = useState(geminiApiKey);
+  const [tempMapsKey, setTempMapsKey] = useState(googleMapsApiKey);
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Filter recent critical or pending grievances for the ticker
@@ -28,7 +31,10 @@ export default function Header() {
     e.preventDefault();
     setGeminiApiKey(tempKey);
     localStorage.setItem('gemini_api_key', tempKey);
+    setGoogleMapsApiKey(tempMapsKey);
+    localStorage.setItem('google_maps_api_key', tempMapsKey);
     setShowSettings(false);
+    window.location.reload();
   };
 
   const handleTabClick = (tab) => {
@@ -386,6 +392,18 @@ export default function Header() {
                   placeholder="Enter your Gemini API key (AIzaSy...)"
                   value={tempKey}
                   onChange={(e) => setTempKey(e.target.value)}
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label" htmlFor="maps-key-input">Google Maps API Key</label>
+                <input
+                  id="maps-key-input"
+                  className="form-input"
+                  type="password"
+                  placeholder="Enter your Google Maps API key"
+                  value={tempMapsKey}
+                  onChange={(e) => setTempMapsKey(e.target.value)}
                 />
               </div>
 
