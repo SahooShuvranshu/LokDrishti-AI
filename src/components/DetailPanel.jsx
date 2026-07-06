@@ -248,19 +248,7 @@ Write in a professional, polite, and reassuring tone. Tell them that their ticke
         </div>
       </div>
 
-      {/* Photo Evidence if present */}
-      {grievance.photo && (
-        <div style={{ marginTop: '12px' }}>
-          <h3 style={{ fontSize: '0.9rem', marginBottom: '8px', color: 'var(--text-secondary)' }}>Attached Photo Evidence</h3>
-          <div className="glass-panel" style={{ padding: '6px', backgroundColor: 'var(--bg-tertiary)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}>
-            <img
-              src={grievance.photo}
-              alt="Citizen Evidence"
-              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', borderRadius: '4px' }}
-            />
-          </div>
-        </div>
-      )}
+      
 
       {/* Command Actions */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>

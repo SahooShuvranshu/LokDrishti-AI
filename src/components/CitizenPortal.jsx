@@ -24,10 +24,10 @@ export default function CitizenPortal() {
   const [showRefinedResult, setShowRefinedResult] = useState(false);
 
   // Photo upload states
-  const [imageFile, setImageFile] = useState(null);
-  const [imageBase64, setImageBase64] = useState('');
-  const [imageMimeType, setImageMimeType] = useState('');
-  const [imagePreview, setImagePreview] = useState(null);
+  
+  
+  
+  
 
   // Map location selector states
   const [pinLocation, setPinLocation] = useState({ lat: 20.2961, lng: 85.8245 });
@@ -259,8 +259,8 @@ export default function CitizenPortal() {
 
   // Mock stream or Live Gemini AI refiner
   const refineWithAI = async () => {
-    if (!description.trim() && !imageBase64) {
-      alert('Please enter a description or upload a photo first.');
+    if (!description.trim() ) {
+      alert('Please enter a description first.');
       return;
     }
 
@@ -423,8 +423,7 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
       status: 'Pending',
       coordinates: { lat: pinLocation.lat, lng: pinLocation.lng },
       timestamp: new Date().toISOString(),
-      impact: 'Est. 50 households',
-      photo: imageBase64 ? `data:${imageMimeType};base64,${imageBase64}` : null
+      impact: 'Est. 50 households'
     };
 
     addGrievance(newTicket);
@@ -440,11 +439,7 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
     setRefinementLogs([]);
     setRefinedOutput('');
     setShowRefinedResult(false);
-    setImageFile(null);
-    setImageBase64('');
-    setImageMimeType('');
-    setImagePreview(null);
-    setPinLocation({ lat: 20.2961, lng: 85.8245 });
+        setPinLocation({ lat: 20.2961, lng: 85.8245 });
     setSearchQuery('');
   };
 
@@ -622,76 +617,7 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
             )}
           </div>
 
-          {/* Photo attachment field */}
-          <div className="form-group" style={{ marginTop: '16px', marginBottom: '20px' }}>
-            <label className="form-label">Attach Photo of the Issue (Optional)</label>
-            <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '6px' }}>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                style={{ display: 'none' }}
-                id="photo-upload-input"
-              />
-              <label
-                htmlFor="photo-upload-input"
-                className="btn"
-                style={{
-                  padding: '8px 16px',
-                  fontSize: '0.8rem',
-                  borderRadius: 'var(--radius-sm)',
-                  backgroundColor: 'var(--bg-tertiary)',
-                  borderColor: 'var(--border-color)',
-                  color: 'var(--text-primary)',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px'
-                }}
-              >
-                Choose Image File
-              </label>
-              {imageFile && (
-                <span className="text-xs text-zinc-400">
-                  {imageFile.name} ({(imageFile.size / 1024).toFixed(1)} KB)
-                </span>
-              )}
-            </div>
 
-            {imagePreview && (
-              <div style={{ marginTop: '12px', position: 'relative', width: '120px', height: '120px' }}>
-                <img
-                  src={imagePreview}
-                  alt="Issue preview"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--border-color)' }}
-                />
-                <button
-                  type="button"
-                  onClick={() => {
-                    setImageFile(null);
-                    setImageBase64('');
-                    setImageMimeType('');
-                    setImagePreview(null);
-                  }}
-                  className="btn"
-                  style={{
-                    position: 'absolute',
-                    top: '-6px',
-                    right: '-6px',
-                    padding: '2px 6px',
-                    fontSize: '0.7rem',
-                    borderRadius: '50%',
-                    backgroundColor: 'var(--danger)',
-                    color: 'white',
-                    border: 'none',
-                    cursor: 'pointer'
-                  }}
-                >
-                  X
-                </button>
-              </div>
-            )}
-          </div>
 
           {/* Map Location Selector */}
           <div className="form-group" style={{ marginTop: '16px', marginBottom: '16px' }}>
