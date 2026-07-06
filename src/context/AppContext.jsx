@@ -19,7 +19,11 @@ export const AppProvider = ({ children }) => {
           .select('*')
           .order('timestamp', { ascending: false });
         if (error) throw error;
-        setGrievances(data || []);
+        const mapped = (data || []).map(g => ({
+          ...g,
+          translatedDescription: g.translated_description || g.description
+        }));
+        setGrievances(mapped);
       } catch (err) {
         console.error('Error fetching grievances:', err.message);
       }
@@ -138,9 +142,22 @@ export const AppProvider = ({ children }) => {
   // Action Handlers
   const addGrievance = async (newTicket) => {
     try {
+      const dbTicket = {
+        id: newTicket.id,
+        title: newTicket.title,
+        description: newTicket.description,
+        translated_description: newTicket.translatedDescription || newTicket.description,
+        reporter: newTicket.reporter,
+        sector: newTicket.sector,
+        urgency: newTicket.urgency,
+        status: newTicket.status,
+        coordinates: newTicket.coordinates,
+        timestamp: newTicket.timestamp,
+        impact: newTicket.impact
+      };
       const { error } = await supabase
         .from('grievances')
-        .insert([newTicket]);
+        .insert([dbTicket]);
       if (error) throw error;
       setGrievances((prev) => [newTicket, ...prev]);
     } catch (err) {
