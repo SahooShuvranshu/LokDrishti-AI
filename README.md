@@ -136,13 +136,43 @@ cd LokDrishti-AI
 npm install
 ```
 
-### **3. Run Development Server**
+### **3. Configure Environment Variables (API Keys)**
+To enable the live Google Maps integration and the real Gemini AI streams, configure your local environment keys:
+
+1. **Create a `.env` File:**
+   Duplicate the provided template file `.env.example` in the root directory and rename it to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Add Your Keys:**
+   Open `.env` and paste your actual keys:
+   ```env
+   VITE_GEMINI_API_KEY=AIzaSyYourGeminiApiKeyHere
+   VITE_GOOGLE_MAPS_API_KEY=AIzaSyYourGoogleMapsApiKeyHere
+   ```
+
+#### **How to obtain your keys:**
+*   **Google Gemini API Key:**
+    1. Visit [Google AI Studio](https://aistudio.google.com/).
+    2. Log in with your Google account.
+    3. Click **"Get API key"** at the top left.
+    4. Click **"Create API Key"** and copy the generated key.
+*   **Google Maps JavaScript API Key:**
+    1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
+    2. Search for and enable the **"Maps JavaScript API"** on your project.
+    3. Navigate to **APIs & Services** > **Credentials**.
+    4. Click **Create Credentials** > **API key** and copy it. *(Recommended: Restrict the key to 'Maps JavaScript API' in credentials settings).*
+
+---
+
+### **4. Run Development Server**
 ```bash
 npm run dev
 ```
 Open **[http://localhost:5173](http://localhost:5173)** in your browser.
 
-### **4. Compile Production Build**
+### **5. Compile Production Build**
 ```bash
 npm run build
 ```
