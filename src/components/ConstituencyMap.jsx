@@ -2,19 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Info, MapPin } from 'lucide-react';
 
-// Bounding box for wards partition in New Delhi
+// Bounding box for wards partition in Bhubaneswar, Odisha
 const wards = [
   {
     id: 'Ward A: Industrial Core',
     name: 'Ward A',
     label: 'Industrial Core',
-    latRange: [28.60, 28.70],
-    lngRange: [77.10, 77.20],
+    latRange: [20.28, 20.35],
+    lngRange: [85.75, 85.80],
     path: [
-      { lat: 28.60, lng: 77.10 },
-      { lat: 28.70, lng: 77.10 },
-      { lat: 28.70, lng: 77.20 },
-      { lat: 28.60, lng: 77.20 }
+      { lat: 20.28, lng: 85.75 },
+      { lat: 20.35, lng: 85.75 },
+      { lat: 20.35, lng: 85.80 },
+      { lat: 20.28, lng: 85.80 }
     ],
     baseSatisfaction: 64,
     population: '1.2L'
@@ -23,13 +23,13 @@ const wards = [
     id: 'Ward B: Urban Center',
     name: 'Ward B',
     label: 'Urban Center',
-    latRange: [28.60, 28.70],
-    lngRange: [77.20, 77.25],
+    latRange: [20.28, 20.35],
+    lngRange: [85.80, 85.85],
     path: [
-      { lat: 28.60, lng: 77.20 },
-      { lat: 28.70, lng: 77.20 },
-      { lat: 28.70, lng: 77.25 },
-      { lat: 28.60, lng: 77.25 }
+      { lat: 20.28, lng: 85.80 },
+      { lat: 20.35, lng: 85.80 },
+      { lat: 20.35, lng: 85.85 },
+      { lat: 20.28, lng: 85.85 }
     ],
     baseSatisfaction: 79,
     population: '2.5L'
@@ -38,13 +38,13 @@ const wards = [
     id: 'Ward C: Rural Green',
     name: 'Ward C',
     label: 'Rural Green',
-    latRange: [28.50, 28.60],
-    lngRange: [77.10, 77.20],
+    latRange: [20.22, 20.28],
+    lngRange: [85.75, 85.80],
     path: [
-      { lat: 28.50, lng: 77.10 },
-      { lat: 28.60, lng: 77.10 },
-      { lat: 28.60, lng: 77.20 },
-      { lat: 28.50, lng: 77.20 }
+      { lat: 20.22, lng: 85.75 },
+      { lat: 20.28, lng: 85.75 },
+      { lat: 20.28, lng: 85.80 },
+      { lat: 20.22, lng: 85.80 }
     ],
     baseSatisfaction: 52,
     population: '0.8L'
@@ -53,13 +53,13 @@ const wards = [
     id: 'Ward D: Heritage Quarter',
     name: 'Ward D',
     label: 'Heritage Quarter',
-    latRange: [28.60, 28.70],
-    lngRange: [77.25, 77.30],
+    latRange: [20.28, 20.35],
+    lngRange: [85.85, 85.90],
     path: [
-      { lat: 28.60, lng: 77.25 },
-      { lat: 28.70, lng: 77.25 },
-      { lat: 28.70, lng: 77.30 },
-      { lat: 28.60, lng: 77.30 }
+      { lat: 20.28, lng: 85.85 },
+      { lat: 20.35, lng: 85.85 },
+      { lat: 20.35, lng: 85.90 },
+      { lat: 20.28, lng: 85.90 }
     ],
     baseSatisfaction: 71,
     population: '1.1L'
@@ -68,13 +68,13 @@ const wards = [
     id: 'Ward E: Coastal/Lake District',
     name: 'Ward E',
     label: 'Coastal/Lake',
-    latRange: [28.50, 28.60],
-    lngRange: [77.25, 77.30],
+    latRange: [20.22, 20.28],
+    lngRange: [85.85, 85.90],
     path: [
-      { lat: 28.50, lng: 77.25 },
-      { lat: 28.60, lng: 77.25 },
-      { lat: 28.60, lng: 77.30 },
-      { lat: 28.50, lng: 77.30 }
+      { lat: 20.22, lng: 85.85 },
+      { lat: 20.28, lng: 85.85 },
+      { lat: 20.28, lng: 85.90 },
+      { lat: 20.22, lng: 85.90 }
     ],
     baseSatisfaction: 68,
     population: '0.9L'
@@ -83,13 +83,13 @@ const wards = [
     id: 'Ward F: Suburbia East',
     name: 'Ward F',
     label: 'Suburbia East',
-    latRange: [28.50, 28.60],
-    lngRange: [77.20, 77.25],
+    latRange: [20.22, 20.28],
+    lngRange: [85.80, 85.85],
     path: [
-      { lat: 28.50, lng: 77.20 },
-      { lat: 28.60, lng: 77.20 },
-      { lat: 28.60, lng: 77.25 },
-      { lat: 28.50, lng: 77.25 }
+      { lat: 20.22, lng: 85.80 },
+      { lat: 20.28, lng: 85.80 },
+      { lat: 20.28, lng: 85.85 },
+      { lat: 20.22, lng: 85.85 }
     ],
     baseSatisfaction: 85,
     population: '1.8L'
@@ -186,7 +186,7 @@ export default function ConstituencyMap({ onSelectGrievance }) {
   const getGrievanceLatLng = (grievance) => {
     const wardDef = wards.find((w) => w.id === grievance.ward);
     if (!wardDef) {
-      return { lat: 28.6139, lng: 77.2090 }; // Center New Delhi
+      return { lat: 20.2961, lng: 85.8245 }; // Center Bhubaneswar
     }
     const latMin = wardDef.latRange[0];
     const latMax = wardDef.latRange[1];
@@ -239,7 +239,7 @@ export default function ConstituencyMap({ onSelectGrievance }) {
 
     // Setup map instance
     const map = new window.google.maps.Map(mapContainerRef.current, {
-      center: { lat: 28.60, lng: 77.20 },
+      center: { lat: 20.2961, lng: 85.8245 },
       zoom: 12,
       styles: theme === 'dark' ? darkMapStyle : lightMapStyle,
       disableDefaultUI: false,
@@ -406,8 +406,8 @@ export default function ConstituencyMap({ onSelectGrievance }) {
       {/* Header & View Switcher */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-primary)' }}>Constituency Map Diagnostics</span>
-          <span style={{ fontSize: '0.7rem', color: 'var(--text-tertiary)' }}>Live Google Maps spatial overlay of New Delhi district</span>
+          <span style={{ fontSize: '0.75rem', fontWeight: 'bold', color: 'var(--text-primary)' }}>Constituency Map Diagnostics</span>
+          <span style={{ fontSize: '0.7rem', color: 'var(--text-tertiary)' }}>Live Google Maps spatial overlay of Bhubaneswar Constituency, Odisha</span>
         </div>
 
         <div className="glass-panel" style={{ display: 'flex', padding: '3px', background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)' }}>
