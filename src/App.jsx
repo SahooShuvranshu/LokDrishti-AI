@@ -111,34 +111,34 @@ function MainAppContent() {
             {/* Sub Workspace Routing */}
             {mpSubTab === 'grievances' ? (
               <main className="dashboard-main-layout">
-                {/* Map & Table Left column */}
-                <div className={`dashboard-left-col ${selectedGrievance ? 'shrink' : ''}`}>
-                  <div className="dashboard-main-grid">
-                    {/* Map Widget */}
-                    <div style={{ minHeight: '450px' }}>
+                {/* Top Row: KPI Statistics */}
+                <KpiGrid />
+
+                {/* Bottom Row: Map & Table Workspace */}
+                <div className="dashboard-workspace-container">
+                  <div className={`dashboard-left-col ${selectedGrievance ? 'shrink' : ''}`}>
+                    <div className="dashboard-main-grid">
+                      {/* Map Widget */}
                       <ConstituencyMap onSelectGrievance={setSelectedGrievance} />
-                    </div>
-                    
-                    {/* KPIs and Table List */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                      <KpiGrid />
+                      
+                      {/* Table List */}
                       <GrievanceTable
                         onSelectGrievance={setSelectedGrievance}
                         selectedGrievanceId={selectedGrievance?.id}
                       />
                     </div>
                   </div>
-                </div>
 
-                {/* Inspector slide-out right side */}
-                {selectedGrievance && (
-                  <div className="detail-panel-wrapper animate-slide-in">
-                    <DetailPanel
-                      grievance={selectedGrievance}
-                      onClose={() => setSelectedGrievance(null)}
-                    />
-                  </div>
-                )}
+                  {/* Inspector slide-out right side */}
+                  {selectedGrievance && (
+                    <div className="detail-panel-wrapper animate-slide-in">
+                      <DetailPanel
+                        grievance={selectedGrievance}
+                        onClose={() => setSelectedGrievance(null)}
+                      />
+                    </div>
+                  )}
+                </div>
               </main>
             ) : (
               <main style={{ flexGrow: 1 }}>
