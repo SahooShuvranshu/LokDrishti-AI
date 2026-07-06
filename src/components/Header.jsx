@@ -11,6 +11,7 @@ export default function Header() {
     geminiApiKey,
     grievances,
     isLoggedIn,
+    user,
     handleLogout
   } = useApp();
 
@@ -34,121 +35,66 @@ export default function Header() {
       flexDirection: 'column',
       gap: '12px',
       borderRadius: 'var(--radius-md)',
-      zIndex: 10
+      border: '1px solid var(--border-color)',
+      background: 'var(--bg-secondary)',
+      boxShadow: 'var(--shadow-sm)'
     }}>
-      {/* Upper row: Brand, Navigation, Action Buttons */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '16px'
-      }}>
-        {/* Brand/Logo */}
-        <div 
-          onClick={() => handleTabClick('landing')} 
-          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
-        >
-          <div className="pulse-glow" style={{
-            width: '12px',
-            height: '12px',
+      {/* Brand row */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div className="logo-sparkle" style={{
+            display: 'inline-flex',
+            padding: '8px',
             borderRadius: '50%',
-            backgroundColor: 'var(--accent)',
-            boxShadow: '0 0 10px var(--accent)'
-          }}></div>
-          <h1 style={{
-            fontSize: '1.4rem',
-            lineHeight: '1.4rem',
-            margin: 0,
-            background: 'linear-gradient(135deg, var(--text-primary), var(--accent))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            fontWeight: 'bold'
+            backgroundColor: 'var(--accent-glow)',
+            color: 'var(--accent)'
           }}>
-            LokDrishti <span style={{ fontWeight: 'normal', color: 'var(--text-secondary)' }}>AI</span>
-          </h1>
+            <Shield size={20} fill="rgba(var(--accent-rgb), 0.1)" />
+          </div>
+          <div>
+            <h1 style={{ fontSize: '1.15rem', fontWeight: 'bold', margin: 0, tracking: '-0.02em', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              LokDrishti <span style={{ color: 'var(--accent)', fontWeight: '800' }}>AI</span>
+            </h1>
+            <span style={{ fontSize: '0.65rem', color: 'var(--text-tertiary)' }}>Constituency Development & Priority Planner</span>
+          </div>
         </div>
 
-        {/* Desktop Tab Switcher */}
-        <div className="header-nav-desktop">
+        {/* Navigation - Desktop */}
+        <nav className="header-nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <button
             onClick={() => handleTabClick('landing')}
-            className="btn"
-            style={{
-              padding: '6px 12px',
-              fontSize: '0.8rem',
-              borderRadius: 'var(--radius-sm)',
-              border: 'none',
-              boxShadow: 'none',
-              background: activeTab === 'landing' ? 'var(--bg-secondary)' : 'transparent',
-              color: activeTab === 'landing' ? 'var(--text-primary)' : 'var(--text-tertiary)',
-              fontWeight: activeTab === 'landing' ? '600' : '400'
-            }}
+            className={`btn ${activeTab === 'landing' ? 'btn-primary' : ''}`}
+            style={{ padding: '6px 14px', fontSize: '0.8rem', background: activeTab === 'landing' ? '' : 'transparent', border: 'none', boxShadow: 'none' }}
           >
-            <Home size={14} style={{ marginRight: '4px', verticalAlign: 'middle', display: 'inline' }} />
             Home
           </button>
-          
           <button
             onClick={() => handleTabClick('about')}
-            className="btn"
-            style={{
-              padding: '6px 12px',
-              fontSize: '0.8rem',
-              borderRadius: 'var(--radius-sm)',
-              border: 'none',
-              boxShadow: 'none',
-              background: activeTab === 'about' ? 'var(--bg-secondary)' : 'transparent',
-              color: activeTab === 'about' ? 'var(--text-primary)' : 'var(--text-tertiary)',
-              fontWeight: activeTab === 'about' ? '600' : '400'
-            }}
+            className={`btn ${activeTab === 'about' ? 'btn-primary' : ''}`}
+            style={{ padding: '6px 14px', fontSize: '0.8rem', background: activeTab === 'about' ? '' : 'transparent', border: 'none', boxShadow: 'none' }}
           >
-            <BookOpen size={14} style={{ marginRight: '4px', verticalAlign: 'middle', display: 'inline' }} />
             About
           </button>
-
           <button
             onClick={() => handleTabClick('citizen')}
-            className="btn"
-            style={{
-              padding: '6px 12px',
-              fontSize: '0.8rem',
-              borderRadius: 'var(--radius-sm)',
-              border: 'none',
-              boxShadow: 'none',
-              background: activeTab === 'citizen' ? 'var(--bg-secondary)' : 'transparent',
-              color: activeTab === 'citizen' ? 'var(--text-primary)' : 'var(--text-tertiary)',
-              fontWeight: activeTab === 'citizen' ? '600' : '400'
-            }}
+            className={`btn ${activeTab === 'citizen' ? 'btn-primary' : ''}`}
+            style={{ padding: '6px 14px', fontSize: '0.8rem', background: activeTab === 'citizen' ? '' : 'transparent', border: 'none', boxShadow: 'none' }}
           >
-            <User size={14} style={{ marginRight: '4px', verticalAlign: 'middle', display: 'inline' }} />
             Citizen Portal
           </button>
-          
           <button
             onClick={() => handleTabClick('mp')}
-            className="btn"
-            style={{
-              padding: '6px 12px',
-              fontSize: '0.8rem',
-              borderRadius: 'var(--radius-sm)',
-              border: 'none',
-              boxShadow: 'none',
-              background: activeTab === 'mp' ? 'var(--bg-secondary)' : 'transparent',
-              color: activeTab === 'mp' ? 'var(--text-primary)' : 'var(--text-tertiary)',
-              fontWeight: activeTab === 'mp' ? '600' : '400'
-            }}
+            className={`btn ${activeTab === 'mp' ? 'btn-primary' : ''}`}
+            style={{ padding: '6px 14px', fontSize: '0.8rem', background: activeTab === 'mp' ? '' : 'transparent', border: 'none', boxShadow: 'none' }}
           >
-            <Shield size={14} style={{ marginRight: '4px', verticalAlign: 'middle', display: 'inline' }} />
             Command Center
           </button>
-        </div>
+        </nav>
 
         {/* Action Controls */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {/* API Key Status Pill */}
           <div
-            onClick={() => setShowSettings(true)}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -159,7 +105,6 @@ export default function Header() {
               border: `1px solid ${geminiApiKey ? 'var(--success-border)' : 'var(--warning-border)'}`,
               fontSize: '0.75rem',
               color: geminiApiKey ? 'var(--success)' : 'var(--warning)',
-              cursor: 'pointer',
               fontWeight: '500'
             }}
           >
@@ -182,16 +127,28 @@ export default function Header() {
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
 
-          {/* Sign Out Button (only visible if logged in) */}
+          {/* Sign Out Button & User Details */}
           {isLoggedIn && (
-            <button
-              className="btn btn-icon"
-              onClick={handleLogout}
-              title="Sign Out of Command Center"
-              style={{ border: '1px solid var(--danger-border)', background: 'var(--danger-bg)', color: 'var(--danger)' }}
-            >
-              <LogOut size={16} />
-            </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {user?.user_metadata?.avatar_url && (
+                <img
+                  src={user.user_metadata.avatar_url}
+                  alt="Avatar"
+                  style={{ width: '24px', height: '24px', borderRadius: '50%', border: '1px solid var(--border-color)' }}
+                />
+              )}
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', maxWidth: '90px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={user?.email}>
+                {user?.user_metadata?.full_name || user?.email?.split('@')[0]}
+              </span>
+              <button
+                className="btn btn-icon"
+                onClick={handleLogout}
+                title="Sign Out of Command Center"
+                style={{ border: '1px solid var(--danger-border)', background: 'var(--danger-bg)', color: 'var(--danger)' }}
+              >
+                <LogOut size={16} />
+              </button>
+            </div>
           )}
 
           {/* Mobile Menu Toggle Button */}

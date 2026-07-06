@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { supabase } from '../supabaseClient';
 
 const AppContext = createContext();
 
@@ -519,19 +520,63 @@ export const AppProvider = ({ children }) => {
     return import.meta.env.VITE_GOOGLE_MAPS_API_KEY || localStorage.getItem('google_maps_api_key') || '';
   });
 
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem('lokdrishti_logged_in') === 'true';
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+
+  // Monitor Supabase session and auth state changes
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        setUser(session.user);
+        setIsLoggedIn(true);
+      } else {
+        setUser(null);
+        setIsLoggedIn(false);
+      }
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        setUser(session.user);
+        setIsLoggedIn(true);
+      } else {
+        setUser(null);
+        setIsLoggedIn(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleLogin = (username, password) => {
+    // Keep as a simulator fallback
     setIsLoggedIn(true);
-    localStorage.setItem('lokdrishti_logged_in', 'true');
     return true;
   };
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem('lokdrishti_logged_in');
+  const signInWithGoogle = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin
+        }
+      });
+      if (error) throw error;
+    } catch (err) {
+      console.error('Error signing in with Google:', err.message);
+      alert('Authentication error: ' + err.message);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      setIsLoggedIn(false);
+      setUser(null);
+    } catch (err) {
+      console.error('Error signing out:', err.message);
+    }
   };
 
   // Persist Data
@@ -728,7 +773,9 @@ export const AppProvider = ({ children }) => {
         googleMapsApiKey,
         setGoogleMapsApiKey,
         isLoggedIn,
+        user,
         handleLogin,
+        signInWithGoogle,
         handleLogout,
         budgetCap,
         currentBudgetUsed,
