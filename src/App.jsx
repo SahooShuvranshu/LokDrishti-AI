@@ -7,6 +7,7 @@ import KpiGrid from './components/KpiGrid';
 import GrievanceTable from './components/GrievanceTable';
 import DetailPanel from './components/DetailPanel';
 import Optimizer from './components/Optimizer';
+import AiAdvisor from './components/AiAdvisor';
 import EventSimulator from './components/EventSimulator';
 import LandingPage from './components/LandingPage';
 import AboutPage from './components/AboutPage';
@@ -16,7 +17,7 @@ import { Shield, Sparkles, Sliders } from 'lucide-react';
 
 function MainAppContent() {
   const { activeTab, isLoggedIn } = useApp();
-  const [mpSubTab, setMpSubTab] = useState('grievances'); // 'grievances' or 'optimizer'
+  const [mpSubTab, setMpSubTab] = useState('grievances'); // 'grievances', 'optimizer', or 'advisor'
   const [selectedGrievance, setSelectedGrievance] = useState(null);
 
   return (
@@ -96,6 +97,26 @@ function MainAppContent() {
                   <Sliders size={14} style={{ marginRight: '6px', verticalAlign: 'middle', display: 'inline' }} />
                   Resource Optimizer
                 </button>
+                <button
+                  onClick={() => setMpSubTab('advisor')}
+                  className="btn"
+                  style={{
+                    padding: '6px 12px',
+                    fontSize: '0.8rem',
+                    borderRadius: 'var(--radius-sm)',
+                    backgroundColor: mpSubTab === 'advisor' ? 'var(--accent)' : 'transparent',
+                    color: mpSubTab === 'advisor' ? 'var(--accent-text)' : 'var(--text-secondary)',
+                    borderColor: mpSubTab === 'advisor' ? 'var(--accent)' : 'transparent',
+                    fontWeight: '600',
+                    boxShadow: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}
+                >
+                  <Sparkles size={14} style={{ display: 'inline' }} />
+                  AI Strategic Advisor
+                </button>
               </div>
             </div>
 
@@ -131,9 +152,13 @@ function MainAppContent() {
                   )}
                 </div>
               </main>
-            ) : (
+            ) : mpSubTab === 'optimizer' ? (
               <main style={{ flexGrow: 1 }}>
                 <Optimizer />
+              </main>
+            ) : (
+              <main style={{ flexGrow: 1, padding: '0 24px' }}>
+                <AiAdvisor />
               </main>
             )}
           </div>

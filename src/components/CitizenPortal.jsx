@@ -86,7 +86,7 @@ export default function CitizenPortal() {
     }
   };
 
-  // Mock stream AI refiner
+  // Mock stream or Live Gemini AI refiner
   const refineWithAI = async () => {
     if (!description.trim()) {
       alert('Please enter a description first.');
@@ -99,49 +99,101 @@ export default function CitizenPortal() {
     setShowRefinedResult(true);
 
     const logs = [
-      'Establishing connection to Gemini-1.5-Flash...',
+      geminiApiKey ? 'Establishing connection to Google Gemini 1.5 Flash API...' : 'Establishing connection to Gemini-1.5-Flash...',
       'Analyzing text characteristics and semantic patterns...',
       'Translating and parsing dialect tokens...',
       'Extracting entities (Location, Impact size, Subject)...',
       'Determining optimal department route...',
-      'Synthesizing professional English citation...'
+      geminiApiKey ? 'Generating real-time structured briefing summary...' : 'Synthesizing professional English citation...'
     ];
 
     // Simulate logs printing out one-by-one
     for (let i = 0; i < logs.length; i++) {
-      await new Promise((r) => setTimeout(r, 600));
+      await new Promise((r) => setTimeout(r, 450));
       setRefinementLogs((prev) => [...prev, `[system] ${logs[i]}`]);
     }
 
-    // Determine mock outputs based on keywords in user input
-    const lowerInput = description.toLowerCase();
+    let refinedText = '';
     let sectorSuggestion = 'Infrastructure';
     let urgencySuggestion = 'Medium';
-    let impactSuggestion = '50 households';
-    let englishTranslation = description;
-    let refinedText = '';
+    let keyToUse = geminiApiKey;
 
-    if (lowerInput.includes('पानी') || lowerInput.includes('water') || lowerInput.includes('nal')) {
-      sectorSuggestion = 'Water Supply';
-      urgencySuggestion = lowerInput.includes('गंदा') || lowerInput.includes('muddy') || lowerInput.includes('leak') ? 'Critical' : 'Medium';
-      impactSuggestion = '80 households';
-      englishTranslation = lowerInput.includes('पानी') ? 'Our drinking water contains mud particles and bad odour. Children are unable to consume it.' : description;
-      refinedText = `REPORT: Potable Water Supply Impurity\nSTATUS: Unfit for consumption\nSECTOR: Water Supply\nEST. IMPACT: ${impactSuggestion}\n\nSUMMARY: Residents are experiencing contaminated water supply with visible turbidity and heavy odour. Poses immediate enteric public health risk. Urgent sanitization and filter flushing required at local supply mains.`;
-    } else if (lowerInput.includes('कचरा') || lowerInput.includes('garbage') || lowerInput.includes('gandagi')) {
-      sectorSuggestion = 'Sanitation';
-      urgencySuggestion = 'Medium';
-      impactSuggestion = '120 households';
-      englishTranslation = lowerInput.includes('कचरा') ? 'Garbage is dumped openly on the main street and it smells horrible.' : description;
-      refinedText = `REPORT: Unauthorized Open Garbage Dumping\nSTATUS: Hazardous municipal blockage\nSECTOR: Sanitation\nEST. IMPACT: ${impactSuggestion}\n\nSUMMARY: Heavy accumulation of household and commercial waste on public roadways, attracting stray pests and releasing toxic biogases. Demands immediate sanitation crew dispatch for waste relocation and installation of standard public bins.`;
-    } else if (lowerInput.includes('मच्छर') || lowerInput.includes('mosquito') || lowerInput.includes('phc') || lowerInput.includes('health') || lowerInput.includes('doctor')) {
-      sectorSuggestion = 'Public Health';
-      urgencySuggestion = 'Critical';
-      impactSuggestion = '250 residents';
-      englishTranslation = lowerInput.includes('मच्छर') ? 'A lot of mosquitoes are breeding in stagnant drainage water. Dengue threat is high.' : description;
-      refinedText = `REPORT: Vector-Borne Breeding Hazard\nSTATUS: Epidemic threat risk\nSECTOR: Public Health\nEST. IMPACT: ${impactSuggestion}\n\nSUMMARY: Severe stagnation of rainy surface runoff causing accelerated breeding of mosquitoes. High local reports of febrile illnesses. Demands rapid action involving chemical anti-larval fogging and immediate water pumping.`;
-    } else {
-      // General infrastructure
-      refinedText = `REPORT: Public Infrastructure Maintenance Request\nSTATUS: General wear\nSECTOR: Infrastructure\nEST. IMPACT: 50+ households\n\nSUMMARY: User reported the following: "${description}". The infrastructure is broken or damaged, leading to local commuting difficulties. Recommend physical audit by municipality engineers.`;
+    if (keyToUse) {
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${keyToUse}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{
+                text: `Translate the following Indian language constituency grievance description into structured, professional English and format it as a report.
+                
+Grievance description: "${description}"
+
+Output EXACTLY in the following format (and nothing else):
+REPORT: [Short descriptive English title, 4-6 words]
+STATUS: [Short status description, e.g., Hazardous municipal blockage]
+SECTOR: [Choose exactly one of: Infrastructure, Water Supply, Sanitation, Public Health, Heritage/Tourism, Transport]
+EST. IMPACT: [Estimated impact based on content, e.g., 80+ households]
+
+SUMMARY: [A concise, professional 2-3 sentence English summary explaining the problem, the danger it poses, and the urgent action requested from the municipal department.]`
+              }]
+            }]
+          })
+        });
+        const data = await response.json();
+        refinedText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        
+        if (!refinedText) {
+          throw new Error(data.error?.message || 'Empty response from Gemini');
+        }
+
+        // Try to parse the sector and status suggestions from Gemini's live response
+        const sectorMatch = refinedText.match(/SECTOR:\s*(.*)/i);
+        if (sectorMatch) {
+          const suggested = sectorMatch[1].trim();
+          const validSectors = ['Infrastructure', 'Water Supply', 'Sanitation', 'Public Health', 'Heritage/Tourism', 'Transport'];
+          const matched = validSectors.find(s => s.toLowerCase() === suggested.toLowerCase());
+          if (matched) sectorSuggestion = matched;
+        }
+
+        const lowerRefined = refinedText.toLowerCase();
+        if (lowerRefined.includes('critical') || lowerRefined.includes('severe') || lowerRefined.includes('urgent') || lowerRefined.includes('hazard')) {
+          urgencySuggestion = 'Critical';
+        } else if (lowerRefined.includes('high') || lowerRefined.includes('danger')) {
+          urgencySuggestion = 'High';
+        }
+
+      } catch (err) {
+        console.error('Error generating with Gemini API:', err);
+        setRefinementLogs((prev) => [...prev, `[error] Live Gemini API failed. Falling back to local simulation...`]);
+        keyToUse = ''; // Force fallback
+      }
+    }
+
+    // Fallback Mock simulation if no API Key or if API request failed
+    if (!keyToUse) {
+      const lowerInput = description.toLowerCase();
+      let impactSuggestion = '50 households';
+      
+      if (lowerInput.includes('पानी') || lowerInput.includes('water') || lowerInput.includes('nal')) {
+        sectorSuggestion = 'Water Supply';
+        urgencySuggestion = lowerInput.includes('गंदा') || lowerInput.includes('muddy') || lowerInput.includes('leak') ? 'Critical' : 'Medium';
+        impactSuggestion = '80 households';
+        refinedText = `REPORT: Potable Water Supply Impurity\nSTATUS: Unfit for consumption\nSECTOR: Water Supply\nEST. IMPACT: ${impactSuggestion}\n\nSUMMARY: Residents are experiencing contaminated water supply with visible turbidity and heavy odour. Poses immediate enteric public health risk. Urgent sanitization and filter flushing required at local supply mains.`;
+      } else if (lowerInput.includes('कचरा') || lowerInput.includes('garbage') || lowerInput.includes('gandagi')) {
+        sectorSuggestion = 'Sanitation';
+        urgencySuggestion = 'Medium';
+        impactSuggestion = '120 households';
+        refinedText = `REPORT: Unauthorized Open Garbage Dumping\nSTATUS: Hazardous municipal blockage\nSECTOR: Sanitation\nEST. IMPACT: ${impactSuggestion}\n\nSUMMARY: Heavy accumulation of household and commercial waste on public roadways, attracting stray pests and releasing toxic biogases. Demands immediate sanitation crew dispatch for waste relocation and installation of standard public bins.`;
+      } else if (lowerInput.includes('मच्छर') || lowerInput.includes('mosquito') || lowerInput.includes('phc') || lowerInput.includes('health') || lowerInput.includes('doctor')) {
+        sectorSuggestion = 'Public Health';
+        urgencySuggestion = 'Critical';
+        impactSuggestion = '250 residents';
+        refinedText = `REPORT: Vector-Borne Breeding Hazard\nSTATUS: Epidemic threat risk\nSECTOR: Public Health\nEST. IMPACT: ${impactSuggestion}\n\nSUMMARY: Severe stagnation of rainy surface runoff causing accelerated breeding of mosquitoes. High local reports of febrile illnesses. Demands rapid action involving chemical anti-larval fogging and immediate water pumping.`;
+      } else {
+        refinedText = `REPORT: Public Infrastructure Maintenance Request\nSTATUS: General wear\nSECTOR: Infrastructure\nEST. IMPACT: 50+ households\n\nSUMMARY: User reported the following: "${description}". The infrastructure is broken or damaged, leading to local commuting difficulties. Recommend physical audit by municipality engineers.`;
+      }
     }
 
     setSector(sectorSuggestion);
@@ -157,7 +209,7 @@ export default function CitizenPortal() {
         clearInterval(interval);
         setIsRefining(false);
       }
-    }, 15);
+    }, 8);
   };
 
   const handleApplyRefinement = () => {

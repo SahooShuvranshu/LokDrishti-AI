@@ -3,7 +3,7 @@ import { useApp } from '../context/AppContext';
 import { X, Calendar, User, MapPin, AlertCircle, FileText, Send, CheckCircle2, ChevronRight, Copy, Share2 } from 'lucide-react';
 
 export default function DetailPanel({ grievance, onClose }) {
-  const { updateGrievanceStatus, addProject, projects } = useApp();
+  const { updateGrievanceStatus, addProject, projects, geminiApiKey } = useApp();
 
   const [status, setStatus] = useState(grievance.status);
   const [streamingText, setStreamingText] = useState('');
@@ -31,7 +31,7 @@ export default function DetailPanel({ grievance, onClose }) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const streamContent = (type) => {
+  const streamContent = async (type) => {
     setStreamingType(type);
     setStreamingText('');
     setIsStreaming(true);
@@ -43,62 +43,71 @@ export default function DetailPanel({ grievance, onClose }) {
     });
 
     let textToStream = '';
-    
-    if (type === 'notice') {
-      textToStream = `OFFICIAL MUNICIPAL DIRECTIVE
-LOKDRISHTI CONSTITUENCY COMMAND HEADQUARTERS
-Reference ID: DIR-2026-${grievance.id.split('-')[1]}
-Date: ${nowStr}
+    let keyToUse = geminiApiKey;
 
-TO:
-The Senior Zonal Officer / Ward Commissioner
-Municipal Grievance and Works Committee
-${grievance.ward}
+    if (keyToUse) {
+      setStreamingText('Drafting with Google Gemini 1.5 Flash...');
+      try {
+        let promptText = '';
+        if (type === 'notice') {
+          promptText = `Draft an official, highly professional, formal municipal directive letter from the Office of the Member of Parliament (MP) to the Senior Zonal Officer/Ward Commissioner regarding the following citizen complaint:
+          
+Grievance Details:
+- ID: ${grievance.id}
+- Category/Sector: ${grievance.sector}
+- Urgency: ${grievance.urgency}
+- Location: ${grievance.ward}
+- Complaint: "${grievance.description}"
+- Reported by: ${grievance.reporter}
+- Date: ${nowStr}
 
-SUBJECT: URGENT COMPLIANCE AND FIELD INSPECTION ORDER
+Structure it like an official government notice. Include Reference ID: DIR-2026-${grievance.id.split('-')[1]}. Outline 3 specific recommended technical municipal actions based on the sector, and state that a compliance report must be submitted within 72 hours. End with 'By Order of, Office of the Member of Parliament'.`;
+        } else {
+          promptText = `Draft a formal, reassuring official constituency update letter from the Citizen Redressal Desk of the Member of Parliament Office to the citizen ${grievance.reporter} regarding their filed complaint:
+          
+Grievance Details:
+- ID: ${grievance.id}
+- Title: ${grievance.title}
+- Location: ${grievance.ward}
+- Sector: ${grievance.sector}
+- Updated Status: ${status.toUpperCase()}
+- Date: ${nowStr}
 
-This is a formal directive issued from the Member of Parliament Command Office regarding Ticket Reference ${grievance.id} (Category: ${grievance.sector}).
+Write in a professional, polite, and reassuring tone. Tell them that their ticket status has been updated to "${status.toUpperCase()}" and that an Official Directive (Reference DIR-2026-${grievance.id.split('-')[1]}) has been dispatched to the Ward Commissioner requesting immediate remediation. Give details of how they can track it.`;
+        }
 
-INCIDENT CITATION:
-Reporter: ${grievance.reporter}
-Location Area: ${grievance.ward}
-Est. Severity: ${grievance.urgency} (Critical Priority Routing)
-Reported Detail: "${grievance.translatedDescription}"
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${keyToUse}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{ text: promptText }]
+            }]
+          })
+        });
+        const data = await response.json();
+        textToStream = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        
+        if (!textToStream) {
+          throw new Error(data.error?.message || 'Empty response');
+        }
+        setStreamingText('');
 
-RECOMMENDED MUNICIPAL ACTION:
-1. Dispatch local engineering and inspection staff to the coordinates immediately.
-2. Formulate immediate corrective repairs.
-3. Submit a progress log and photographic proof of resolution to this Command Center.
+      } catch (err) {
+        console.error('Error generating directive with Gemini:', err);
+        setStreamingText('API Error. Falling back to template...');
+        await new Promise(r => setTimeout(r, 1000));
+        keyToUse = ''; // Fallback
+      }
+    }
 
-Failure to resolve or submit a justified delay brief within 72 hours will trigger escalation to the District Collector.
-
-By Order of,
-Office of the Member of Parliament
-LokDrishti Constituency Command.`;
-    } else {
-      textToStream = `OFFICIAL CONSTITUENCY UPDATE
-
-To:
-Mr./Ms. ${grievance.reporter}
-Registered Citizen
-
-Reference: Grievance Ticket ID ${grievance.id}
-
-Dear ${grievance.reporter},
-
-We are writing to update you on the status of your grievance regarding "${grievance.title}" in ${grievance.ward.split(':')[0]}, which you submitted to the LokDrishti portal.
-
-STATUS PROTOCOL UPDATE:
-Your ticket has been reviewed by the MP Command Center and is officially updated to: [ ${status.toUpperCase()} ].
-
-Action Route:
-We have drafted and dispatched an Official Directive (Reference DIR-2026-${grievance.id.split('-')[1]}) to the Ward Commissioner requesting emergency field remediation. The local supervisor has been assigned to audit the location.
-
-You can monitor the status live on the Citizen Portal using reference ID: ${grievance.id}. Thank you for helping us keep our constituency clean, safe, and progressive.
-
-Warm regards,
-Citizen Redressal Desk
-Office of the Member of Parliament`;
+    if (!keyToUse) {
+      setStreamingText('');
+      if (type === 'notice') {
+        textToStream = `OFFICIAL MUNICIPAL DIRECTIVE\nLOKDRISHTI CONSTITUENCY COMMAND HEADQUARTERS\nReference ID: DIR-2026-${grievance.id.split('-')[1]}\nDate: ${nowStr}\n\nTO:\nThe Senior Zonal Officer / Ward Commissioner\nMunicipal Grievance and Works Committee\n${grievance.ward}\n\nSUBJECT: URGENT COMPLIANCE AND FIELD INSPECTION ORDER\n\nThis is a formal directive issued from the Member of Parliament Command Office regarding Ticket Reference ${grievance.id} (Category: ${grievance.sector}).\n\nINCIDENT CITATION:\nReporter: ${grievance.reporter}\nLocation Area: ${grievance.ward}\nEst. Severity: ${grievance.urgency} (Critical Priority Routing)\nReported Detail: "${grievance.translatedDescription}"\n\nRECOMMENDED MUNICIPAL ACTION:\n1. Dispatch local engineering and inspection staff to the coordinates immediately.\n2. Formulate immediate corrective repairs.\n3. Submit a progress log and photographic proof of resolution to this Command Center.\n\nFailure to resolve or submit a justified delay brief within 72 hours will trigger escalation to the District Collector.\n\nBy Order of,\nOffice of the Member of Parliament\nLokDrishti Constituency Command.`;
+      } else {
+        textToStream = `OFFICIAL CONSTITUENCY UPDATE\n\nTo:\nMr./Ms. ${grievance.reporter}\nRegistered Citizen\n\nReference: Grievance Ticket ID ${grievance.id}\n\nDear ${grievance.reporter},\n\nWe are writing to update you on the status of your grievance regarding "${grievance.title}" in ${grievance.ward.split(':')[0]}, which you submitted to the LokDrishti portal.\n\nSTATUS PROTOCOL UPDATE:\nYour ticket has been reviewed by the MP Command Center and is officially updated to: [ ${status.toUpperCase()} ].\n\nAction Route:\nWe have drafted and dispatched an Official Directive (Reference DIR-2026-${grievance.id.split('-')[1]}) to the Ward Commissioner requesting emergency field remediation. The local supervisor has been assigned to audit the location.\n\nYou can monitor the status live on the Citizen Portal using reference ID: ${grievance.id}. Thank you for helping us keep our constituency clean, safe, and progressive.\n\nWarm regards,\nCitizen Redressal Desk\nOffice of the Member of Parliament`;
+      }
     }
 
     let charIdx = 0;
@@ -110,7 +119,7 @@ Office of the Member of Parliament`;
         clearInterval(interval);
         setIsStreaming(false);
       }
-    }, 8);
+    }, 6);
   };
 
   const handleExportWorkOrder = () => {
