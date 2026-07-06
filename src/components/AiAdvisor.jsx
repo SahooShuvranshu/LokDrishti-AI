@@ -2,6 +2,47 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Sparkles, Brain, Award, AlertOctagon, TrendingUp, CheckCircle, FileText, Copy, Printer, RefreshCw } from 'lucide-react';
 
+const constituencyDemographics = {
+  "Ward A: Industrial Core": {
+    population: 45000,
+    unemploymentRate: "8%",
+    primarySchools: 3,
+    literacyRate: "82%",
+    infrastructureGap: "High heavy-vehicle road wear, lack of worker healthcare centers"
+  },
+  "Ward B: Urban Center": {
+    population: 62000,
+    unemploymentRate: "5%",
+    primarySchools: 12,
+    schoolEnrollmentRate: "94%",
+    averageTravelToSchoolKm: 4.5,
+    infrastructureGap: "Overburdened primary schools, heavy school traffic congestion"
+  },
+  "Ward C: Rural Green": {
+    population: 28000,
+    unemploymentRate: "18%",
+    primarySchools: 2,
+    unemployedYouthGraduates: 1200,
+    infrastructureGap: "No local vocational training or skill development centers, low agricultural water access"
+  },
+  "Ward D: Heritage Quarter": {
+    population: 35000,
+    unemploymentRate: "6%",
+    touristAnnualFootfall: "1.2 Lakhs",
+    infrastructureGap: "Poor heritage site restoration, lack of public toilets and sanitation bins"
+  },
+  "Ward E: Coastal/Lake District": {
+    population: 22000,
+    unemploymentRate: "11%",
+    infrastructureGap: "Lack of clean drinking water filtration, open garbage dumping near water bodies"
+  },
+  "Ward F: Suburbia East": {
+    population: 50000,
+    unemploymentRate: "4%",
+    infrastructureGap: "Power grid instability, transformer overloads in summer"
+  }
+};
+
 export default function AiAdvisor() {
   const { grievances, projects, budgetCap, currentBudgetUsed, geminiApiKey } = useApp();
 
@@ -18,13 +59,15 @@ export default function AiAdvisor() {
     const logs = [
       'Scanning active grievances from Supabase...',
       'Synthesizing scheduled projects priority list...',
+      'Combining feedback with Ward Demographics & Public Datasets...',
       'Calculating remaining budget allocation...',
       'Connecting to Google Gemini 1.5 Flash API...',
+      'Analyzing comparative trade-offs & bottlenecks...',
       'Structuring strategic recommendations...'
     ];
 
     for (let i = 0; i < logs.length; i++) {
-      await new Promise((r) => setTimeout(r, 500));
+      await new Promise((r) => setTimeout(r, 450));
       setAdvisorLogs((prev) => [...prev, `[advisor-ai] ${logs[i]}`]);
     }
 
@@ -61,19 +104,25 @@ Scheduled Projects Count: ${projects.length}
 Projects Detail List:
 ${JSON.stringify(projectsSummary)}
 
+Demographics & Infrastructure Gaps of Wards:
+${JSON.stringify(constituencyDemographics)}
+
 Budget Constraints:
 - MP LAD Fund Budget Cap: ${budgetCap} Lakhs (₹1.0 Crore)
 - Budget Allocated: ${currentBudgetUsed} Lakhs
 - Remaining Budget: ${budgetCap - currentBudgetUsed} Lakhs
 
 Provide a highly professional, structured constituency strategic roadmap. Use CLEAN, readable markdown format.
+You MUST combine the active grievances and proposed projects with the constituency demographic profiles and infrastructure gaps to recommend and rank high-priority development works.
+For instance, objectively weigh and compare requests for school upgrades (looking at Ward B's school enrollment rates and travel-distance data) against requests for establishing vocational centers (looking at Ward C's 18% unemployment rate and 1,200 unemployed youth graduates). Show this comparative trade-off analysis explicitly in your recommendations.
+
 Your output must include:
 1. ### CONSTITUENCY HEALTH BRIEF
-   Calculate a Constituency Health Score (e.g. 75/100) based on active vs. resolved grievances and explain the rating.
+   Calculate a Constituency Health Score (e.g. 75/100) based on active vs. resolved grievances and explain the rating, taking population weight into account.
 2. ### PRIMARY BOTTLENECKS
    Identify the top 2 sectors and wards with the highest congestion of grievances.
-3. ### STRATEGIC BUDGET RECOMMENDATIONS
-   Recommend where the remaining budget of ${budgetCap - currentBudgetUsed} Lakhs should be allocated, referencing specific wards.
+3. ### STRATEGIC BUDGET RECOMMENDATIONS & TRADE-OFFS
+   Recommend where the remaining budget of ${budgetCap - currentBudgetUsed} Lakhs should be allocated, referencing specific wards. Provide an objective trade-off analysis comparing school upgrades vs. vocational centers or infrastructure vs. sanitation based on the demographic gaps.
 4. ### ADMINISTRATIVE DIRECTIVES
    Recommend exactly 3 official directives the MP should issue to local departments (e.g. Water Board, Sanitation Dept) based on this data.`;
 

@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS grievances (
   status TEXT DEFAULT 'Pending',
   coordinates JSONB,
   timestamp TIMESTAMPTZ DEFAULT NOW(),
-  impact TEXT
+  impact TEXT,
+  photo TEXT
 );
 
 -- 2. Create Projects Table

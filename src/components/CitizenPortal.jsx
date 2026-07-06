@@ -23,6 +23,12 @@ export default function CitizenPortal() {
   const [refinedOutput, setRefinedOutput] = useState('');
   const [showRefinedResult, setShowRefinedResult] = useState(false);
 
+  // Photo upload states
+  const [imageFile, setImageFile] = useState(null);
+  const [imageBase64, setImageBase64] = useState('');
+  const [imageMimeType, setImageMimeType] = useState('');
+  const [imagePreview, setImagePreview] = useState(null);
+
   // Submission success state
   const [submittedTicket, setSubmittedTicket] = useState(null);
 
@@ -86,10 +92,31 @@ export default function CitizenPortal() {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 3 * 1024 * 1024) {
+      alert('Photo size exceeds 3MB limit. Please upload a smaller image.');
+      return;
+    }
+
+    setImageFile(file);
+    setImageMimeType(file.type);
+    setImagePreview(URL.createObjectURL(file));
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result.split(',')[1];
+      setImageBase64(base64String);
+    };
+    reader.readAsDataURL(file);
+  };
+
   // Mock stream or Live Gemini AI refiner
   const refineWithAI = async () => {
-    if (!description.trim()) {
-      alert('Please enter a description first.');
+    if (!description.trim() && !imageBase64) {
+      alert('Please enter a description or upload a photo first.');
       return;
     }
 
@@ -120,24 +147,37 @@ export default function CitizenPortal() {
 
     if (keyToUse) {
       try {
+        const promptParts = [
+          {
+            text: `Translate the following Indian language constituency grievance description into structured, professional English and format it as a report. If a photo is attached, analyze the photo to extract details, identify the issue, and verify the complaint. If no description is provided, analyze the photo and generate the description and details based on what you see.
+            
+Grievance description from citizen: "${description || 'None provided. Describe the problem based on the attached photo.'}"
+
+Output EXACTLY in the following format (and nothing else):
+REPORT: [Short descriptive English title, 4-6 words]
+STATUS: [Short status description, e.g., Hazardous municipal blockage]
+SECTOR: [Choose exactly one of: Infrastructure, Water Supply, Sanitation, Public Health, Heritage & Tourism, Transport]
+EST. IMPACT: [Estimated impact based on content, e.g., 80+ households]
+
+SUMMARY: [A concise, professional 2-3 sentence English summary explaining the problem, the danger it poses, and the urgent action requested from the municipal department.]`
+          }
+        ];
+
+        if (imageBase64) {
+          promptParts.push({
+            inlineData: {
+              mimeType: imageMimeType,
+              data: imageBase64
+            }
+          });
+        }
+
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${keyToUse}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             contents: [{
-              parts: [{
-                text: `Translate the following Indian language constituency grievance description into structured, professional English and format it as a report.
-                
-Grievance description: "${description}"
-
-Output EXACTLY in the following format (and nothing else):
-REPORT: [Short descriptive English title, 4-6 words]
-STATUS: [Short status description, e.g., Hazardous municipal blockage]
-SECTOR: [Choose exactly one of: Infrastructure, Water Supply, Sanitation, Public Health, Heritage/Tourism, Transport]
-EST. IMPACT: [Estimated impact based on content, e.g., 80+ households]
-
-SUMMARY: [A concise, professional 2-3 sentence English summary explaining the problem, the danger it poses, and the urgent action requested from the municipal department.]`
-              }]
+              parts: promptParts
             }]
           })
         });
@@ -239,7 +279,8 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
       status: 'Pending',
       coordinates: { x: 30 + Math.random() * 40, y: 30 + Math.random() * 40 },
       timestamp: new Date().toISOString(),
-      impact: 'Est. 50 households'
+      impact: 'Est. 50 households',
+      photo: imageBase64 ? `data:${imageMimeType};base64,${imageBase64}` : null
     };
 
     addGrievance(newTicket);
@@ -256,6 +297,10 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
     setRefinementLogs([]);
     setRefinedOutput('');
     setShowRefinedResult(false);
+    setImageFile(null);
+    setImageBase64('');
+    setImageMimeType('');
+    setImagePreview(null);
   };
 
   if (submittedTicket) {
@@ -448,6 +493,77 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: 'var(--danger)', marginTop: '6px' }}>
                 <AlertTriangle size={12} />
                 <span>{speechError}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Photo attachment field */}
+          <div className="form-group" style={{ marginTop: '16px', marginBottom: '20px' }}>
+            <label className="form-label">Attach Photo of the Issue (Optional)</label>
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '6px' }}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                style={{ display: 'none' }}
+                id="photo-upload-input"
+              />
+              <label
+                htmlFor="photo-upload-input"
+                className="btn"
+                style={{
+                  padding: '8px 16px',
+                  fontSize: '0.8rem',
+                  borderRadius: 'var(--radius-sm)',
+                  backgroundColor: 'var(--bg-tertiary)',
+                  borderColor: 'var(--border-color)',
+                  color: 'var(--text-primary)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                Choose Image File
+              </label>
+              {imageFile && (
+                <span className="text-xs text-zinc-400">
+                  {imageFile.name} ({(imageFile.size / 1024).toFixed(1)} KB)
+                </span>
+              )}
+            </div>
+
+            {imagePreview && (
+              <div style={{ marginTop: '12px', position: 'relative', width: '120px', height: '120px' }}>
+                <img
+                  src={imagePreview}
+                  alt="Issue preview"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--border-color)' }}
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    setImageFile(null);
+                    setImageBase64('');
+                    setImageMimeType('');
+                    setImagePreview(null);
+                  }}
+                  className="btn"
+                  style={{
+                    position: 'absolute',
+                    top: '-6px',
+                    right: '-6px',
+                    padding: '2px 6px',
+                    fontSize: '0.7rem',
+                    borderRadius: '50%',
+                    backgroundColor: 'var(--danger)',
+                    color: 'white',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  X
+                </button>
               </div>
             )}
           </div>
