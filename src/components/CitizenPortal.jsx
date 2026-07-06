@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
-import { Mic, MicOff, Sparkles, Send, CheckCircle2, RotateCcw, AlertTriangle, Languages } from 'lucide-react';
+import { Mic, MicOff, Sparkles, Send, CheckCircle2, RotateCcw, AlertTriangle, Languages, Navigation } from 'lucide-react';
 
 export default function CitizenPortal() {
   const { addGrievance, geminiApiKey, googleMapsApiKey } = useApp();
@@ -32,6 +32,8 @@ export default function CitizenPortal() {
   // Map location selector states
   const [pinLocation, setPinLocation] = useState({ lat: 20.2961, lng: 85.8245 });
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [locating, setLocating] = useState(false);
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const markerRef = useRef(null);
@@ -172,6 +174,67 @@ export default function CitizenPortal() {
       mapInstanceRef.current = null;
     };
   }, [scriptLoaded]);
+
+  const handleSearchLocation = (e) => {
+    if (e) e.preventDefault();
+    if (!searchQuery.trim() || !window.google || !window.google.maps) return;
+
+    setLocating(true);
+    const geocoder = new window.google.maps.Geocoder();
+    const fullQuery = searchQuery.toLowerCase().includes('bhubaneswar') ? searchQuery : `${searchQuery}, Bhubaneswar, Odisha`;
+
+    geocoder.geocode({ address: fullQuery }, (results, status) => {
+      setLocating(false);
+      if (status === 'OK' && results[0]) {
+        const loc = {
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        };
+        setPinLocation(loc);
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.setCenter(loc);
+          mapInstanceRef.current.setZoom(15);
+        }
+        if (markerRef.current) {
+          markerRef.current.setPosition(loc);
+        }
+      } else {
+        alert('Could not find that location. Please try adding more details (e.g. landmark, street name).');
+      }
+    });
+  };
+
+  const handleShareLiveLocation = () => {
+    if (!navigator.geolocation) {
+      alert('Geolocation is not supported by your browser.');
+      return;
+    }
+
+    setLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLocating(false);
+        const loc = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        setPinLocation(loc);
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.setCenter(loc);
+          mapInstanceRef.current.setZoom(16);
+        }
+        if (markerRef.current) {
+          markerRef.current.setPosition(loc);
+        }
+      },
+      (error) => {
+        setLocating(false);
+        console.error('Geolocation error:', error);
+        alert('Could not retrieve your location. Please check browser location permissions.');
+      },
+      { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
+    );
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -382,6 +445,7 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
     setImageMimeType('');
     setImagePreview(null);
     setPinLocation({ lat: 20.2961, lng: 85.8245 });
+    setSearchQuery('');
   };
 
   if (submittedTicket) {
@@ -632,7 +696,66 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
           {/* Map Location Selector */}
           <div className="form-group" style={{ marginTop: '16px', marginBottom: '16px' }}>
             <label className="form-label">Pin Problem Location on Map</label>
-            <p className="text-xs text-zinc-400 mb-2">Click or tap on the map to place a pin where the issue is occurring.</p>
+            
+            {/* Search and GPS controls */}
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
+              <div style={{ position: 'relative', flexGrow: 1, minWidth: '220px' }}>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="Search landmark, colony, or address in Bhubaneswar..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleSearchLocation(); } }}
+                  style={{ paddingRight: '75px' }}
+                />
+                <button
+                  type="button"
+                  onClick={handleSearchLocation}
+                  className="btn"
+                  style={{
+                    position: 'absolute',
+                    right: '4px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    padding: '4px 10px',
+                    fontSize: '0.75rem',
+                    backgroundColor: 'var(--accent)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                  disabled={locating}
+                >
+                  Search
+                </button>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleShareLiveLocation}
+                className="btn"
+                style={{
+                  padding: '8px 14px',
+                  fontSize: '0.8rem',
+                  borderRadius: 'var(--radius-sm)',
+                  backgroundColor: 'var(--bg-tertiary)',
+                  borderColor: 'var(--border-color)',
+                  color: 'var(--text-primary)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  cursor: 'pointer'
+                }}
+                disabled={locating}
+              >
+                <Navigation size={14} className={locating ? "animate-pulse" : ""} />
+                {locating ? "Locating..." : "Share Live Location"}
+              </button>
+            </div>
+
+            <p className="text-xs text-zinc-400 mb-2">You can click or drag the red marker pin anywhere on the map to fine-tune the coordinates.</p>
             <div
               ref={mapRef}
               style={{
