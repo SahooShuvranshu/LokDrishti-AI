@@ -55,23 +55,14 @@ function MainAppContent() {
           <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
             
             {/* Sub Navigation Bar for MP Workspace */}
-            <div className="glass-panel" style={{
-              margin: '16px 20px 0 20px',
-              padding: '10px 20px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              borderRadius: 'var(--radius-sm)',
-              border: '1px solid var(--border-color)',
-              background: 'var(--bg-secondary)'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div className="admin-sub-navbar glass-panel">
+              <div className="admin-sub-navbar-label">
                 <Shield size={18} style={{ color: 'var(--accent)' }} />
-                <span style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>Constituency Admin Workspace</span>
+                <span>Constituency Admin Workspace</span>
               </div>
 
               {/* Sub-tab selectors */}
-              <div style={{ display: 'flex', gap: '6px' }}>
+              <div className="admin-sub-navbar-tabs">
                 <button
                   onClick={() => setMpSubTab('grievances')}
                   className="btn"
