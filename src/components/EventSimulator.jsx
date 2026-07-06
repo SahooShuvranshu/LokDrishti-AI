@@ -18,16 +18,7 @@ export default function EventSimulator() {
   return (
     <>
       {/* Floating Simulator Trigger Badge */}
-      <div style={{
-        position: 'fixed',
-        bottom: '24px',
-        left: '24px',
-        zIndex: 9999,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        gap: '10px'
-      }}>
+      <div className="event-simulator-container">
         {/* Toast Alert Notification */}
         {activeNotification && (
           <div className="glass-panel-glow" style={{
@@ -52,7 +43,7 @@ export default function EventSimulator() {
         {!isOpen ? (
           <button
             onClick={() => setIsOpen(true)}
-            className="btn btn-primary pulse-glow"
+            className="btn btn-primary pulse-glow event-simulator-btn"
             style={{
               padding: '12px 16px',
               borderRadius: 'var(--radius-full)',
@@ -67,7 +58,7 @@ export default function EventSimulator() {
             }}
           >
             <Sliders size={16} />
-            Demo Event Simulator
+            <span>Demo Event Simulator</span>
           </button>
         ) : (
           <div className="glass-panel-glow" style={{

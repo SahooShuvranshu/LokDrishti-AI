@@ -533,3 +533,35 @@ h2 {
   }
 }
 
+/* Event Simulator Responsive Styles */
+.event-simulator-container {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .event-simulator-container {
+    bottom: 80px !important;
+    left: 16px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .event-simulator-btn span {
+    display: none !important;
+  }
+  .event-simulator-btn {
+    padding: 12px !important;
+    border-radius: 50% !important;
+    width: 44px !important;
+    height: 44px !important;
+    justify-content: center !important;
+  }
+}
+

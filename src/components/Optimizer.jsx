@@ -355,11 +355,10 @@ export default function Optimizer() {
           border: '1px solid var(--border-color)',
           borderRadius: 'var(--radius-md)',
           backgroundColor: 'var(--bg-tertiary)',
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'auto',
           padding: '16px',
-          minHeight: '400px'
+          minHeight: '400px',
+          overflowX: 'auto',
+          width: '100%'
         }}>
           <div style={{ minWidth: '500px', display: 'flex', flexDirection: 'column', gap: '16px', flexGrow: 1 }}>
             {/* Timeline axis labels */}
