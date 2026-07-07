@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Sparkles, Brain, FileText, Copy, Printer, RefreshCw } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const constituencyDemographics = {
   "Education Sector": {
@@ -213,31 +215,7 @@ Constituency Health Score: **68 / 100**
     printWindow.close();
   };
 
-  // Simple custom Markdown rendering to safe HTML
-  const formatReport = (text) => {
-    if (!text) return null;
-    return text.split('\n').map((line, idx) => {
-      if (line.startsWith('###')) {
-        return <h4 key={idx} className="text-lg font-bold text-white border-b border-zinc-800 pb-2 mt-5 mb-3 flex items-center gap-2"><Brain size={18} className="text-indigo-400" /> {line.replace('###', '').trim()}</h4>;
-      }
-      if (line.startsWith('-') || line.startsWith('*')) {
-        return <li key={idx} className="ml-5 list-disc text-zinc-300 py-1">{line.replace(/^[-*]\s*/, '')}</li>;
-      }
-      if (line.startsWith('1.') || line.startsWith('2.') || line.startsWith('3.') || line.startsWith('4.')) {
-        return <div key={idx} className="pl-2 py-1 text-zinc-300 font-medium flex gap-2"><span className="text-indigo-400 font-bold">{line.match(/^\d+\./)[0]}</span> {line.replace(/^\d+\.\s*/, '')}</div>;
-      }
-      // Replace bold text **word**
-      const parts = line.split(/\*\*(.*?)\*\*/g);
-      if (parts.length > 1) {
-        return (
-          <p key={idx} className="text-zinc-300 py-1 leading-relaxed">
-            {parts.map((part, pIdx) => pIdx % 2 === 1 ? <strong key={pIdx} className="text-white font-semibold">{part}</strong> : part)}
-          </p>
-        );
-      }
-      return <p key={idx} className="text-zinc-300 py-1 leading-relaxed">{line}</p>;
-    });
-  };
+
 
   return (
     <div className="admin-advisor-container animate-fade-in" style={{ padding: '24px 0' }}>
@@ -364,8 +342,25 @@ Constituency Health Score: **68 / 100**
             }}
           >
             {briefingText ? (
-              <div className="space-y-4 font-normal">
-                {formatReport(briefingText)}
+              <div className="space-y-4 font-normal" style={{ color: 'var(--text-secondary)' }}>
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    h1: ({node, ...props}) => <h1 style={{ color: 'var(--text-primary)', fontSize: '1.4rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '8px', marginTop: '20px', marginBottom: '12px' }} {...props} />,
+                    h2: ({node, ...props}) => <h2 style={{ color: 'var(--text-primary)', fontSize: '1.25rem', marginTop: '18px', marginBottom: '10px' }} {...props} />,
+                    h3: ({node, ...props}) => <h3 style={{ color: 'var(--text-primary)', fontSize: '1.1rem', marginTop: '16px', marginBottom: '8px' }} {...props} />,
+                    p: ({node, ...props}) => <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: '1.6', margin: '0 0 12px 0' }} {...props} />,
+                    ul: ({node, ...props}) => <ul style={{ paddingLeft: '20px', margin: '0 0 16px 0', listStyleType: 'disc' }} {...props} />,
+                    li: ({node, ...props}) => <li style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '6px' }} {...props} />,
+                    ol: ({node, ...props}) => <ol style={{ paddingLeft: '20px', margin: '0 0 16px 0', listStyleType: 'decimal' }} {...props} />,
+                    strong: ({node, ...props}) => <strong style={{ color: 'var(--text-primary)', fontWeight: 'bold' }} {...props} />,
+                    table: ({node, ...props}) => <table style={{ width: '100%', borderCollapse: 'collapse', margin: '16px 0', border: '1px solid var(--border-color)' }} {...props} />,
+                    th: ({node, ...props}) => <th style={{ padding: '8px 12px', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-tertiary)', fontWeight: 'bold', color: 'var(--text-primary)', fontSize: '0.85rem' }} {...props} />,
+                    td: ({node, ...props}) => <td style={{ padding: '8px 12px', border: '1px solid var(--border-color)', color: 'var(--text-secondary)', fontSize: '0.85rem' }} {...props} />
+                  }}
+                >
+                  {briefingText}
+                </ReactMarkdown>
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--text-tertiary)', gap: '12px', textAlign: 'center', padding: '40px' }}>
