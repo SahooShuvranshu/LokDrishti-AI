@@ -46,7 +46,6 @@ function SortableProjectCard({ project, index, fitsInBudget, cumulativeCost, onD
   return (
     <div
       ref={setNodeRef}
-      style={style}
       className="glass-panel"
       style={{
         ...style,
