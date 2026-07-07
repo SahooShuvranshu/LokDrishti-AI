@@ -1,4 +1,4 @@
-# 🏆 LokDrishti AI — Hackathon Presentation Guide
+# 🏆 LokDrishti AI — Hackathon Pitch & Presentation Guide
 
 LokDrishti AI is a fully responsive, state-of-the-art Web GIS and Live AI platform designed for Members of Parliament (MPs) and citizens to optimize local constituency resource management and accelerate grievance redressal.
 
@@ -7,26 +7,31 @@ LokDrishti AI is a fully responsive, state-of-the-art Web GIS and Live AI platfo
 ## 📌 Project Overview
 * **Live Site URL:** [https://lokdrishti-ai.onrender.com](https://lokdrishti-ai.onrender.com)
 * **GitHub Repository:** [SahooShuvranshu/LokDrishti-AI](https://github.com/SahooShuvranshu/LokDrishti-AI)
-* **Target Focus:** Geocoded Citizen Input (Text/Voice with Live Map Selection), Demographic & Infrastructure Gap Analysis, Trade-Off Analytics (School Upgrades vs. Vocational Centers), Live AI Copilot, and Dynamic Project Scheduling.
+* **Hackathon Track:** People's Priorities (AI for Constituency Development Planning)
 
 ---
 
-## 🛠️ The Technology Stack
+## 🎙️ The Pitch: How to Explain the Problem & Our Solution to Judges
 
-| Layer | Technology | Purpose |
-| :--- | :--- | :--- |
-| **Frontend Framework** | React (Vite) | Fast-loading, component-driven client interface. |
-| **Styling & Theme** | Modern Glassmorphism CSS | Slick, premium dark-mode dashboard with hover micro-animations. |
-| **AI Model Engine** | Google Gemini 1.5 Flash API | Performs live dialect translation, directive letter generation, and strategic demographic trade-off roadmaps. |
-| **Database** | Supabase PostgreSQL | Live database hosting grievances (including geocoded coordinate pairs), project queues, and priority indices. |
-| **Authentication** | Supabase Auth (Google OAuth) | Secure login for Members of Parliament and constituency administration staff. |
-| **GIS Mapping** | Google Maps JavaScript API | Interactive map centered on Bhubaneswar, Odisha showing geocoded custom markers and active problem overlays. |
-| **Interactive Icons** | Lucide React | Clean, scalable vector interface icons. |
-| **State Management** | React Context API | Unified global application context (`AppContext.jsx`) to handle auth status, loading states, and live API configurations. |
+### 1. The Hook (The Introduction)
+> "Judges, as Members of Parliament, managing a constituency of over 10 Lakh citizens with a limited MP Local Area Development (MPLAD) budget of just ₹1 Crore (100 Lakhs) is an optimization nightmare. How do you objectively decide whether to fund a school upgrade in one area versus a vocational training center in another, when citizen complaints arrive in chaotic, unstructured formats?"
+
+### 2. The Problem
+* **Unstructured Feedback Chaos:** Citizen requests come via voice notes, handwritten letters, messaging apps, and phone calls. Important requests get lost in administrative static.
+* **No Spatial Context:** Wards are large and abstract. Administrators cannot identify specific hot-spots or repeat occurrences.
+* **Zero Objective Data Correlation:** There is no tool to compare subjective demands against real demographic stats. For instance, comparing requests for school upgrades (travel-distance data) versus a proposed vocational center (local youth unemployment stats).
+* **Budget Tracking Disconnect:** Proposed projects are scheduled ad-hoc, leading to budget overruns beyond the strict ₹1.0Cr cap.
+
+### 3. The LokDrishti AI Solution
+We built a unified platform that acts as the **digital nervous system** for a constituency:
+* **multilingual & Geocoded Intake:** Citizens speak in their native tongue (like Hindi) and drop a pin on Google Maps. AI translates, structures, and logs the issue at the exact latitude/longitude.
+* **Zonal Command Center:** Maps live spatial diagnostics, displaying backlogs and hotspot clusters on a geocoded Bhubaneswar map.
+* **AI Strategic Advisor:** Aggregates grievances, correlates them with sector-specific demographic gaps (travel times, enrollment, unemployment rates), and executes Gemini-driven trade-off evaluations.
+* **MPLAD Resource Optimizer:** Enforces strict budget caps, allowing administrators to drag-and-drop sort projects and dynamically organize completion schedules on a Gantt timeline.
 
 ---
 
-## 🧠 System Architecture
+## ⚙️ How the Website Works: Step-by-Step Walkthrough
 
 ```mermaid
 graph TD
@@ -40,51 +45,71 @@ graph TD
     Admin -->|7. Generate Directive Letter| Gemini
     Admin -->|8. Reorder Gantt Timeline| Optimizer[Resource Optimizer]
     Optimizer -->|9. Update Priority Index| DB
-    Admin -->|10. Combine with Census/Demographic Data| Gemini
+    Admin -->|10. Combine with Sector Gaps Data| Gemini
     Gemini -->|11. Return Strategic Trade-off Report| Advisor[AI Strategic Advisor]
 ```
 
+### Step 1: Citizen Submits Grievance (Citizen Portal)
+1. Navigate to the **Citizen Portal** tab.
+2. The citizen clicks **Record Voice** and speaks in Hindi or English (e.g., *"Hamaare area mein paani ke pipe se ganda paani aa raha hai"*).
+3. The platform leverages the HTML5 Speech Recognition API to transcribe the dialect.
+4. The transcription is sent to **Google Gemini 1.5 Flash**. Gemini translates the Indic dialect, structures it into a professional English title, predicts the sector category (*Water Supply*), and sets the severity level (*Critical*).
+5. The citizen types an address (e.g. *"Jayadev Vihar"*) or clicks **Share Live Location** to fetch their current GPS coordinates. They can drag the red pin on the Google Map to fine-tune the exact location.
+6. Click **Submit Grievance**. The row is instantly inserted into the live Supabase PostgreSQL database.
+
+### Step 2: Administrator Authenticates (Login Gate)
+1. Navigate to the **Command Center** tab.
+2. The administrator is prompted by a secure Google OAuth sign-in screen.
+3. Signing in redirects the administrator back, reading the session using the Supabase Auth listener, and unlocking the Command Center.
+
+### Step 3: Incident Diagnostic Auditing (Grievance Command Panel)
+1. The dashboard fetches active grievances from Supabase.
+2. The geocoded pins are rendered on the **Google Map** centered on Bhubaneswar, colored by severity (Red = Critical, Yellow = Medium, Green = Low).
+3. Clicking a pin opens the **Inspector Panel**:
+   - Inspect the AI translation side-by-side with the raw voice text.
+   - Click **Generate AI Directive**. Gemini drafts a context-aware municipal notice (e.g., to the Bhubaneswar Water Board) and an SMS update for the reporter.
+   - Click **Create Work Order** to export the grievance as an active development project.
+
+### Step 4: Budget Compliance & Gantt Scheduling (Resource Optimizer)
+1. Navigate to the **Resource Optimizer** sub-tab.
+2. The list of active projects is displayed as drag-and-drop cards showing estimated costs, durations, and materials.
+3. The top banner shows the budget utilization bar: if total costs exceed the **₹1.0Cr (100 Lakhs) MPLAD cap**, the indicator flashes red and displays a warning.
+4. Dragging cards changes their sequence order. This instantly triggers a batch `upsert` saving the new priority order to Supabase.
+5. The Gantt chart dynamically draws start and end dates sequentially based on the priority index, ensuring projects are scheduled logically.
+
+### Step 5: Demographic Trade-off Advisory (AI Strategic Advisor)
+1. Navigate to the **AI Strategic Advisor** sub-tab.
+2. Click **Generate AI Strategic Roadmap**.
+3. The advisor scans active database rows and passes them to Gemini alongside public sector demographics (e.g. *Education Sector: 94% enrollment, 4.5km travel-to-school distance* vs *Vocational Training Sector: 18% youth unemployment*).
+4. Gemini runs a comparative trade-off analysis, determining whether to prioritize school upgrades or vocational centers based on local census gaps, and prints a formatted briefing roadmap.
+
 ---
 
-## 💾 Supabase Database Schema
+## 🛠️ Detailed Tech Stack & Frameworks
 
-### 1. Grievances Table (`grievances`)
-Stores citizen-submitted issues.
-* `id` (TEXT, Primary Key): Unique alphanumeric ID (e.g., `LKD-1234`).
-* `title` (TEXT): High-level English summary generated by Gemini.
-* `reporter` (TEXT): Name of the citizen.
-* `description` (TEXT): Raw complaint text (or speech transcription).
-* `translated_description` (TEXT): Refined, professional English translation.
-* `sector` (TEXT): Category (e.g., `Water Supply`, `Sanitation`, `Public Health`, `Infrastructure`).
-* `urgency` (TEXT): Severity level (`Low`, `Medium`, `High`, `Critical`).
-* `status` (TEXT): Redressal state (`Pending`, `Investigating`, `Resolved`).
-* `coordinates` (JSONB): `{lat, lng}` coordinate pair representing the geocoded position pinned on the map.
-* `timestamp` (TIMESTAMPTZ): Submission time.
+### 1. Core Framework: React 19 & Vite
+* **Why Vite:** Offers instant hot module replacement (HMR) and ultra-fast ESbuild transpilation, ensuring smooth UI state switches.
+* **State Management:** Unified global React Context (`AppContext.jsx`) managing auth sessions, map scripts loading, and Supabase database records synchronization.
 
-### 2. Projects Table (`projects`)
-Tracks proposed constituency projects funded under the MP Local Area Development (MPLAD) budget.
-* `id` (TEXT, Primary Key): Unique project ID (e.g., `PROJ-WO-1234`).
-* `name` (TEXT): Name of the development project.
-* `sector` (TEXT): Work sector classification.
-* `cost` (NUMERIC): Estimated budget cost in Lakhs.
-* `duration` (INTEGER): Completion timeline in days.
-* `status` (TEXT): Queue status (`Queued`, `Active`, `Completed`).
-* `priority` (INTEGER): Dynamic priority sorting index for the Gantt timeline.
-* `materials` (TEXT): Resource specifications.
+### 2. Styling System: Custom Modern CSS (Glassmorphism)
+* **Visuals:** Dark mode layout utilizing deep zinc gradients, transparent glassmorphism panels, customizable border systems, and smooth hover micro-animations.
+* **Fonts:** Loaded Google Fonts *Outfit* (for bold, editorial headings) and *Inter* (for clean, readable metadata tables).
 
----
+### 3. AI Model Engine: Google Gemini 1.5 Flash API
+* **Indic Translation:** Translates and refines messy voice transcripts.
+* **Multimodal Reasoning:** Synthesizes directive letters and municipal notices based on geocoded categories.
+* **Trade-Off Analytics:** Compares demographic indicators (school travel-distances vs. local unemployment rates) to calculate project rankings.
 
-## 💎 How LokDrishti Answers the Track 1 Challenge (What to tell the Judges)
+### 4. Database: Supabase PostgreSQL
+* **CRUD Syncing:** Real-time database syncing. Inserting, updating, or deleting records on the frontend writes updates directly to PostgreSQL.
+* **Geocoding Support:** Leverages JSONB formatting to store precise geographical coordinate pairs (`{lat, lng}`) for spatial mapping.
 
-### 1. Interactive Geolocation Map Pinning
-* **The Flow:** Citizens can type an address or landmark in Bhubaneswar using the geocoding search bar, or click "Share Live Location" to share their current GPS location. They can then fine-tune the pin placement directly on an interactive Google Map.
-* **Precise Coordinates:** Eliminates abstract ward groupings. Complaints are logged with high-resolution coordinates for exact spatial lookup.
+### 5. Authentication: Supabase Auth (Google OAuth)
+* **Single Sign-On:** Protects command panels using Google OAuth redirection, ensuring secure login credentials and profile picture display.
 
-### 2. Demographic & Infrastructure Gap Integration
-* **Data Context:** Incorporated public demographic profiles for Bhubaneswar wards (Population size, Literacy rate, Ward school enrollment, average travel-distance to school, and youth unemployment rates).
-* **The AI Advisor Analysis:** Gathers all active grievances and scheduled projects from Supabase and passes them to Gemini alongside the sector demographics.
-* **Comparative Trade-offs:** Gemini performs objective trade-off analyses, calculating priorities based on data (e.g. comparing average school travel-distances against youth unemployment rates) to recommend whether to fund a school upgrade vs. a vocational training center.
+### 6. Interactive GIS: Google Maps JavaScript SDK
+* **Spatial Mapping:** Embedded map centered on Bhubaneswar. Renders custom pins representing geocoded grievance coordinates.
+* **Address Geocoder:** Utilizes core Geocoding services to resolve typed landmark queries to precise coordinate coordinates.
 
-### 3. MP LAD Fund Resource Optimizer
-* **Interactive Gantt Timeline:** Organizes project schedules in a drag-and-drop hierarchy.
-* **Real-time Cost Cap Constraints:** Enforces strict compliance with the ₹1.0Cr budget threshold limit, instantly prompting alerts if projects exceed safety values.
+### 7. Analytical Charts: Apache ECharts & ReactECharts
+* **Data Visualization:** Theme-aware, vector-drawn horizontal bars (grievance categories), donuts (budget allocations), and sparklines (constituent satisfaction rates).
