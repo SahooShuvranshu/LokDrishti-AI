@@ -97,12 +97,15 @@
 *   **Analytics:** Apache ECharts & ReactECharts.
 *   **Styling:** Custom CSS Glassmorphism.
 
----
+## Slide 10: Summary & Project Credits
+### Transforming Governance, One Pin at a Time
 
-## Slide 10: Scalability Roadmap
-### Next-Step Enterprise Architecture on Google Cloud
-
-*   **Database:** Migrate to **Google Cloud SQL for PostgreSQL** or **AlloyDB** for high availability.
-*   **Hosting:** Deploy containerized React assets to **Google Cloud Run** for serverless scaling.
-*   **Credentials:** Store API keys and connection passwords securely in **Google Secret Manager**.
-*   **Data Pipelines:** Route incoming social media gripes via **Google Cloud Pub/Sub** and **Cloud Functions** directly to **BigQuery**.
+*   **Key Impacts:**
+    *   **Democratizing Development:** Moves civic planning from arbitrary decisions to live citizen priorities.
+    *   **100% Budget Compliance:** Built-in MPLAD cap guards against municipal resource overruns.
+    *   **Closed-Loop Accountability:** Auto-generated dispatches secure transparent municipal actions.
+*   **Team Roles & Contributions:**
+    *   *AI Engineering:* Live translation & Gemini-based strategic briefing compilers.
+    *   *GIS Mapping:* Geocoded pinpointing, address markers, and constituency visualizations.
+    *   *Database & Deployment:* Supabase integration and production hosting.
+*   **Q&A Session:** *Open for Questions & Strategic Feedback.*

@@ -74,9 +74,9 @@ Goal: Transform this markdown outline into a cohesive, jaw-dropping, high-produc
 - Right Image Prompt: "A beautiful isometric 3D composition of glowing tech logo representations (React React logo, Google Gemini diamond logo, Supabase database container, and Google Maps pin) floating together in a group on a dark reflective surface, neon glow --ar 16:9"
 
 ---
-### Slide 10: Scalability Roadmap (Google Cloud)
-- Left Layout: 3-step timeline (Stage 1: Containerize on Cloud Run, Stage 2: AlloyDB SQL, Stage 3: Pub/Sub BigQuery Pipelines).
-- Right Image Prompt: "A premium enterprise server room datacenter corridor. Dark server cabinets with glowing blue and green LED status lights, server racks stretching into the background with clean perspective, serverless cloud hosting visualization, photorealistic --ar 16:9"
+### Slide 10: Summary & Project Credits (Closing Slide)
+- Left Layout: Highlight key impact blocks in a checklist, followed by team roles and a concluding bold Q&A callout.
+- Right Image Prompt: "An elegant, cinematic close-up of a glass trophy or shield engraving that reads 'THANK YOU' and 'LokDrishti AI'. Soft blue and purple stage lighting, shallow depth of field, reflective glass texture, clean premium ending slide graphic, octane render --ar 16:9"
 
 [END OF PROMPT]
 ================================================================================
