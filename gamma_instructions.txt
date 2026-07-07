@@ -1,36 +1,82 @@
 ================================================================================
-🚀 GAMMA AI GENERATION & REFINEMENT PROMPT
+👑 LOKDRISHTI AI — HACKATHON SLIDE DECK: ULTIMATE REFINEMENT PROMPT
 ================================================================================
-Copy and paste the prompt below into the Gamma AI "Instructions" or "Refine Prompt" 
-box along with the slide outline to ensure uniform layout, premium dark-mode 
-aesthetics, and highly detailed visual assets.
+Copy the entire text below and paste it as the instructions/prompt in Gamma AI. 
+This prompt enforces layout symmetry, a premium dark glassmorphic design 
+system, and highly detailed visual asset generation.
 
 --------------------------------------------------------------------------------
 [START OF PROMPT]
 
-Format this 10-slide presentation deck adhering strictly to the following parameters:
+Role: Principal UI/UX Designer & Presentation Director.
+Goal: Transform this markdown outline into a cohesive, jaw-dropping, high-production 10-slide executive pitch deck. 
 
-1. LAYOUT & STRUCTURE
-- Layout: 16:9 widescreen presentation. Ensure ALL slides are generated with identical height and width dimensions (uniform card size).
-- Structure: Split each slide into a 2-column layout (Left Column: structured markdown bullet points/quotes, Right Column: relevant high-quality image asset).
-- Columns must be vertically aligned and horizontally balanced.
+================================================================================
+🎨 PART 1: MASTER DESIGN SYSTEM & LAYOUT CONSTRAINTS
+================================================================================
+- Dimensions: Force all cards/slides to a strict 16:9 widescreen format. All slides must have identical height, width, margins, and content padding to ensure 100% size uniformity.
+- Layout Rule: Use a strict 2-column grid layout on every slide.
+  * Left Column (55% width): Markdown text content styled with high visual hierarchy, bulleted lists, and highlighted metrics.
+  * Right Column (45% width): A single, highly detailed, context-relevant AI-generated image.
+- Theme: "Cyberpunk Civic Tech / Glassmorphic Executive Dashboard".
+  * Primary Background: Ultra-dark slate black (#090b11)
+  * Card Backgrounds: Semi-transparent glass panels (#131722 with a 1px border of rgba(99,102,241,0.12))
+  * Highlight Colors: Neon Indigo (#6366f1) for active focus, Emerald (#10b981) for budget success, Amber (#f59e0b) for alerts.
+- Typography: Large bold titles (weight: 800) in Outfit/Inter font, body text in clean zinc gray (#a1a1aa).
 
-2. THEME & TYPOGRAPHY
-- Color Palette: Sleek, high-contrast dark mode. Use deep zinc/charcoal (#09090b, #18181b) for slide backgrounds, electric indigo (#6366f1) for accents, and emerald (#10b981) for success indicators.
-- Fonts: Premium sans-serif. Large editorial titles (weight: 800) and clean, readable metadata tables.
-- Card Design: Subtle glassmorphism panels with thin borders and glowing drop shadows.
+================================================================================
+🖼️ PART 2: SLIDE-BY-SLIDE SPECIFICATIONS & DETAILED IMAGE PROMPTS
+================================================================================
 
-3. INDIVIDUAL SLIDE IMAGE SPECIFICATIONS (GENERATE NEW DETAILED IMAGES)
-*   Slide 1 (Title): "A high-tech digital command center dashboard displaying a glowing holographic map of a smart city, glowing metrics, clean modern UI design, dark zinc aesthetic, cinematic lighting, 8k resolution."
-*   Slide 2 (Problem): "An abstract concept of data overload showing letters, tweets, and grievance documents flowing like a chaotic digital stream into a funnel, dark tech aesthetic, dramatic lighting."
-*   Slide 3 (Dilemma): "A split-screen comparison illustration: on the left, an old crowded municipal school class; on the right, a modern vocational computer training center, separated by a glowing blue artificial intelligence node."
-*   Slide 4 (Architecture): "A clean 3D isometric blueprint diagram showing four interconnected glowing nodes floating on a dark glass panel, neon purple and blue accents, technology network."
-*   Slide 5 (Citizen Intake): "A close-up of a citizen holding a smartphone showing a voice waveform and a map pin overlay, with a digital translation symbol hovering above, soft warm ambient lighting."
-*   Slide 6 (Command Center): "A modern municipal control room with a massive wall screen displaying a GIS satellite map of Bhubaneswar, India, surrounded by charts and analytical graphs, premium dark workspace."
-*   Slide 7 (Strategic Advisor): "A holographic brain analyzing demographic census charts and financial graphs in a sci-fi tech style, glowing blue circuits, data visualization."
-*   Slide 8 (Resource Optimizer): "A minimalist product UI dashboard showing hands reordering project task cards along a calendar timeline (Gantt chart) next to a glowing budget progress bar, modern SaaS aesthetic."
-*   Slide 9 (Tech Stack): "An elegant 3D arrangement of technology symbols (React, Gemini AI, PostgreSQL Database, and Maps) floating on a dark gray platform, studio product photography."
-*   Slide 10 (Scalability): "A server rack data center corridor glowing with neon green and blue LED lights, representing secure serverless cloud infrastructure, wide-angle lens, photorealistic."
+---
+### Slide 1: Title Slide (LokDrishti AI)
+- Left Layout: Title "LokDrishti AI" in massive neon indigo font, subtitle, and clickable repo/app links formatted as glowing pill tags.
+- Right Image Prompt: "A highly detailed, futuristic 3D vector emblem of a digital shield enclosing a glowing eye symbol. The emblem is floating in a dark room with volumetric blue and indigo lighting, reflections, octane render, 8k resolution, photorealistic, tech asset --ar 16:9 --style raw"
+
+---
+### Slide 2: The Core Problem Statement (The MP's Dilemma)
+- Left Layout: Place the quote in a prominent glassmorphic blockquote container with indigo left borders. Bullet points listed below with warning-colored bullet icons.
+- Right Image Prompt: "An abstract concept of civic database chaos. Unstructured letters, document pages, and social media chat bubbles floating into a large glowing digital funnel. The funnel geocodes and structures them, cyber-tech aesthetic, dark blue background, volumetric lighting, high contrast, clean vector render --ar 16:9"
+
+---
+### Slide 3: The Dilemma We Solve (School vs. Vocational Center)
+- Left Layout: Structured comparison layout. Highlight two distinct blocks (Case A: School upgrades, Case B: Vocational Center) using contrasting border panels.
+- Right Image Prompt: "A double-exposure 3D concept art. On the left side, a modern classroom with student silhouettes; on the right side, a robotic workshop or vocational training room. A bright vertical neon laser dividing the two halves, deep blue and orange hues, conceptual art, cinematic lighting --ar 16:9"
+
+---
+### Slide 4: System Architecture (Four Core Product Pillars)
+- Left Layout: A clean 2x2 grid representing the four pillars with matching icons and short bold headers for each.
+- Right Image Prompt: "A 3D isometric flowchart of a software system architecture. Four glowing crystal nodes representing 'Intake', 'GIS Map', 'Advisor', and 'Optimizer' connected by neon blue light paths, floating on a dark glass plane, abstract tech schematic, highly detailed, 8k --ar 16:9"
+
+---
+### Slide 5: Pillar 1 (Citizen Intake & geocoding)
+- Left Layout: Timeline-style vertical list showing the flow from Voice Note -> Gemini Translate/Parse -> Map Pinning.
+- Right Image Prompt: "A modern smartphone mockup floating in space, displaying a map of Bhubaneswar with red pin drops and a glowing colorful voice speech wave. The background is a dark grid with subtle network nodes, clean app interface design, cinematic --ar 16:9"
+
+---
+### Slide 6: Pillar 2 (Zonal Command Center)
+- Left Layout: Split sub-features. Use high-contrast success badges next to the features (Map, KPIs, Letter Writer).
+- Right Image Prompt: "A clean dashboard layout of an MP command console. A central map of Bhubaneswar with green and red glowing heat clusters, surrounding analytical charts (donut chart, bar chart) rendered in neon colors, dark theme UI mockup, flat design --ar 16:9"
+
+---
+### Slide 7: Pillar 3 (AI Strategic Advisor)
+- Left Layout: A summary box showcasing the calculated "Constituency Health Score" next to Gemini's analytical checks.
+- Right Image Prompt: "A glowing 3D holographic human brain made of digital lines and nodes, analyzing vertical bar graphs and budget numbers floating around it. High-tech, dark cyberspace setting, glowing neon indigo and cyan lights, volumetric render --ar 16:9"
+
+---
+### Slide 8: Pillar 4 (Resource Optimizer)
+- Left Layout: Features list highlighting the budget cap check (₹1.0Cr), Gantt scheduling, and the official printed work order dispatches.
+- Right Image Prompt: "A sleek Gantt chart calendar interface showing colorful project timeline blocks. A hand is dragging a card, and a progress bar at the top glows green, showing 100% budget optimization, vector flat design, modern project management app --ar 16:9"
+
+---
+### Slide 9: The Technology Stack (Unified Stack)
+- Left Layout: A clean table listing: Component (Frontend, AI, GIS, Database) vs. Technology used. Keep lines spaced and tidy.
+- Right Image Prompt: "A beautiful isometric 3D composition of glowing tech logo representations (React React logo, Google Gemini diamond logo, Supabase database container, and Google Maps pin) floating together in a group on a dark reflective surface, neon glow --ar 16:9"
+
+---
+### Slide 10: Scalability Roadmap (Google Cloud)
+- Left Layout: 3-step timeline (Stage 1: Containerize on Cloud Run, Stage 2: AlloyDB SQL, Stage 3: Pub/Sub BigQuery Pipelines).
+- Right Image Prompt: "A premium enterprise server room datacenter corridor. Dark server cabinets with glowing blue and green LED status lights, server racks stretching into the background with clean perspective, serverless cloud hosting visualization, photorealistic --ar 16:9"
 
 [END OF PROMPT]
 ================================================================================
