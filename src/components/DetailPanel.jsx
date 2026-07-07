@@ -143,7 +143,6 @@ Write in a professional, polite, and reassuring tone. Tell them that their ticke
       id: projId,
       name: `Grievance Repair: ${grievance.title}`,
       sector: grievance.sector,
-      ward: grievance.ward,
       cost: estimatedCost,
       duration: grievance.urgency === 'Critical' ? 10 : 20,
       materials: materialsText,
