@@ -186,7 +186,7 @@ Do NOT wrap the JSON in markdown code blocks. Just return the raw JSON string.`;
   };
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '20px', padding: '20px 0' }}>
+    <div className="social-ingestor-grid">
       
       {/* Feed Area */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>

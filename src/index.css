@@ -565,3 +565,17 @@ h2 {
   }
 }
 
+/* Responsive Ingestor Grid */
+.social-ingestor-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+@media (max-width: 900px) {
+  .social-ingestor-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
