@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { X, Calendar, User, MapPin, AlertCircle, FileText, Send, CheckCircle2, ChevronRight, Copy, Share2 } from 'lucide-react';
+import { X, Calendar, User, MapPin, AlertCircle, FileText, Send, CheckCircle2, ChevronRight, Copy, Share2, Printer } from 'lucide-react';
 
 export default function DetailPanel({ grievance, onClose }) {
   const { updateGrievanceStatus, addProject, projects, geminiApiKey } = useApp();
@@ -118,6 +118,112 @@ Write in a professional, polite, and reassuring tone. Tell them that their ticke
         setIsStreaming(false);
       }
     }, 6);
+  };
+
+  const handlePrintDispatch = () => {
+    const projId = `PROJ-WO-${grievance.id.split('-')[1]}`;
+    
+    // Estimate cost based on urgency and sector
+    let estimatedCost = 10;
+    if (grievance.urgency === 'Critical') estimatedCost = 25;
+    else if (grievance.urgency === 'Medium') estimatedCost = 15;
+
+    const materialsText = grievance.sector === 'Water Supply'
+      ? 'RO Filters: 1 Unit, Piping: 50m, Valve replacements, Labor: 40 Man-days'
+      : grievance.sector === 'Sanitation'
+      ? 'Waste containers: 4 Units, Sanitation Crew, Disinfectant sprayers, Labor: 20 Man-days'
+      : 'Structural cement: 50 Bags, Bitumen mix: 5 Tons, Excavator hire, Labor: 60 Man-days';
+
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Official Dispatch - ${projId}</title>
+          <style>
+            body { font-family: 'Times New Roman', serif; padding: 40px; color: #1c1917; line-height: 1.5; }
+            .header { text-align: center; border-bottom: 2px double #1c1917; padding-bottom: 20px; margin-bottom: 30px; }
+            .emblem { font-size: 24px; font-weight: bold; margin-bottom: 8px; }
+            .govt { font-size: 14px; letter-spacing: 2px; text-transform: uppercase; font-weight: bold; }
+            .office { font-size: 16px; font-weight: bold; margin-top: 4px; }
+            .ref { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 20px; font-family: monospace; }
+            .title { text-align: center; font-size: 16px; font-weight: bold; text-decoration: underline; margin-bottom: 25px; text-transform: uppercase; }
+            .content { font-size: 14px; text-align: justify; margin-bottom: 40px; }
+            .meta-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+            .meta-table th, .meta-table td { border: 1px solid #78716c; padding: 10px; text-align: left; }
+            .meta-table th { background-color: #f5f5f4; font-weight: bold; }
+            .sign-block { float: right; text-align: center; margin-top: 50px; width: 250px; }
+            .seal { width: 80px; height: 80px; border-radius: 50%; border: 2px dashed #991b1b; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; color: #991b1b; font-weight: bold; margin-top: 10px; text-transform: uppercase; transform: rotate(-5deg); }
+          </style>
+        </head>
+        <body onload="window.print()">
+          <div class="header">
+            <div class="govt">Satyameva Jayate</div>
+            <div class="emblem">🏛️</div>
+            <div class="govt">Government of India</div>
+            <div class="office">OFFICE OF THE MEMBER OF PARLIAMENT (MPLAD FUNDING)</div>
+            <div class="office">Bhubaneswar Constituency Office, Odisha</div>
+          </div>
+          
+          <div class="ref">
+            <div>REF NO: LKD/MPLAD/${projId}</div>
+            <div>DATE: ${new Date().toLocaleDateString('en-IN')}</div>
+          </div>
+
+          <div class="title">OFFICIAL DISPATCH & WORK ORDER AUTHORIZATION NOTICE</div>
+
+          <div class="content">
+            <p>To,</p>
+            <p><strong>The Commissioner / Chief Engineer,</strong><br/>Bhubaneswar Municipal Corporation (BMC),<br/>Odisha.</p>
+            
+            <p>Pursuant to powers vested under the Member of Parliament Local Area Development Scheme (MPLADS), funding is hereby authorized and sanctioned for the emergency public development project outlined below, initiated based on active constituent grievances gathered via <strong>LokDrishti AI</strong>:</p>
+
+            <table class="meta-table">
+              <tr>
+                <th width="30%">Work Order ID</th>
+                <td>${projId}</td>
+              </tr>
+              <tr>
+                <th>Project Title</th>
+                <td>Grievance Repair: ${grievance.title}</td>
+              </tr>
+              <tr>
+                <th>Sector</th>
+                <td>${grievance.sector}</td>
+              </tr>
+              <tr>
+                <th>Authorized Budget</th>
+                <td><strong>₹${estimatedCost} Lakhs (INR)</strong> from the MPLAD annual allocation</td>
+              </tr>
+              <tr>
+                <th>Target Completion</th>
+                <td>${grievance.urgency === 'Critical' ? '10 Days' : '20 Days'} from dispatch</td>
+              </tr>
+              <tr>
+                <th>Required Materials</th>
+                <td>${materialsText}</td>
+              </tr>
+              <tr>
+                <th>Description / Location</th>
+                <td>${grievance.translatedDescription || grievance.description} (Coordinates: ${grievance.coordinates?.lat || 20.2961}, ${grievance.coordinates?.lng || 85.8245})</td>
+              </tr>
+            </table>
+
+            <p>You are directed to immediately invite tenders or deploy emergency municipal services to execute these works. Monthly progress updates and financial utilization certificates must be submitted directly to this office.</p>
+          </div>
+
+          <div class="sign-block">
+            <p><strong>Authorized Signatory</strong></p>
+            <br/><br/>
+            <p>___________________________</p>
+            <p>Member of Parliament (MP)<br/>Bhubaneswar Constituency</p>
+            <div class="seal">
+              MP OFFICE SEAL<br/>BHUBANESWAR
+            </div>
+          </div>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
   };
 
   const handleExportWorkOrder = () => {
@@ -273,7 +379,7 @@ Write in a professional, polite, and reassuring tone. Tell them that their ticke
           </button>
         </div>
 
-        {status !== 'Resolved' && status !== 'Work Order Created' && (
+        {status !== 'Resolved' && status !== 'Work Order Created' ? (
           <button
             onClick={handleExportWorkOrder}
             className="btn btn-primary"
@@ -288,6 +394,29 @@ Write in a professional, polite, and reassuring tone. Tell them that their ticke
           >
             <CheckCircle2 size={14} /> Generate & Export Work Order
           </button>
+        ) : (
+          status === 'Work Order Created' && (
+            <button
+              onClick={handlePrintDispatch}
+              className="btn"
+              style={{
+                fontSize: '0.8rem',
+                padding: '10px',
+                background: 'var(--accent-glow)',
+                color: 'var(--accent)',
+                borderColor: 'var(--accent)',
+                width: '100%',
+                marginTop: '4px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                cursor: 'pointer'
+              }}
+            >
+              <Printer size={14} /> Print Official Dispatch Letter
+            </button>
+          )
         )}
       </div>
 
