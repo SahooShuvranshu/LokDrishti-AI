@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Sparkles, Brain, Award, AlertOctagon, TrendingUp, CheckCircle, FileText, Copy, Printer, RefreshCw } from 'lucide-react';
+import { Sparkles, Brain, FileText, Copy, Printer, RefreshCw } from 'lucide-react';
 
 const constituencyDemographics = {
   "Education Sector": {

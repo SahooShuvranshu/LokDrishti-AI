@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Info, MapPin } from 'lucide-react';
+import { Info } from 'lucide-react';
 
 // Dark Google Maps theme styling
 const darkMapStyle = [
@@ -113,7 +113,7 @@ export default function ConstituencyMap({ onSelectGrievance }) {
     return () => {
       mapInstanceRef.current = null;
     };
-  }, [scriptLoaded]);
+  }, [scriptLoaded, theme]);
 
   // 3. Update Map Theme Styling
   useEffect(() => {
@@ -194,7 +194,7 @@ export default function ConstituencyMap({ onSelectGrievance }) {
 
       markersRef.current.push(marker);
     });
-  }, [grievances, selectedSector, selectedUrgency, scriptLoaded]);
+  }, [grievances, selectedSector, selectedUrgency, scriptLoaded, onSelectGrievance]);
 
   return (
     <div className="glass-panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '14px', flexGrow: 1 }}>

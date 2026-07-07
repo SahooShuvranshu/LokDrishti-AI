@@ -236,26 +236,7 @@ export default function CitizenPortal() {
     );
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
 
-    if (file.size > 3 * 1024 * 1024) {
-      alert('Photo size exceeds 3MB limit. Please upload a smaller image.');
-      return;
-    }
-
-    setImageFile(file);
-    setImageMimeType(file.type);
-    setImagePreview(URL.createObjectURL(file));
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result.split(',')[1];
-      setImageBase64(base64String);
-    };
-    reader.readAsDataURL(file);
-  };
 
   // Mock stream or Live Gemini AI refiner
   const refineWithAI = async () => {

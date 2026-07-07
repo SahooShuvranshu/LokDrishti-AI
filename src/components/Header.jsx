@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Sun, Moon, Shield, User, Bell, Info, Home, BookOpen, Menu, LogOut } from 'lucide-react';
+import { Sun, Moon, Shield, User, Bell, Menu, LogOut, Home, BookOpen } from 'lucide-react';
 
 export default function Header() {
   const {
