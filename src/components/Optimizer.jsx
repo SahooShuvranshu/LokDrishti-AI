@@ -79,7 +79,7 @@ function SortableProjectCard({ project, index, fitsInBudget, cumulativeCost, onD
           <span className={`badge ${getStatusBadge(project.status)}`} style={{ fontSize: '0.65rem' }}>
             {project.status}
           </span>
-          <span style={{ fontSize: '0.7rem', color: 'var(--text-tertiary)' }}>{project.ward.split(':')[0]}</span>
+          <span style={{ fontSize: '0.7rem', color: 'var(--text-tertiary)' }}>{project.sector}</span>
           
           {!fitsInBudget && (
             <span className="badge badge-danger" style={{ fontSize: '0.65rem', display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
