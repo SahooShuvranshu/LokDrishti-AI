@@ -114,7 +114,7 @@ Your output must include:
 4. ### ADMINISTRATIVE DIRECTIVES
    Recommend exactly 3 official directives the MP should issue to local departments (e.g. Water Board, Sanitation Dept) based on this data.`;
 
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${keyToUse}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent?key=${keyToUse}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
