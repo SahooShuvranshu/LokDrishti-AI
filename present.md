@@ -1,4 +1,4 @@
-# 🏛️ LokDrishti AI — Hackathon Pitch Slide Deck
+# 🏛️ LokDrishti AI — Complete 15-Slide Hackathon Pitch Deck
 
 ---
 
@@ -47,7 +47,18 @@
 
 ---
 
-## Slide 5: Pillar 1 — Citizen Intake
+## Slide 5: Real-time Database Schema
+### Secure Supabase & PostgreSQL Foundations
+
+*   **Table Structure:**
+    *   `grievances`: Stores ID, reporter name, title, translated description, coordinates (Lat/Lng), sector, urgency, and status.
+    *   `projects`: Tracks name, cost (Lakhs), duration (Days), status, and sector.
+*   **Real-time Synchronization:** Built-in PostgreSQL triggers automatically broadcast additions and modifications to the React client state.
+*   **Data Integrity:** Standard schema maps prevent column caches mismatching.
+
+---
+
+## Slide 6: Pillar 1 — Citizen Intake
 ### Multilingual Reports & Geocoded Coordinates
 
 *   **HTML5 Web Speech Integration:** Citizens record voice notes in Hindi/regional languages.
@@ -57,7 +68,7 @@
 
 ---
 
-## Slide 6: Pillar 2 — Zonal Command Center
+## Slide 7: Pillar 2 — Zonal Command Center
 ### Live Diagnostics & Actionable Directives
 
 *   **GIS Diagnostic Map:** Interactive map centered on Bhubaneswar plotting coordinates-based severity pins.
@@ -67,7 +78,7 @@
 
 ---
 
-## Slide 7: Pillar 3 — AI Strategic Advisor
+## Slide 8: Pillar 3 — AI Strategic Advisor
 ### Sector Gaps & Budget Trade-Off briefings
 
 *   **The Engine:** Powered by live queries to **Google Gemini 2.5 Flash-Lite**.
@@ -77,7 +88,7 @@
 
 ---
 
-## Slide 8: Pillar 4 — Resource Optimizer
+## Slide 9: Pillar 4 — Resource Optimizer
 ### Budget Cap Auditing & Gantt Timelines
 
 *   **dnd-kit Drag-and-Drop:** Administrators drag project cards to sort execution priority.
@@ -87,7 +98,29 @@
 
 ---
 
-## Slide 9: The Technology Stack
+## Slide 10: Special Feature — Social Gripe Ingestor
+### Geocoding Public Complaints in Real-Time
+
+*   **What it does:** Scans public social media complaints (mock Twitter feed) in Bhubaneswar.
+*   **LLM Extraction Loop:** Gemini extracts the location description (e.g. "dirty water near Patia square"), resolves it to coordinates, and categorizes it.
+*   **Developer Logs Console:** A terminal monitor displaying the extraction telemetry, prompt details, and database inserts.
+*   **Impact:** Bridges the gap between social media noise and municipal action.
+
+---
+
+## Slide 11: Special Feature — Municipal Dispatch Printer
+### Exporting PDF Work Orders in 1 Click
+
+*   **Official Layout:** Clicking "Print Dispatch" dynamically renders a printable letterhead document.
+*   **Visual Assets:**
+    *   *Satyameva Jayate* Ashok Chakra emblem.
+    *   Tilted red MP Office seal (**MP OFFICE SEAL - BHUBANESWAR**).
+    *   Structured grid showing geocodes, assigned budget, and required materials.
+*   **Automation:** Triggers `window.print()` directly to compile a PDF work order for the municipal department.
+
+---
+
+## Slide 12: The Technology Stack
 ### Unified, Modern Framework Integration
 
 *   **Frontend:** React 19 & Vite (HMR, fast bundle, Outfits/Inter typography).
@@ -97,7 +130,28 @@
 *   **Analytics:** Apache ECharts & ReactECharts.
 *   **Styling:** Custom CSS Glassmorphism.
 
-## Slide 10: Summary & Project Credits
+---
+
+## Slide 13: Scalability Roadmap
+### Next-Step Enterprise Architecture on Google Cloud
+
+*   **Database:** Migrate to **Google Cloud SQL for PostgreSQL** or **AlloyDB** for high availability.
+*   **Hosting:** Deploy containerized React assets to **Google Cloud Run** for serverless scaling.
+*   **Credentials:** Store API keys and connection passwords securely in **Google Secret Manager**.
+*   **Data Pipelines:** Route incoming social media gripes via **Google Cloud Pub/Sub** and **Cloud Functions** directly to **BigQuery**.
+
+---
+
+## Slide 14: Future Vision
+### Predictive Civic AI & National e-Governance
+
+*   **Predictive Grievance Routing:** Machine learning models forecasting water clogging or infrastructure failure based on historic records.
+*   **National Integration:** Connecting LokDrishti AI directly to India's National e-Governance Portal.
+*   **State-wide Expansion:** Scaling the GIS dashboard from Bhubaneswar to all 21 parliamentary constituencies of Odisha.
+
+---
+
+## Slide 15: Summary & Project Credits
 ### Transforming Governance, One Pin at a Time
 
 *   **Key Impacts:**

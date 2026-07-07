@@ -1,5 +1,5 @@
 ================================================================================
-🏛️ LOKDRISHTI AI — SLIDES GENERATOR INSTRUCTION PROMPT
+🏛️ LOKDRISHTI AI — 15-SLIDE GENERATOR INSTRUCTION PROMPT
 ================================================================================
 Copy and paste this prompt into your Slide Creator / AI Presentation Tool 
 to enforce structural formatting, dark-theme styling, and clean visual layouts.
@@ -7,7 +7,7 @@ to enforce structural formatting, dark-theme styling, and clean visual layouts.
 --------------------------------------------------------------------------------
 [START OF PROMPT]
 
-Generate a 10-slide presentation deck using the provided markdown content. Adhere strictly to these styling and layout constraints:
+Generate a 15-slide presentation deck using the provided markdown content. Adhere strictly to these styling and layout constraints:
 
 1. SLIDE FORMAT & STYLE
 - Theme: Dark-Mode Premium Executive Tech. 
@@ -26,12 +26,17 @@ Generate a 10-slide presentation deck using the provided markdown content. Adher
 * Slide 2 (Problem): Blockquote panel on the left. Right side: A digital stream of chaotic, unsorted documents and tweets.
 * Slide 3 (Dilemma): Left-right side comparison panels for 'School Upgrade' vs. 'Vocational Training'. Right side: Dual-exposure 3D comparative concept art.
 * Slide 4 (Architecture): 2x2 grid panel showing the four pillars. Right side: Isometric 3D system architecture node chart.
-* Slide 5 (Pillar 1): Vertical timeline list. Right side: Smartphone mockup displaying Bhubaneswar pins and speech wave.
-* Slide 6 (Pillar 2): Success indicators next to command center features. Right side: Map dashboard UI mockup with heat clusters.
-* Slide 7 (Pillar 3): A data metrics summary card. Right side: Holographic digital brain analyzing charts.
-* Slide 8 (Pillar 4): Horizontal project scheduling timeline. Right side: Gantt chart progress slider app screen.
-* Slide 9 (Tech Stack): 3-column table displaying Component, Tech, and Description. Right side: Floating 3D stack logos (React, Gemini, Supabase, Google Maps).
-* Slide 10 (Credits): Summary checklist and team roles. Right side: Elegant premium ending trophy graphic saying 'THANK YOU'.
+* Slide 5 (Database Schema): Table structure columns display. Right side: A glowing server database cylinder icon, neon blue lines, octane render.
+* Slide 6 (Pillar 1): Vertical timeline list. Right side: Smartphone mockup displaying Bhubaneswar pins and speech wave.
+* Slide 7 (Pillar 2): Success indicators next to command center features. Right side: Map dashboard UI mockup with heat clusters.
+* Slide 8 (Pillar 3): A data metrics summary card. Right side: Holographic digital brain analyzing charts.
+* Slide 9 (Pillar 4): Horizontal project scheduling timeline. Right side: Gantt chart progress slider app screen.
+* Slide 10 (Social Ingestor): Developer logs panel output. Right side: An iPad mockup showing geocoded Twitter posts in Bhubaneswar, dark interface.
+* Slide 11 (Dispatch Printer): Key highlights of printable dispatch orders. Right side: Renders a printed government dispatch paper with red MP Office seal stamp.
+* Slide 12 (Tech Stack): 3-column table displaying Component, Tech, and Description. Right side: Floating 3D stack logos (React, Gemini, Supabase, Google Maps).
+* Slide 13 (Scalability): 3-step GCP timeline. Right side: Clean premium enterprise datacenter server stacks, serverless cloud hosting visualization.
+* Slide 14 (Future Vision): Future expansions overview. Right side: Graphic showing map of India with glowing interconnected laser network paths.
+* Slide 15 (Credits): Summary checklist and team roles. Right side: Elegant premium ending trophy graphic saying 'THANK YOU'.
 
 [END OF PROMPT]
 ================================================================================
