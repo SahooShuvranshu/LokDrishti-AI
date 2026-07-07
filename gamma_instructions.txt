@@ -1,0 +1,36 @@
+================================================================================
+🚀 GAMMA AI GENERATION & REFINEMENT PROMPT
+================================================================================
+Copy and paste the prompt below into the Gamma AI "Instructions" or "Refine Prompt" 
+box along with the slide outline to ensure uniform layout, premium dark-mode 
+aesthetics, and highly detailed visual assets.
+
+--------------------------------------------------------------------------------
+[START OF PROMPT]
+
+Format this 10-slide presentation deck adhering strictly to the following parameters:
+
+1. LAYOUT & STRUCTURE
+- Layout: 16:9 widescreen presentation. Ensure ALL slides are generated with identical height and width dimensions (uniform card size).
+- Structure: Split each slide into a 2-column layout (Left Column: structured markdown bullet points/quotes, Right Column: relevant high-quality image asset).
+- Columns must be vertically aligned and horizontally balanced.
+
+2. THEME & TYPOGRAPHY
+- Color Palette: Sleek, high-contrast dark mode. Use deep zinc/charcoal (#09090b, #18181b) for slide backgrounds, electric indigo (#6366f1) for accents, and emerald (#10b981) for success indicators.
+- Fonts: Premium sans-serif. Large editorial titles (weight: 800) and clean, readable metadata tables.
+- Card Design: Subtle glassmorphism panels with thin borders and glowing drop shadows.
+
+3. INDIVIDUAL SLIDE IMAGE SPECIFICATIONS (GENERATE NEW DETAILED IMAGES)
+*   Slide 1 (Title): "A high-tech digital command center dashboard displaying a glowing holographic map of a smart city, glowing metrics, clean modern UI design, dark zinc aesthetic, cinematic lighting, 8k resolution."
+*   Slide 2 (Problem): "An abstract concept of data overload showing letters, tweets, and grievance documents flowing like a chaotic digital stream into a funnel, dark tech aesthetic, dramatic lighting."
+*   Slide 3 (Dilemma): "A split-screen comparison illustration: on the left, an old crowded municipal school class; on the right, a modern vocational computer training center, separated by a glowing blue artificial intelligence node."
+*   Slide 4 (Architecture): "A clean 3D isometric blueprint diagram showing four interconnected glowing nodes floating on a dark glass panel, neon purple and blue accents, technology network."
+*   Slide 5 (Citizen Intake): "A close-up of a citizen holding a smartphone showing a voice waveform and a map pin overlay, with a digital translation symbol hovering above, soft warm ambient lighting."
+*   Slide 6 (Command Center): "A modern municipal control room with a massive wall screen displaying a GIS satellite map of Bhubaneswar, India, surrounded by charts and analytical graphs, premium dark workspace."
+*   Slide 7 (Strategic Advisor): "A holographic brain analyzing demographic census charts and financial graphs in a sci-fi tech style, glowing blue circuits, data visualization."
+*   Slide 8 (Resource Optimizer): "A minimalist product UI dashboard showing hands reordering project task cards along a calendar timeline (Gantt chart) next to a glowing budget progress bar, modern SaaS aesthetic."
+*   Slide 9 (Tech Stack): "An elegant 3D arrangement of technology symbols (React, Gemini AI, PostgreSQL Database, and Maps) floating on a dark gray platform, studio product photography."
+*   Slide 10 (Scalability): "A server rack data center corridor glowing with neon green and blue LED lights, representing secure serverless cloud infrastructure, wide-angle lens, photorealistic."
+
+[END OF PROMPT]
+================================================================================
