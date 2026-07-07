@@ -288,14 +288,7 @@ SUMMARY: [A concise, professional 2-3 sentence English summary explaining the pr
           }
         ];
 
-        if (imageBase64) {
-          promptParts.push({
-            inlineData: {
-              mimeType: imageMimeType,
-              data: imageBase64
-            }
-          });
-        }
+
 
         const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent?key=${keyToUse}`, {
           method: 'POST',

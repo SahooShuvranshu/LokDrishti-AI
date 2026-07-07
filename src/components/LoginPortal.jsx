@@ -3,7 +3,7 @@ import { useApp } from '../context/AppContext';
 import { Shield, AlertCircle } from 'lucide-react';
 
 export default function LoginPortal() {
-  const { signInWithGoogle } = useApp();
+  const { signInWithGoogle, handleLogin } = useApp();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -51,7 +51,7 @@ export default function LoginPortal() {
           pointerEvents: 'none'
         }}></div>
 
-        <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '28px' }}>
+        <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '24px' }}>
           
           {/* Top Shield Icon */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
@@ -119,6 +119,34 @@ export default function LoginPortal() {
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
             </svg>
             <span>{loading ? 'Redirecting to Google...' : 'Continue with Google'}</span>
+          </button>
+
+          {/* Demo Bypass Button */}
+          <button
+            onClick={() => handleLogin()}
+            disabled={loading}
+            className="btn"
+            style={{
+              width: '100%',
+              padding: '12px',
+              fontSize: '0.85rem',
+              fontWeight: '600',
+              backgroundColor: 'rgba(255, 255, 255, 0.04)',
+              color: 'var(--text-secondary)',
+              border: '1px solid var(--border-color)',
+              borderRadius: 'var(--radius-md)',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              transition: 'background-color 0.2s ease, transform 0.1s ease',
+              boxShadow: 'none'
+            }}
+            onMouseOver={(e) => { if (!loading) e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)'; }}
+            onMouseOut={(e) => { if (!loading) e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.04)'; }}
+          >
+            <span>Bypass Sign In (Demo Mode)</span>
           </button>
 
           <div style={{
