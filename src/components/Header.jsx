@@ -266,7 +266,7 @@ export default function Header() {
                     {alert.id}
                   </span>
                   <span style={{ color: 'var(--text-secondary)' }}>{alert.title}</span>
-                  <span style={{ color: 'var(--text-tertiary)' }}>({alert.ward.split(':')[0]})</span>
+                  <span style={{ color: 'var(--text-tertiary)' }}>({alert.sector})</span>
                   <span style={{ color: 'var(--text-tertiary)' }}>•</span>
                 </div>
               ))
