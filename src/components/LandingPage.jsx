@@ -32,7 +32,7 @@ export default function LandingPage() {
         }}></div>
 
         <div style={{ position: 'relative', zIndex: 1 }}>
-          {/* Hackathon Tag */}
+          {/* Government Portal Tag */}
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -46,8 +46,8 @@ export default function LandingPage() {
             fontWeight: '600',
             marginBottom: '24px'
           }}>
-            <Heart size={12} fill="var(--accent)" />
-            Built for Code for Communities Hackathon
+            <Shield size={12} fill="var(--accent)" />
+            Bhubaneswar Parliamentary Constituency Command
           </div>
 
           <h1 style={{

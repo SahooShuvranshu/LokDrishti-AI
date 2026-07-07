@@ -50,21 +50,21 @@ export default function AboutPage() {
           About LokDrishti AI
         </h2>
         <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', margin: 0 }}>
-          Code for Communities Hackathon — People's Priorities (AI for Constituency Development Planning)
+          MPLAD Strategic Resource Planning & Citizen Grievance Portal
         </p>
       </section>
 
-      {/* HACKATHON TRACK CREDENTIALS */}
+      {/* DIGITAL GOVERNANCE CREDENTIALS */}
       <section className="glass-panel" style={{ padding: '24px', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
         <div style={{ padding: '10px', borderRadius: 'var(--radius-sm)', backgroundColor: 'var(--accent-glow)', color: 'var(--accent)', flexShrink: 0 }}>
           <Award size={24} />
         </div>
         <div>
           <h3 style={{ fontSize: '1.2rem', marginBottom: '8px', fontWeight: 'bold' }}>
-            People's Priorities (AI for Constituency Development Planning)
+            National Informatics Centre — Smart Civic Planning Initiative
           </h3>
           <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', margin: 0 }}>
-            LokDrishti AI is a custom-built solution for the <strong>Build with AI: Code for Communities</strong> Hackathon. Our platform directly aligns with the People's Priorities track, providing a bridge between the voice of the electorate and local governance.
+            LokDrishti AI is a pilot digital governance system deployed for the <strong>Bhubaneswar Parliamentary Constituency</strong>. The platform acts as a secure bridge between the electorate and localized municipal administrations, enabling transparent MPLAD budget utilization.
           </p>
         </div>
       </section>
@@ -88,11 +88,11 @@ export default function AboutPage() {
         </blockquote>
       </section>
 
-      {/* THE HACKATHON CHALLENGE */}
+      {/* PLATFORM MANDATE */}
       <section className="glass-panel" style={{ padding: '24px', backgroundColor: 'var(--bg-tertiary)', border: '1px dashed var(--accent-border)', display: 'flex', flexDirection: 'column', gap: '14px' }}>
         <h3 style={{ fontSize: '1.15rem', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent)', margin: 0 }}>
           <HelpCircle size={18} />
-          The Challenge
+          Platform Mandate
         </h3>
         <blockquote style={{ 
           fontSize: '0.9rem', 
@@ -103,15 +103,15 @@ export default function AboutPage() {
           margin: 0,
           fontStyle: 'italic'
         }}>
-          "Build a multilingual AI platform where citizens can submit development suggestions via voice, text, photos, or messaging apps. The system should analyze submissions to surface recurring themes, map demand hotspots, and combine citizen feedback with demographic data, infrastructure gaps, local development plans, and public datasets — to recommend and rank high-priority development works an MP can act on."
+          "Establish a digital-first, multilingual citizen planning portal enabling constituents to register civic development requests via voice transcripts or coordinate mapping. The system shall autonomously categorize incoming grievances, resolve them to spatial heatmaps, and correlate citizen reports against regional demographic data to compile executive roadmap priorities for MPLAD fund allocations."
         </blockquote>
       </section>
 
-      {/* OUR SOLUTION: HOW LOKDRISHTI SOLVES THIS */}
+      {/* OUR SOLUTION: SYSTEM IMPLEMENTATION */}
       <section className="glass-panel" style={{ padding: '24px', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '20px' }}>
         <h3 style={{ fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--success)' }}>
           <Target size={18} />
-          How LokDrishti AI Solves the Challenge
+          System Implementation Highlights
         </h3>
 
         <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', margin: 0 }}>
