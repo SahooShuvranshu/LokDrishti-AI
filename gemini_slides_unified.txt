@@ -1,0 +1,192 @@
+================================================================================
+🏛️ LOKDRISHTI AI — UNIFIED PRESENTATION BUILDER PROMPT
+================================================================================
+Copy the entire text below (from [START] to [END]) and paste it directly into 
+Gemini in Google Slides, Tome, or your preferred AI presentation generator.
+This single prompt handles the formatting, design system, slide contents, 
+and image descriptions in one execution.
+
+--------------------------------------------------------------------------------
+[START OF PROMPT]
+
+Generate a professional, cohesive 15-slide presentation deck. 
+Adhere strictly to the styling, layout, content, and image specifications provided below:
+
+================================================================================
+🎨 DESIGN & SYSTEM INSTRUCTIONS
+================================================================================
+- Dimensions: Strict 16:9 widescreen slides. Maintain identical margins and card dimensions on every slide.
+- Theme: Dark-Mode Premium Executive Tech.
+  * Background Color: Deep slate black (#090b11).
+  * Panel styling: Semi-transparent glassmorphic panels with thin indigo borders.
+  * Highlights: White headers, zinc gray body text (#a1a1aa), key metrics in glowing indigo (#6366f1) or green (#10b981).
+- Layout: 2-column grid layout for all slides.
+  * Left Column: Markdown text bullet points, comparison tables, and quotes.
+  * Right Column: Place the specified highly detailed AI image illustration.
+
+================================================================================
+📝 SLIDE CONTENT AND VISUAL SPECIFICATIONS
+================================================================================
+
+---
+### Slide 1: LokDrishti AI (Title Slide)
+- Left Content:
+  * Title: LokDrishti AI (Smart Web GIS & Live AI Constituency Planner)
+  * Subtitle: Empowering Members of Parliament (MPs) with data-driven constituent planning.
+  * Hackathon Track: People's Priorities (AI for Constituency Development Planning)
+  * Live App: https://lokdrishti-ai.onrender.com
+  * GitHub: https://github.com/SahooShuvranshu/LokDrishti-AI
+- Right Image: "A highly detailed, futuristic 3D vector emblem of a digital shield enclosing a glowing eye symbol. The emblem is floating in a dark room with volumetric blue and indigo lighting, reflections, octane render, 8k resolution, photorealistic, tech asset --ar 16:9"
+
+---
+### Slide 2: The Core Problem Statement
+- Left Content:
+  * Section Header: The MP's Decision Dilemma
+  * Quote: "MPs receive development requests through public meetings, letters, social media, grievance portals, and direct representations — while local development plans contain dozens of competing proposed projects. There's no objective way to consolidate citizen feedback, spot recurring needs, and weigh competing proposals against real demand."
+  * Key Bottlenecks:
+    * Chaotic Formats: Dialect reports without unified structure.
+    * No Spatial Context: Wards are too large; exact hotspots are missed.
+    * Ad-hoc Decisions: Projects approved without budget audits.
+- Right Image: "An abstract concept of civic database chaos. Unstructured letters, document pages, and social media chat bubbles floating into a large glowing digital funnel. The funnel geocodes and structures them, cyber-tech aesthetic, dark blue background, volumetric lighting, high contrast, clean vector render --ar 16:9"
+
+---
+### Slide 3: The Dilemma We Solve
+- Left Content:
+  * Section Header: School Upgrades vs. Vocational Training
+  * The Challenge: How does an MP choose between:
+    * Case A: Upgrading a crowded local school?
+    * Case B: Building a youth vocational training center?
+  * The LokDrishti Solution:
+    * Cross-references citizen requests with live demographics and public datasets (e.g. travel distances vs. local unemployment rates).
+    * Google Gemini runs an objective trade-off evaluation to prioritize by community impact.
+- Right Image: "A double-exposure 3D concept art. On the left side, a modern classroom with student silhouettes; on the right side, a robotic workshop or vocational training room. A bright vertical neon laser dividing the two halves, deep blue and orange hues, conceptual art, cinematic lighting --ar 16:9"
+
+---
+### Slide 4: System Architecture
+- Left Content:
+  * Section Header: The Four Core Product Pillars
+  * Pillars Grid:
+    1. Multilingual Intake & Map Pinning: Hindi/regional dialect reports + Google Maps geocoding.
+    2. Live GIS Zonal Command Center: Real-time complaint mapping and backlog KPIs.
+    3. AI Strategic Advisor: Gemini-driven constituency health roadmaps.
+    4. MPLAD Resource Optimizer: Drag-and-drop prioritization + Gantt scheduler.
+- Right Image: "A 3D isometric flowchart of a software system architecture. Four glowing crystal nodes representing 'Intake', 'GIS Map', 'Advisor', and 'Optimizer' connected by neon blue light paths, floating on a dark glass plane, abstract tech schematic, highly detailed, 8k --ar 16:9"
+
+---
+### Slide 5: Real-time Database Schema
+- Left Content:
+  * Section Header: Secure Supabase & PostgreSQL Foundations
+  * Tables Grid:
+    * Table 1 (Grievances): Stores IDs, reporter details, geocodes (Lat/Lng), sector categories, and status tracking.
+    * Table 2 (Projects): Tracks name, Lakhs cost, duration, status, and sector tags.
+  * Sync Mechanism: PostgreSQL triggers broadcast database modifications instantly to update React state.
+- Right Image: "A glowing 3D cylinder representing a secure database server, floating on a dark reflective glass plane. Glowing blue data stream lines connecting to it, technological backdrop, octane render --ar 16:9"
+
+---
+### Slide 6: Pillar 1 — Citizen Intake
+- Left Content:
+  * Section Header: Multilingual Reports & Geocoded Coordinates
+  * Key Workflows:
+    * HTML5 Voice Input: Speech-to-text recording in regional dialects.
+    * Gemini Refinement: Live translation to English, category extraction, and urgency rating.
+    * Pinpoint Map Widget: Citizens select coordinates by clicking Google Maps or sharing GPS.
+- Right Image: "A modern smartphone mockup floating in space, displaying a map of Bhubaneswar with red pin drops and a glowing colorful voice speech wave. The background is a dark grid with subtle network nodes, clean app interface design, cinematic --ar 16:9"
+
+---
+### Slide 7: Pillar 2 — Zonal Command Center
+- Left Content:
+  * Section Header: Live Diagnostics & Actionable Directives
+  * Features Grid:
+    * Map Dashboard: centered on Bhubaneswar, Odisha showing geocoded pins.
+    * KPI Analytics: Apache ECharts horizontal grids monitoring sector backlogs.
+    * AI Dispatch Writer: Gemini drafts compliance notices to municipal officers.
+- Right Image: "A clean dashboard layout of an MP command console. A central map of Bhubaneswar with green and red glowing heat clusters, surrounding analytical charts (donut chart, bar chart) rendered in neon colors, dark theme UI mockup, flat design --ar 16:9"
+
+---
+### Slide 8: Pillar 3 — AI Strategic Advisor
+### Sector Gaps & Budget Trade-Off briefings
+- Left Content:
+  * Key Operations:
+    * Real-time Compilation: Scans complaints and active projects in Supabase.
+    * Demographic Gaps: Matches demands against travel times and local data.
+    * AI Briefing: Google Gemini outputs a Constituency Health Score and 3 action directives.
+- Right Image: "A glowing 3D holographic human brain made of digital lines and nodes, analyzing vertical bar graphs and budget numbers floating around it. High-tech, dark cyberspace setting, glowing neon indigo and cyan lights, volumetric render --ar 16:9"
+
+---
+### Slide 9: Pillar 4 — Resource Optimizer
+- Left Content:
+  * Section Header: Budget Cap Auditing & Gantt Timelines
+  * Optimizer Rules:
+    * Drag & Drop Sorting: Rearrange cards to change execution priority.
+    * ₹1.0Cr Budget Cap: Active checks flag visual warnings during budget overruns.
+    * Gantt Timelines: Dynamic timelines recalculate dates automatically in the browser.
+- Right Image: "A sleek Gantt chart calendar interface showing colorful project timeline blocks. A hand is dragging a card, and a progress bar at the top glows green, showing 100% budget optimization, vector flat design, modern project management app --ar 16:9"
+
+---
+### Slide 10: Special Feature — Social Gripe Ingestor
+- Left Content:
+  * Section Header: Geocoding Public Complaints in Real-Time
+  * System Flow:
+    * Scans twitter public municipal gripes in Bhubaneswar.
+    * Admin clicks 'Ingest' to prompt Gemini to geocode and categorize.
+    * Telemetry Log: Terminal logs display live database queries and LLM prompts.
+- Right Image: "An iPad screen mockup floating on a dark desk, showing a list of social media cards with geocodes and category pills on the left, and a geocoded map plot on the right, dark futuristic tech interface --ar 16:9"
+
+---
+### Slide 11: Special Feature — Municipal Dispatch Printer
+- Left Content:
+  * Section Header: Exporting PDF Work Orders in 1 Click
+  * Print Layout Specifications:
+    * Ashok Chakra government emblem headers.
+    * Officially signed and tilted red office seals.
+    * Directives detailing Lat/Lng coordinates and estimated project costs.
+    * Automates window print dialogs to compile PDFs instantly.
+- Right Image: "A clean render of a printed white sheet of paper on a dark slate desk, containing an official government letterhead, structured data tables, and a prominent round red office seal stamp, octane render --ar 16:9"
+
+---
+### Slide 12: The Technology Stack
+- Left Content:
+  * Section Header: Unified, Modern Framework Integration
+  * Technical Components:
+    * Frontend: React 19 & Vite (Outfit & Inter fonts).
+    * AI: Google Gemini 2.5 Flash-Lite API.
+    * GIS: Google Maps JavaScript SDK & HTML5 GPS.
+    * Database: Supabase PostgreSQL & Supabase Auth.
+    * Analytics: Apache ECharts & ReactECharts.
+- Right Image: "A beautiful isometric 3D composition of glowing tech logo representations (React React logo, Google Gemini diamond logo, Supabase database container, and Google Maps pin) floating together in a group on a dark reflective surface, neon glow --ar 16:9"
+
+---
+### Slide 13: Scalability Roadmap
+- Left Content:
+  * Section Header: Next-Step Enterprise Architecture on Google Cloud
+  * GCP Migration Stages:
+    * Database: Migrate to Google Cloud SQL (PostgreSQL) or AlloyDB for scale.
+    * Hosting: Deploy containerized React assets to serverless Google Cloud Run.
+    * Security: Secure API keys via Google Secret Manager.
+    * Pipelines: Pub/Sub and Cloud Functions streaming to BigQuery.
+- Right Image: "A premium enterprise server room datacenter corridor. Dark server cabinets with glowing blue and green LED status lights, server racks stretching into the background with clean perspective, serverless cloud hosting visualization, photorealistic --ar 16:9"
+
+---
+### Slide 14: Future Vision
+- Left Content:
+  * Section Header: Predictive Civic AI & National e-Governance
+  * Vision Roadmap:
+    * ML Fail-Safes: AI forecasting water clogging based on rain datasets.
+    * National Integration: Syncing tickets directly to India's National e-Governance Portal.
+    * State Expansion: Expanding mapping dashboards to all 21 parliamentary constituencies of Odisha.
+- Right Image: "A graphic map of India glowing in neon cyan on a dark background, showing interconnected bright laser network paths linking major metropolitan hubs, data nodes visualization --ar 16:9"
+
+---
+### Slide 15: Summary & Project Credits
+- Left Content:
+  * Section Header: Transforming Governance, One Pin at a Time
+  * Key Takeaways:
+    * Democratizes civic planning via real citizen coordinates.
+    * Guarantees 100% budget compliance under ₹1.0Cr ceilings.
+    * Automates closing feedback loop with dispatch orders.
+  * Project Team Roles: AI Engineering, GIS Mapping, Database & Hosting.
+  * Q&A: Open for Questions & Strategic Feedback.
+- Right Image: "An elegant, cinematic close-up of a glass trophy or shield engraving that reads 'THANK YOU' and 'LokDrishti AI'. Soft blue and purple stage lighting, shallow depth of field, reflective glass texture, clean premium ending slide graphic, octane render --ar 16:9"
+
+[END OF PROMPT]
+================================================================================
