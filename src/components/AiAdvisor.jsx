@@ -133,7 +133,7 @@ Your output must include:
 
       } catch (err) {
         console.error('Error generating briefing:', err);
-        setAdvisorLogs((prev) => [...prev, '[error] Live Gemini API failed. Loading fallback report...']);
+        setAdvisorLogs((prev) => [...prev, `[error] Live Gemini API failed: ${err.message || err}. Loading fallback report...`]);
         resultReport = getFallbackReport();
       }
     } else {
