@@ -89,7 +89,7 @@ export default function Header() {
               className={`btn ${activeTab === 'settings' ? 'btn-primary' : ''}`}
               style={{ padding: '6px 14px', fontSize: '0.8rem', background: activeTab === 'settings' ? '' : 'transparent', border: 'none', boxShadow: 'none' }}
             >
-              API Settings
+              Settings
             </button>
           )}
         </nav>
@@ -264,7 +264,7 @@ export default function Header() {
               }}
             >
               <Settings size={14} style={{ marginRight: '8px' }} />
-              API Settings
+              Settings
             </button>
           )}
         </div>

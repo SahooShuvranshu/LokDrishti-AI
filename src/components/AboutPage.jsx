@@ -223,7 +223,7 @@ export default function AboutPage() {
 
       {/* LIVE DATABASE GRIEVANCE FEED */}
       <section style={{ width: '100%' }}>
-        <LiveConstituencyFeed title="Live Constituency Status Ticker (Supabase Connected)" />
+        <LiveConstituencyFeed title="Live Constituency Status Ticker" />
       </section>
 
       {/* DETAILED TECH STACK */}

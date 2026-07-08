@@ -20,7 +20,7 @@ export default function LiveConstituencyFeed({ title = "Live Constituency Incide
         </h3>
         <span style={{ fontSize: '0.7rem', color: 'var(--text-tertiary)', display: 'flex', alignItems: 'center', gap: '4px' }}>
           <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10b981', display: 'inline-block' }}></span>
-          Live Database Connection
+          Active Telemetry Stream
         </span>
       </div>
 

@@ -429,7 +429,7 @@ export default function LandingPage() {
 
       {/* LIVE DATABASE GRIEVANCE FEED */}
       <section style={{ maxWidth: '800px', margin: '0 auto', width: '100%' }}>
-        <LiveConstituencyFeed title="Live Incident Stream (Database Connected)" />
+        <LiveConstituencyFeed title="Live Incident Stream" />
       </section>
 
       {/* FAQ SECTION */}
