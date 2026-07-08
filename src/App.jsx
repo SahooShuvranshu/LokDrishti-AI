@@ -215,8 +215,8 @@ function MainAppContent() {
         )
       )}
 
-      {/* Floating Demo Event Simulator */}
-      <EventSimulator />
+      {/* Floating Demo Event Simulator - Rendered only in Admin Command Center */}
+      {isLoggedIn && activeTab === 'mp' && <EventSimulator />}
 
       {/* Website Footer */}
       <Footer />
