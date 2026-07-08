@@ -1,14 +1,18 @@
 import React from 'react';
-import { Shield, BookOpen, Layers, Terminal, Server, Check, Award, AlertTriangle, Target, Lightbulb, HelpCircle, MapPin, Brain, Sliders, Database, Users } from 'lucide-react';
+import { 
+  Shield, BookOpen, Layers, Terminal, Server, Check, Award, AlertTriangle, 
+  Target, Lightbulb, HelpCircle, MapPin, Brain, Sliders, Database, Users,
+  Activity, Landmark, Lock, Globe
+} from 'lucide-react';
 
 export default function AboutPage() {
   const stack = [
     { 
       name: 'React 19 & Vite', 
-      desc: 'Modern reactive virtual DOM scaffolded for blazing fast page loads and HMR updates.' 
+      desc: 'Modern reactive virtual DOM scaffolded for blazing fast page loads and HMR updates with optimized manual chunk compiling.' 
     },
     { 
-      name: 'Google Gemini 1.5 Flash API', 
+      name: 'Google Gemini 2.5 Flash-Lite API', 
       desc: 'Drives our translation, letter writers, and strategic roadmaps. Integrates context demographics directly to evaluate prioritization trade-offs (e.g. school travel times vs. youth unemployment).' 
     },
     { 
@@ -37,16 +41,16 @@ export default function AboutPage() {
     },
     { 
       name: 'Custom Zinc CSS System', 
-      desc: 'Tailored typography (Outfit, Inter), variable-based dark/light toggles, glassmorphism, and responsive grids.' 
+      desc: 'Tailored typography (Outfit, Inter), variable-based dark/light toggles, glassmorphic card containers, and responsive layouts.' 
     }
   ];
 
   return (
-    <div style={{ padding: '40px 20px', maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '40px' }}>
+    <div style={{ padding: '40px 20px', maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '50px' }}>
       
       {/* HEADER SECTION */}
       <section style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '24px' }}>
-        <h2 style={{ fontSize: '2rem', marginBottom: '8px', background: 'linear-gradient(135deg, var(--text-primary), var(--accent))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+        <h2 style={{ fontSize: '2.2rem', marginBottom: '8px', background: 'linear-gradient(135deg, var(--text-primary), var(--accent))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: '800' }}>
           About LokDrishti AI
         </h2>
         <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', margin: 0 }}>
@@ -86,6 +90,21 @@ export default function AboutPage() {
         }}>
           "MPs receive development requests through public meetings, letters, social media, grievance portals, and direct representations — while local development plans contain dozens of competing proposed projects. There's no objective way to consolidate citizen feedback, spot recurring needs, and weigh competing proposals against real demand (for example, comparing requests for school upgrades against enrollment and travel-distance data versus a proposed vocational centre)."
         </blockquote>
+      </section>
+
+      {/* MPLADS SCHEME CONTEXT */}
+      <section className="glass-panel" style={{ padding: '24px', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+        <div style={{ padding: '10px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(168, 85, 247, 0.1)', color: 'rgb(168, 85, 247)', flexShrink: 0 }}>
+          <Landmark size={24} />
+        </div>
+        <div>
+          <h3 style={{ fontSize: '1.2rem', marginBottom: '8px', fontWeight: 'bold' }}>
+            Understanding the MPLADS Framework
+          </h3>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', margin: 0 }}>
+            Under the **Member of Parliament Local Area Development Scheme (MPLADS)**, each MP is allocated ₹5 Crore annually to execute local developmental projects. However, administrative planning is often hindered by delayed reports and subjective lobbying. LokDrishti AI enforces strict visual audits and budget tracking against a ₹1.00 Crore pilot cap, introducing absolute financial rigor to constituency planning.
+          </p>
+        </div>
       </section>
 
       {/* PLATFORM MANDATE */}
@@ -168,6 +187,36 @@ export default function AboutPage() {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* SECURITY & DATA INTEGRITY SECTION */}
+      <section className="glass-panel" style={{ padding: '24px', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+        <div style={{ padding: '10px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(220, 38, 38, 0.1)', color: 'rgb(220, 38, 38)', flexShrink: 0 }}>
+          <Lock size={24} />
+        </div>
+        <div>
+          <h3 style={{ fontSize: '1.2rem', marginBottom: '8px', fontWeight: 'bold' }}>
+            Data Integrity & Security Standards
+          </h3>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', margin: 0 }}>
+            LokDrishti AI secures public submissions and MP command controls. Citizen portal submissions and administrative settings require verified SSO Google OAuth sessions. In addition, custom developer credentials and key overrides are cached exclusively on the client's local storage sandbox, protecting credentials from network interception.
+          </p>
+        </div>
+      </section>
+
+      {/* ENTERPRISE SCALABILITY BLUEPRINT */}
+      <section className="glass-panel" style={{ padding: '24px', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+        <div style={{ padding: '10px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(59, 130, 246, 0.1)', color: 'rgb(59, 130, 246)', flexShrink: 0 }}>
+          <Globe size={24} />
+        </div>
+        <div>
+          <h3 style={{ fontSize: '1.2rem', marginBottom: '8px', fontWeight: 'bold' }}>
+            National Scale & Google Cloud Blueprint
+          </h3>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', margin: 0 }}>
+            To expand beyond the Bhubaneswar pilot, LokDrishti AI is designed for containerized deployment on **Google Cloud Run** connected to a managed **Google Cloud SQL (PostgreSQL)** database or **AlloyDB**. Integration with Pub/Sub and Cloud Functions allows for streaming telemetry directly to BigQuery for state-wide developmental forecasting.
+          </p>
         </div>
       </section>
 

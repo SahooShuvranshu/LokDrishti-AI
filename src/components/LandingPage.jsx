@@ -382,6 +382,50 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* STRATEGIC DECISION HEURISTICS */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+        <div style={{ textAlign: 'center' }}>
+          <h2 style={{ fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '8px' }}>Strategic Advisor Analytics Heuristics</h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>How our AI engine ranks competing public works proposals objectively.</p>
+        </div>
+
+        <div className="glass-panel" style={{ padding: '30px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '24px', backgroundColor: 'var(--bg-secondary)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent)', fontWeight: 'bold' }}>
+                <Brain size={18} />
+                <span>Constituency Health Score</span>
+              </div>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5', margin: 0 }}>
+                Calculates an aggregate score (0-100) by combining active ticket volume, average resolution times, and the ratio of Critical to Low-severity civic reports.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--success)', fontWeight: 'bold' }}>
+                <Activity size={18} />
+                <span>Demographic Gap Index</span>
+              </div>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5', margin: 0 }}>
+                Weighs civic grievances against real demographic data: for example, checking local school drop-out rates when prioritizing school upgrades vs. assessing unemployment rates when prioritizing training centers.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--warning)', fontWeight: 'bold' }}>
+                <Sliders size={18} />
+                <span>MPLADS Cap Check</span>
+              </div>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5', margin: 0 }}>
+                Runs real-time client-side audits to check that the combined Lakhs estimate of all active priority projects does not exceed the ₹1.00 Crore limit.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* FAQ SECTION */}
       <section style={{ display: 'flex', flexDirection: 'column', gap: '30px', maxWidth: '800px', margin: '0 auto', width: '100%' }}>
         <div style={{ textAlign: 'center' }}>
