@@ -108,7 +108,11 @@ LokDrishti-AI/
 ├── public/                      # Static client-side assets served by the web app
 │   ├── favicon.png              # Cybernetic shield logo for browser tab icons
 │   ├── humans.txt               # Authorship credits and technology stack manifest file
-│   └── seo_card.png             # High-resolution Open Graph branding card image
+│   ├── seo_card.png             # High-resolution Open Graph branding card image
+│   ├── robots.txt               # Search engine crawler permissions directive file
+│   ├── sitemap.xml              # XML sitemap mapping pages for search indexers
+│   ├── llms.txt                 # Technical details document for AI/LLM agent scrapers
+│   └── llm.txt                  # Alternative alias link resolving agent metadata specs
 ├── src/
 │   ├── main.jsx                 # Client entry point mounting App to the DOM
 │   ├── App.jsx                  # Main component handling state-driven page routing and viewport layouts
