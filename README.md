@@ -247,5 +247,5 @@ Distributed under the MIT License. See [LICENSE](file:///d:/Projects/LokDrishti-
 *   **Interactive Analytics:** [Apache ECharts](https://echarts.apache.org/) visualization library.
 *   **Prioritized List Reordering:** [dnd-kit](https://dndkit.com/) drag-and-drop toolkit.
 *   **Platform Blueprint Deployment:** [Render](https://render.com/) web hosting.
-*   **Developed by:** Team LokDrishti 🇮🇳
+*   **Developed by:** [Shuvransu Sekhar Sahoo](https://github.com/SahooShuvranshu) (Crystal Studio Labs) 🇮🇳
 
