@@ -58,6 +58,32 @@ LokDrishti AI bridges the gap between constituency feedback and municipal resour
 
 ---
 
+## 📷 Visual Walkthrough & Screenshots
+
+Here is a visual overview of the LokDrishti AI platform interfaces:
+
+### 🏠 Home Page
+*Digital governance welcome portal featuring core pillars, system statistics, and active telemetry marquee ticker.*
+![Home Page](assets/home.png)
+
+### ℹ️ About Page
+*Comprehensive deployment blueprint detail mapping technical layers and Google Cloud stack.*
+![About Page](assets/about.png)
+
+### 🗣️ Citizen Portal
+*Inclusive portal allowing multilingual grievance filings with client-side Speech-to-Text and AI translation.*
+![Citizen Portal](assets/citizen.png)
+
+### 📊 MP Zonal Command Center
+*Administrative dashboard highlighting density-mapped Bhubaneswar Wards, ECharts analytics, and live interactive incident grids.*
+![Command Center](assets/command.png)
+
+### ⚙️ Settings Console
+*Secure settings override manager enabling judges to run custom Gemini and Maps API keys live in sandbox.*
+![Settings Console](assets/settings.png)
+
+---
+
 ## 📂 Project Repository Structure
 
 Below is the directory and file tree of the LokDrishti AI codebase, detailing the responsibility of each file:
