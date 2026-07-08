@@ -233,7 +233,7 @@ Constituency Health Score: **68 / 100**
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+          <div className="form-grid-2col" style={{ gap: '12px' }}>
             <div className="metrics-box" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', padding: '16px', borderRadius: '12px' }}>
               <div className="text-zinc-500 text-xs uppercase font-semibold">Parsed Grievances</div>
               <div className="text-2xl font-bold text-white mt-1">{grievances.length}</div>
