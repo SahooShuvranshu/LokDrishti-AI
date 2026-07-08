@@ -4,7 +4,7 @@ import LiveConstituencyFeed from './LiveConstituencyFeed';
 import { 
   Shield, User, Info, ArrowRight, Map, Languages, BarChart3, Sliders, 
   Activity, FileText, CheckCircle, Database, HelpCircle, Landmark, Users, 
-  ChevronDown, ChevronUp 
+  ChevronDown, ChevronUp, Brain
 } from 'lucide-react';
 
 export default function LandingPage() {
