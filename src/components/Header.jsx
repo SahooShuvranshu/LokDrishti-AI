@@ -83,13 +83,15 @@ export default function Header() {
           >
             Command Center
           </button>
-          <button
-            onClick={() => handleTabClick('settings')}
-            className={`btn ${activeTab === 'settings' ? 'btn-primary' : ''}`}
-            style={{ padding: '6px 14px', fontSize: '0.8rem', background: activeTab === 'settings' ? '' : 'transparent', border: 'none', boxShadow: 'none' }}
-          >
-            API Settings
-          </button>
+          {isLoggedIn && (
+            <button
+              onClick={() => handleTabClick('settings')}
+              className={`btn ${activeTab === 'settings' ? 'btn-primary' : ''}`}
+              style={{ padding: '6px 14px', fontSize: '0.8rem', background: activeTab === 'settings' ? '' : 'transparent', border: 'none', boxShadow: 'none' }}
+            >
+              API Settings
+            </button>
+          )}
         </nav>
 
         {/* Action Controls */}
@@ -125,17 +127,39 @@ export default function Header() {
 
           {/* Sign Out Button & User Details */}
           {isLoggedIn && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              {user?.user_metadata?.avatar_url && (
-                <img
-                  src={user.user_metadata.avatar_url}
-                  alt="Avatar"
-                  style={{ width: '24px', height: '24px', borderRadius: '50%', border: '1px solid var(--border-color)' }}
-                />
-              )}
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', maxWidth: '90px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={user?.email}>
-                {user?.user_metadata?.full_name || user?.email?.split('@')[0]}
-              </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              {/* Clickable Profile Trigger (goes to Settings tab) */}
+              <button
+                onClick={() => handleTabClick('settings')}
+                title="View Profile Settings"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  background: 'none',
+                  border: 'none',
+                  padding: '4px 8px',
+                  borderRadius: 'var(--radius-sm)',
+                  cursor: 'pointer',
+                  color: 'inherit',
+                  transition: 'background-color 0.2s ease'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+              >
+                {user?.user_metadata?.avatar_url && (
+                  <img
+                    src={user.user_metadata.avatar_url}
+                    alt="Avatar"
+                    style={{ width: '24px', height: '24px', borderRadius: '50%', border: '1px solid var(--border-color)' }}
+                  />
+                )}
+                <span style={{ fontSize: '0.75rem', fontWeight: '600', color: 'var(--text-secondary)', maxWidth: '90px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={user?.email}>
+                  {user?.user_metadata?.full_name || user?.email?.split('@')[0]}
+                </span>
+              </button>
+
+              {/* Log Out Button */}
               <button
                 className="btn btn-icon"
                 onClick={handleLogout}
@@ -226,21 +250,23 @@ export default function Header() {
             Command Center
           </button>
           
-          <button
-            onClick={() => handleTabClick('settings')}
-            className="btn"
-            style={{
-              width: '100%',
-              justifyContent: 'flex-start',
-              background: activeTab === 'settings' ? 'var(--bg-secondary)' : 'transparent',
-              color: activeTab === 'settings' ? 'var(--text-primary)' : 'var(--text-tertiary)',
-              border: 'none',
-              boxShadow: 'none'
-            }}
-          >
-            <Settings size={14} style={{ marginRight: '8px' }} />
-            API Settings
-          </button>
+          {isLoggedIn && (
+            <button
+              onClick={() => handleTabClick('settings')}
+              className="btn"
+              style={{
+                width: '100%',
+                justifyContent: 'flex-start',
+                background: activeTab === 'settings' ? 'var(--bg-secondary)' : 'transparent',
+                color: activeTab === 'settings' ? 'var(--text-primary)' : 'var(--text-tertiary)',
+                border: 'none',
+                boxShadow: 'none'
+              }}
+            >
+              <Settings size={14} style={{ marginRight: '8px' }} />
+              API Settings
+            </button>
+          )}
         </div>
       )}
     </header>
