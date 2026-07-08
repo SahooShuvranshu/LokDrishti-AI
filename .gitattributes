@@ -1,0 +1,11 @@
+# Enforce LF line endings globally
+* text=auto eol=lf
+
+# Explicitly mark binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.svg text

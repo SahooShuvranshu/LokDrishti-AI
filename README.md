@@ -101,6 +101,9 @@ LokDrishti-AI/
 ├── package.json                 # Project dependencies, build tasks, and metadata configurations
 ├── CODE_OF_CONDUCT.md           # Community guidelines and contributor code of conduct
 ├── SECURITY.md                  # Security policies, reporting protocols, and safety standards
+├── CONTRIBUTING.md              # Guidelines for submitting features and coding styles
+├── .gitattributes               # Git line endings normalization configurations
+├── .editorconfig                # Universal IDE indentation and text formatting styles
 ├── assets/                      # Repository documentation screenshots (Home, About, Citizen, Command, Settings)
 ├── public/                      # Static client-side assets served by the web app
 │   ├── favicon.png              # Cybernetic shield logo for browser tab icons
