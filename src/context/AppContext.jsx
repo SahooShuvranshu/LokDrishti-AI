@@ -58,12 +58,29 @@ export const AppProvider = ({ children }) => {
   const [activeTab, setActiveTab] = useState('landing'); // 'landing', 'about', 'mp', or 'citizen'
   
   const [geminiApiKey, setGeminiApiKey] = useState(() => {
-    return import.meta.env.VITE_GEMINI_API_KEY || localStorage.getItem('gemini_api_key') || '';
+    return localStorage.getItem('gemini_api_key') || import.meta.env.VITE_GEMINI_API_KEY || '';
   });
 
   const [googleMapsApiKey, setGoogleMapsApiKey] = useState(() => {
-    return import.meta.env.VITE_GOOGLE_MAPS_API_KEY || localStorage.getItem('google_maps_api_key') || '';
+    return localStorage.getItem('google_maps_api_key') || import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
   });
+
+  // Persist API Keys to localStorage reactively
+  useEffect(() => {
+    if (geminiApiKey) {
+      localStorage.setItem('gemini_api_key', geminiApiKey);
+    } else {
+      localStorage.removeItem('gemini_api_key');
+    }
+  }, [geminiApiKey]);
+
+  useEffect(() => {
+    if (googleMapsApiKey) {
+      localStorage.setItem('google_maps_api_key', googleMapsApiKey);
+    } else {
+      localStorage.removeItem('google_maps_api_key');
+    }
+  }, [googleMapsApiKey]);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);

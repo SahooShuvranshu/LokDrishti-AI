@@ -9,12 +9,13 @@ import DetailPanel from './components/DetailPanel';
 import Optimizer from './components/Optimizer';
 import AiAdvisor from './components/AiAdvisor';
 import SocialIngestor from './components/SocialIngestor';
+import ProfileSettings from './components/ProfileSettings';
 import EventSimulator from './components/EventSimulator';
 import LandingPage from './components/LandingPage';
 import AboutPage from './components/AboutPage';
 import Footer from './components/Footer';
 import LoginPortal from './components/LoginPortal';
-import { Shield, Sparkles, Sliders, MessageSquare } from 'lucide-react';
+import { Shield, Sparkles, Sliders, MessageSquare, Settings } from 'lucide-react';
 
 function MainAppContent() {
   const { activeTab, isLoggedIn } = useApp();
@@ -138,6 +139,26 @@ function MainAppContent() {
                   <MessageSquare size={14} style={{ display: 'inline' }} />
                   Social Gripe Ingestor
                 </button>
+                <button
+                  onClick={() => setMpSubTab('settings')}
+                  className="btn"
+                  style={{
+                    padding: '6px 12px',
+                    fontSize: '0.8rem',
+                    borderRadius: 'var(--radius-sm)',
+                    backgroundColor: mpSubTab === 'settings' ? 'var(--accent)' : 'transparent',
+                    color: mpSubTab === 'settings' ? 'var(--accent-text)' : 'var(--text-secondary)',
+                    borderColor: mpSubTab === 'settings' ? 'var(--accent)' : 'transparent',
+                    fontWeight: '600',
+                    boxShadow: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}
+                >
+                  <Settings size={14} style={{ display: 'inline' }} />
+                  Profile Settings
+                </button>
               </div>
             </div>
 
@@ -181,9 +202,13 @@ function MainAppContent() {
               <main style={{ flexGrow: 1, padding: '0 24px' }}>
                 <AiAdvisor />
               </main>
-            ) : (
+            ) : mpSubTab === 'social' ? (
               <main style={{ flexGrow: 1, padding: '0 24px' }}>
                 <SocialIngestor />
+              </main>
+            ) : (
+              <main style={{ flexGrow: 1, padding: '0 24px' }}>
+                <ProfileSettings />
               </main>
             )}
           </div>
