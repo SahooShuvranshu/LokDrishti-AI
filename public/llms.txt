@@ -1,0 +1,70 @@
+# LokDrishti AI — Technical Specification for LLMs & AI Agents
+
+LokDrishti AI is a Web GIS and Live AI analytics platform designed for Members of Parliament (MPs) and local citizens to track grievances, optimize resource scheduling, and automate directives.
+
+## 🚀 Key URLs & Resources
+*   **Hosted URL:** https://lokdrishti-ai.onrender.com
+*   **GitHub Repository:** https://github.com/SahooShuvranshu/LokDrishti-AI
+*   **Sitemap:** https://lokdrishti-ai.onrender.com/sitemap.xml
+*   **Robots.txt:** https://lokdrishti-ai.onrender.com/robots.txt
+
+---
+
+## 🏗️ Core Architecture & Components
+
+The application is structured as a client-side React 19 single-page app built with Vite and styled with Vanilla CSS:
+
+### 1. `src/context/AppContext.jsx` (Global State Manager)
+*   **Grievances State:** Array of objects representing citizens' reports (id, title, description, category, ward, lat, lng, urgency, status, reporter name).
+*   **Projects State:** Array of objects representing developmental projects proposed or active in the constituency.
+*   **Budgets Allocation:** Caps spending to ₹1.0Cr and monitors total allocated funds dynamically.
+*   **Auth State:** Handles Supabase Session checks and OAuth triggers.
+
+### 2. `src/components/LiveIncidentTicker.jsx` (Continuous Marquee Alert Ticker)
+*   Continuously scrolls active, critical, and pending grievances from the Supabase database.
+*   Duplicates alerts array for seamless infinite looping translate transitions.
+*   Pauses scroll behavior on mouse hover.
+
+### 3. `src/components/LiveConstituencyFeed.jsx` (Telemetry Widget)
+*   Renders the 5 most recent incident reports in a high-fidelity list card featuring pulsing indicator rings color-coded by urgency.
+
+### 4. `src/components/ProfileSettings.jsx` (Settings Override Sandbox)
+*   Enables users or judges to save personal Google Gemini API keys and Google Maps API keys to the browser's local sandbox `localStorage` scope to test the platform live.
+
+---
+
+## 📊 Database Schema Details (Supabase PostgreSQL)
+
+The backend utilizes two main tables hosted on Supabase:
+
+### `grievances` Table
+*   `id` (text, primary key) - Unique incident ticket ID (e.g. GRV-102).
+*   `title` (text) - Grievance headline.
+*   `description` (text) - Detailed problem explanation.
+*   `sector` (text) - Infrastructure, Water Supply, Sanitation, Public Health, Heritage & Tourism, Transport.
+*   `ward` (text) - Target ward name (e.g., Ward A: Old Town).
+*   `latitude` (double precision) - Pinpoint coordinate latitude.
+*   `longitude` (double precision) - Pinpoint coordinate longitude.
+*   `urgency` (text) - Low, Medium, Critical.
+*   `status` (text) - Pending, In Progress, Resolved.
+*   `reporter_name` (text) - Name of citizen submitter.
+*   `timestamp` (timestamp with time zone) - Date of complaint submission.
+
+### `projects` Table
+*   `id` (text, primary key) - Unique work order ID (e.g. PROJ-101).
+*   `name` (text) - Proposed work project title.
+*   `sector` (text) - Department sector classification.
+*   `ward` (text) - Target ward placement.
+*   `cost` (integer) - Estimated project cost in Lakhs.
+*   `duration` (integer) - Estimated execution time in days.
+*   `materials` (text) - Estimated labor and concrete supply materials.
+*   `status` (text) - Completed, Active, Queued.
+*   `priority` (integer) - Drag-and-drop index sorting weight.
+
+---
+
+## 💡 Tech Stack & APIs
+*   **React 19 & Vite** - High-performance reactive state rendering and Hot Module Replacement.
+*   **Google Gemini AI** - Speech-to-Text translation and strategic direct drafting.
+*   **Google Maps API** - Geolocated map overlays and landmark queries.
+*   **Apache ECharts** - Vector visualizations for constituency performance indices.
