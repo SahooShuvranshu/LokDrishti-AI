@@ -11,6 +11,7 @@ import AiAdvisor from './components/AiAdvisor';
 import SocialIngestor from './components/SocialIngestor';
 import ProfileSettings from './components/ProfileSettings';
 import LiveConstituencyFeed from './components/LiveConstituencyFeed';
+import LiveIncidentTicker from './components/LiveIncidentTicker';
 import EventSimulator from './components/EventSimulator';
 import LandingPage from './components/LandingPage';
 import AboutPage from './components/AboutPage';
@@ -27,6 +28,9 @@ function MainAppContent() {
     <div className="layout-container">
       {/* Brand Header */}
       <Header />
+
+      {/* Live Incident Ticker */}
+      <LiveIncidentTicker />
 
       {/* Landing View */}
       {activeTab === 'landing' && (
