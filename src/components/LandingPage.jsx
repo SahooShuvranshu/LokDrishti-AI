@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
+import LiveConstituencyFeed from './LiveConstituencyFeed';
 import { 
   Shield, User, Info, ArrowRight, Map, Languages, BarChart3, Sliders, 
   Activity, FileText, CheckCircle, Database, HelpCircle, Landmark, Users, 
@@ -424,6 +425,11 @@ export default function LandingPage() {
 
           </div>
         </div>
+      </section>
+
+      {/* LIVE DATABASE GRIEVANCE FEED */}
+      <section style={{ maxWidth: '800px', margin: '0 auto', width: '100%' }}>
+        <LiveConstituencyFeed title="Live Incident Stream (Database Connected)" />
       </section>
 
       {/* FAQ SECTION */}

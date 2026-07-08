@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Sun, Moon, Shield, User, Bell, Menu, LogOut, Home, BookOpen } from 'lucide-react';
+import { Sun, Moon, Shield, User, Menu, LogOut, Home, BookOpen, Settings } from 'lucide-react';
 
 export default function Header() {
   const {
@@ -9,18 +9,12 @@ export default function Header() {
     activeTab,
     setActiveTab,
     geminiApiKey,
-    grievances,
     isLoggedIn,
     user,
     handleLogout
   } = useApp();
 
   const [menuOpen, setMenuOpen] = useState(false);
-
-  // Filter recent critical or pending grievances for the ticker
-  const recentAlerts = grievances
-    .filter(g => g.urgency === 'Critical' || g.status === 'Pending')
-    .slice(0, 5);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -89,6 +83,13 @@ export default function Header() {
           >
             Command Center
           </button>
+          <button
+            onClick={() => handleTabClick('settings')}
+            className={`btn ${activeTab === 'settings' ? 'btn-primary' : ''}`}
+            style={{ padding: '6px 14px', fontSize: '0.8rem', background: activeTab === 'settings' ? '' : 'transparent', border: 'none', boxShadow: 'none' }}
+          >
+            API Settings
+          </button>
         </nav>
 
         {/* Action Controls */}
@@ -108,13 +109,8 @@ export default function Header() {
               fontWeight: '500'
             }}
           >
-            <div style={{
-              width: '6px',
-              height: '6px',
-              borderRadius: '50%',
-              backgroundColor: geminiApiKey ? 'var(--success)' : 'var(--warning)'
-            }}></div>
-            {geminiApiKey ? 'Gemini Live' : 'AI Simulation'}
+            <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: geminiApiKey ? 'var(--success)' : 'var(--warning)', display: 'inline-block' }}></span>
+            <span>{geminiApiKey ? 'AI Active' : 'AI Offline'}</span>
           </div>
 
           {/* Theme Toggle */}
@@ -229,53 +225,24 @@ export default function Header() {
             <Shield size={14} style={{ marginRight: '8px' }} />
             Command Center
           </button>
+          
+          <button
+            onClick={() => handleTabClick('settings')}
+            className="btn"
+            style={{
+              width: '100%',
+              justifyContent: 'flex-start',
+              background: activeTab === 'settings' ? 'var(--bg-secondary)' : 'transparent',
+              color: activeTab === 'settings' ? 'var(--text-primary)' : 'var(--text-tertiary)',
+              border: 'none',
+              boxShadow: 'none'
+            }}
+          >
+            <Settings size={14} style={{ marginRight: '8px' }} />
+            API Settings
+          </button>
         </div>
       )}
-
-      {/* Lower row: Live Incident Ticker */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        background: 'var(--bg-tertiary)',
-        borderRadius: 'var(--radius-sm)',
-        padding: '6px 12px',
-        fontSize: '0.8rem',
-        overflow: 'hidden',
-        border: '1px solid var(--border-color)'
-      }}>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '6px',
-          fontWeight: 'bold',
-          color: 'var(--danger)',
-          marginRight: '16px',
-          borderRight: '1px solid var(--border-color)',
-          paddingRight: '16px',
-          flexShrink: 0
-        }}>
-          <Bell size={14} className="pulse-glow" style={{ color: 'var(--danger)' }} />
-          LIVE constituency FEED
-        </div>
-        <div style={{ flexGrow: 1, overflow: 'hidden', position: 'relative' }}>
-          <div className="marquee-content" style={{ display: 'flex', gap: '40px' }}>
-            {recentAlerts.length > 0 ? (
-              [...recentAlerts, ...recentAlerts].map((alert, idx) => (
-                <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span className={`badge ${alert.urgency === 'Critical' ? 'badge-danger' : 'badge-warning'}`} style={{ padding: '1px 6px', fontSize: '0.65rem' }}>
-                    {alert.id}
-                  </span>
-                  <span style={{ color: 'var(--text-secondary)' }}>{alert.title}</span>
-                  <span style={{ color: 'var(--text-tertiary)' }}>({alert.sector})</span>
-                  <span style={{ color: 'var(--text-tertiary)' }}>•</span>
-                </div>
-              ))
-            ) : (
-              <span style={{ color: 'var(--text-tertiary)' }}>No active critical grievances in the constituency. All quiet.</span>
-            )}
-          </div>
-        </div>
-      </div>
     </header>
   );
 }

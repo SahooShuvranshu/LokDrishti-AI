@@ -10,6 +10,7 @@ import Optimizer from './components/Optimizer';
 import AiAdvisor from './components/AiAdvisor';
 import SocialIngestor from './components/SocialIngestor';
 import ProfileSettings from './components/ProfileSettings';
+import LiveConstituencyFeed from './components/LiveConstituencyFeed';
 import EventSimulator from './components/EventSimulator';
 import LandingPage from './components/LandingPage';
 import AboutPage from './components/AboutPage';
@@ -45,6 +46,13 @@ function MainAppContent() {
       {activeTab === 'citizen' && (
         <main style={{ flexGrow: 1 }}>
           <CitizenPortal />
+        </main>
+      )}
+
+      {/* Settings View */}
+      {activeTab === 'settings' && (
+        <main style={{ flexGrow: 1 }}>
+          <ProfileSettings />
         </main>
       )}
 
@@ -139,26 +147,6 @@ function MainAppContent() {
                   <MessageSquare size={14} style={{ display: 'inline' }} />
                   Social Gripe Ingestor
                 </button>
-                <button
-                  onClick={() => setMpSubTab('settings')}
-                  className="btn"
-                  style={{
-                    padding: '6px 12px',
-                    fontSize: '0.8rem',
-                    borderRadius: 'var(--radius-sm)',
-                    backgroundColor: mpSubTab === 'settings' ? 'var(--accent)' : 'transparent',
-                    color: mpSubTab === 'settings' ? 'var(--accent-text)' : 'var(--text-secondary)',
-                    borderColor: mpSubTab === 'settings' ? 'var(--accent)' : 'transparent',
-                    fontWeight: '600',
-                    boxShadow: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px'
-                  }}
-                >
-                  <Settings size={14} style={{ display: 'inline' }} />
-                  Profile Settings
-                </button>
               </div>
             </div>
 
@@ -180,6 +168,9 @@ function MainAppContent() {
                         onSelectGrievance={setSelectedGrievance}
                         selectedGrievanceId={selectedGrievance?.id}
                       />
+                      
+                      {/* Live Administrative Log Feed */}
+                      <LiveConstituencyFeed title="Live Administrative Incident Feed (Database Synced)" />
                     </div>
                   </div>
 
@@ -202,13 +193,9 @@ function MainAppContent() {
               <main style={{ flexGrow: 1, padding: '0 24px' }}>
                 <AiAdvisor />
               </main>
-            ) : mpSubTab === 'social' ? (
-              <main style={{ flexGrow: 1, padding: '0 24px' }}>
-                <SocialIngestor />
-              </main>
             ) : (
               <main style={{ flexGrow: 1, padding: '0 24px' }}>
-                <ProfileSettings />
+                <SocialIngestor />
               </main>
             )}
           </div>

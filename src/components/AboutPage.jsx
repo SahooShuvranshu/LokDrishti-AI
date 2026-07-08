@@ -1,4 +1,5 @@
 import React from 'react';
+import LiveConstituencyFeed from './LiveConstituencyFeed';
 import { 
   Shield, BookOpen, Layers, Terminal, Server, Check, Award, AlertTriangle, 
   Target, Lightbulb, HelpCircle, MapPin, Brain, Sliders, Database, Users,
@@ -218,6 +219,11 @@ export default function AboutPage() {
             To expand beyond the Bhubaneswar pilot, LokDrishti AI is designed for containerized deployment on **Google Cloud Run** connected to a managed **Google Cloud SQL (PostgreSQL)** database or **AlloyDB**. Integration with Pub/Sub and Cloud Functions allows for streaming telemetry directly to BigQuery for state-wide developmental forecasting.
           </p>
         </div>
+      </section>
+
+      {/* LIVE DATABASE GRIEVANCE FEED */}
+      <section style={{ width: '100%' }}>
+        <LiveConstituencyFeed title="Live Constituency Status Ticker (Supabase Connected)" />
       </section>
 
       {/* DETAILED TECH STACK */}
