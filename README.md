@@ -221,5 +221,31 @@ The optimized minified production assets will be output in the `dist/` directory
 
 ---
 
+## ❓ Frequently Asked Questions (FAQ)
+
+### **Q1: How do I test the platform if I do not have active Google Cloud / Gemini credentials?**
+**A:** Simply sign in to the Command Center and go to the **Settings** tab in the navigation bar. You can paste your own Google Gemini API Key and Google Maps API Key there. These keys are saved client-side in your browser's sandboxed `localStorage` cache and will automatically override the default environment keys.
+
+### **Q2: Does the voice recording component require paid third-party API calls?**
+**A:** No. The Citizen Portal uses the native HTML5 **Web Speech API** built directly into modern web browsers. Transcription is processed locally on the client machine, meaning it has zero operating costs and requires no external paid speech API keys.
+
+### **Q3: Which parts of the platform run completely locally?**
+**A:** The HTML5 Speech transcribing, interactive Ward SVG maps, drag-and-drop project scheduling, and budget calculations are processed entirely on the client-side. An active network connection is only needed to load the Google Maps visual tiles, execute the Gemini AI Strategic analysis, or connect to the real-time Supabase telemetry tables.
+
+---
+
 ## 🔒 License
-Distributed under the MIT License. See `LICENSE` for more information.
+
+Distributed under the MIT License. See [LICENSE](file:///d:/Projects/LokDrishti-AI/LICENSE) for more information.
+
+---
+
+## 💖 Credits & Acknowledgements
+
+*   **Hackathon Host:** [Hack2Skill](https://hack2skill.com/) & Google Cloud India (*Build with AI: Code for Communities*).
+*   **Vector Icons:** [Lucide React](https://lucide.dev/) contributors.
+*   **Interactive Analytics:** [Apache ECharts](https://echarts.apache.org/) visualization library.
+*   **Prioritized List Reordering:** [dnd-kit](https://dndkit.com/) drag-and-drop toolkit.
+*   **Platform Blueprint Deployment:** [Render](https://render.com/) web hosting.
+*   **Developed by:** Team LokDrishti 🇮🇳
+
