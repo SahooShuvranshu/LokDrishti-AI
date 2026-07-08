@@ -99,6 +99,12 @@ LokDrishti-AI/
 ├── index.html                   # HTML template containing Google Font preconnects and SEO Meta / OG Tags
 ├── vite.config.js               # Vite configurations for React and bundler compiling
 ├── package.json                 # Project dependencies, build tasks, and metadata configurations
+├── CODE_OF_CONDUCT.md           # Community guidelines and contributor code of conduct
+├── SECURITY.md                  # Security policies, reporting protocols, and safety standards
+├── assets/                      # Repository documentation screenshots (Home, About, Citizen, Command, Settings)
+├── public/                      # Static client-side assets served by the web app
+│   ├── favicon.png              # Cybernetic shield logo for browser tab icons
+│   └── seo_card.png             # High-resolution Open Graph branding card image
 ├── src/
 │   ├── main.jsx                 # Client entry point mounting App to the DOM
 │   ├── App.jsx                  # Main component handling state-driven page routing and viewport layouts
@@ -108,17 +114,20 @@ LokDrishti-AI/
 │   │   └── AppContext.jsx       # State Provider managing grievances, budgets, login/logout, theme, and simulator hooks
 │   │
 │   └── components/
-│       ├── Header.jsx           # Top navbar with ticker alert marquee, theme toggle, and settings modal
+│       ├── Header.jsx           # Top navbar with theme toggles, profile settings shortcut triggers, and controls
 │       ├── Footer.jsx           # Bottom footer containing navigation tabs, hackathon links, and copyrights
 │       ├── LandingPage.jsx      # Portal gateway hero section with descriptive pillars and CTA buttons
 │       ├── AboutPage.jsx        # Project case-study outlining the verbatim problem statement and tech details
-│       ├── LoginPortal.jsx      # Glassmorphic admin sign-in portal with prefilled demo credentials
+│       ├── LoginPortal.jsx      # Glassmorphic admin sign-in portal with Supabase Google Auth gateways
 │       ├── CitizenPortal.jsx    # Grievance filing panel with speech recognition and AI Translation refiners
 │       ├── ConstituencyMap.jsx  # Interactive SVG representation of 6 wards with hover overlays and pinpoint coords
-│       ├── KpiGrid.jsx          # KPI analytics panel rendering ECharts sparklines and budget donuts
+│       ├── KpiGrid.jsx          # KPI analytics panel rendering ECharts sparklines and budget allocation sparklines
 │       ├── GrievanceTable.jsx   # List panel with search filters, sorting, pagination, and mobile column hiding
 │       ├── DetailPanel.jsx      # Inspector card with streaming directive generators and work order creators
 │       ├── Optimizer.jsx        # Project scheduling queue with drag-and-drop handles and Gantt charts
+│       ├── ProfileSettings.jsx  # Settings manager enabling custom Gemini and Maps API overrides in localStorage
+│       ├── LiveConstituencyFeed.jsx # Live database telemetry stream component integrated across Home/About/Command
+│       ├── LiveIncidentTicker.jsx   # Continuous marquee alert ticker component rendered at the top of all pages
 │       └── EventSimulator.jsx   # Sticky trigger drawer to simulate monsoon storms or utility pipe failures
 ```
 
