@@ -240,7 +240,7 @@ The optimized minified production assets will be output in the `dist/` directory
 
 ## 🔒 License
 
-Distributed under the MIT License. See [LICENSE](file:///d:/Projects/LokDrishti-AI/LICENSE) for more information.
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 ---
 
