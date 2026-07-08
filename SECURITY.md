@@ -1,4 +1,4 @@
-# Security Policy
+# 🛡️ Security Policy
 
 <div align="center">
 
@@ -10,7 +10,7 @@
 
 ---
 
-## Supported Versions
+## 📦 Supported Versions
 
 We actively monitor and patch the following versions of LokDrishti AI:
 
@@ -21,13 +21,13 @@ We actively monitor and patch the following versions of LokDrishti AI:
 
 ---
 
-## Reporting a Vulnerability
+## 🚨 Reporting a Vulnerability
 
 We take the security of our digital governance infrastructure extremely seriously. If you discover any security vulnerability in this application (including API key leaks, authentication bypasses, script injection risks, or server-side vulnerabilities), please do not open a public GitHub issue. Instead, report it privately to our development team.
 
-### How to Report:
-*   **Email:** Send an email to **mp.bhubaneswar@governance.in**.
-*   **Response Window:** You will receive a acknowledgement receipt within **24 hours**.
+### 📬 How to Report:
+*   **Email:** Send an email to **connect.crystalstudio@gmail.com**.
+*   **Response Window:** You will receive an acknowledgement receipt within **24 hours**.
 *   **Resolution Target:** Critical vulnerabilities will be patched and a security advisory released within **7 days** of verification.
 
 Please include the following information in your report:
@@ -38,7 +38,7 @@ Please include the following information in your report:
 
 ---
 
-## Security Best Practices Built-In
+## 🔒 Security Best Practices Built-In
 
 LokDrishti AI adopts the following defensive programming layers:
 1.  **Sanitization:** React's standard JSX handles escaping of variables by default, preventing script injections (XSS).
