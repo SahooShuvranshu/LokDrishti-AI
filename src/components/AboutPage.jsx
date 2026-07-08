@@ -3,45 +3,54 @@ import LiveConstituencyFeed from './LiveConstituencyFeed';
 import { 
   Shield, BookOpen, Layers, Terminal, Server, Check, Award, AlertTriangle, 
   Target, Lightbulb, HelpCircle, MapPin, Brain, Sliders, Database, Users,
-  Activity, Landmark, Lock, Globe
+  Activity, Landmark, Lock, Globe, Palette, Mic
 } from 'lucide-react';
 
 export default function AboutPage() {
   const stack = [
     { 
       name: 'React 19 & Vite', 
+      icon: <Layers size={16} style={{ color: 'var(--accent)' }} />,
       desc: 'Modern reactive virtual DOM scaffolded for blazing fast page loads and HMR updates with optimized manual chunk compiling.' 
     },
     { 
       name: 'Google Gemini 2.5 Flash-Lite API', 
+      icon: <Brain size={16} style={{ color: 'var(--accent)' }} />,
       desc: 'Drives our translation, letter writers, and strategic roadmaps. Integrates context demographics directly to evaluate prioritization trade-offs (e.g. school travel times vs. youth unemployment).' 
     },
     { 
       name: 'Supabase PostgreSQL Database', 
+      icon: <Database size={16} style={{ color: 'var(--accent)' }} />,
       desc: 'Hosted cloud database syncing grievances (including geocoded coordinate pairs), work projects queue, and timelines in real-time.' 
     },
     { 
       name: 'Supabase Auth & Google OAuth', 
+      icon: <Lock size={16} style={{ color: 'var(--accent)' }} />,
       desc: 'Premium SSO (Single Sign-On) authentication guarding administrative access with OAuth redirection.' 
     },
     { 
       name: 'Google Maps JavaScript API', 
+      icon: <MapPin size={16} style={{ color: 'var(--accent)' }} />,
       desc: 'Interactive geolocated map of Bhubaneswar, Odisha featuring address/landmark searches, live GPS tracking, and spatial pin plots.' 
     },
     { 
       name: 'Apache ECharts', 
+      icon: <Activity size={16} style={{ color: 'var(--accent)' }} />,
       desc: 'Theme-aware horizontal bars, sparklines, and donuts visualizing grievance sectors and budget limits.' 
     },
     { 
       name: 'HTML5 Web Speech API', 
+      icon: <Mic size={16} style={{ color: 'var(--accent)' }} />,
       desc: 'Client-side speech-to-text supporting Hindi (हिंदी) and English (India) voices.' 
     },
     { 
       name: 'dnd-kit Drag-and-Drop', 
+      icon: <Sliders size={16} style={{ color: 'var(--accent)' }} />,
       desc: 'Pointer and keyboard sensors enabling the MP to drag cards and priority-order constituency projects.' 
     },
     { 
       name: 'Custom Zinc CSS System', 
+      icon: <Palette size={16} style={{ color: 'var(--accent)' }} />,
       desc: 'Tailored typography (Outfit, Inter), variable-based dark/light toggles, glassmorphic card containers, and responsive layouts.' 
     }
   ];
@@ -240,8 +249,8 @@ export default function AboutPage() {
         }}>
           {stack.map((item, idx) => (
             <div key={idx} className="glass-panel" style={{ padding: '20px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Check size={14} style={{ color: 'var(--accent)' }} />
+              <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                {item.icon}
                 {item.name}
               </span>
               <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', lineHeight: '1.5', margin: 0 }}>{item.desc}</p>
