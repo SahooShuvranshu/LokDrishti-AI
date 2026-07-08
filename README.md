@@ -104,6 +104,7 @@ LokDrishti-AI/
 ├── assets/                      # Repository documentation screenshots (Home, About, Citizen, Command, Settings)
 ├── public/                      # Static client-side assets served by the web app
 │   ├── favicon.png              # Cybernetic shield logo for browser tab icons
+│   ├── humans.txt               # Authorship credits and technology stack manifest file
 │   └── seo_card.png             # High-resolution Open Graph branding card image
 ├── src/
 │   ├── main.jsx                 # Client entry point mounting App to the DOM

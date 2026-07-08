@@ -1,0 +1,16 @@
+/* TEAM */
+Lead Developer: Shuvransu Sekhar Sahoo
+GitHub: https://github.com/SahooShuvranshu
+Email: connect.crystalstudio@gmail.com
+Studio: Crystal Studio Labs
+From: Bhubaneswar, Odisha, India 🇮🇳
+
+/* THANKS */
+Hackathon Host: Hack2Skill
+Sponsor: Google Cloud India (Build with AI: Code for Communities Hackathon)
+
+/* SITE */
+Last update: 2026-07-08
+Standards: HTML5, CSS3, ES6+, Web Speech API, Geolocation API, SVG mapping
+Libraries: React 19, Vite 8, Supabase Auth/Client, Apache ECharts, dnd-kit, Lucide React
+Software: VS Code, Git
