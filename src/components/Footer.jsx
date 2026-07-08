@@ -119,7 +119,7 @@ export default function Footer() {
           © {new Date().getFullYear()} LokDrishti AI. All rights reserved.
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-          Built with <Heart size={10} fill="var(--danger)" style={{ color: 'var(--danger)' }} /> for Code for Communities Track 1
+          Built with <Heart size={10} fill="var(--danger)" style={{ color: 'var(--danger)' }} /> and ☕ By Team Crystal Studio Labs
         </div>
       </div>
     </footer>
